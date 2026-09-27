@@ -2,33 +2,22 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Mail,
   Github,
   Linkedin,
   Download,
-  Code2,
-  Database,
-  Brain,
   Sparkles,
   ArrowRight,
   GraduationCap,
   Award,
-  ExternalLink,
-  ChevronDown,
-  Layers,
-  Activity,
-  Terminal,
   Copy,
   Check,
   FolderOpen,
   ArrowUpRight,
-  User,
   Star,
   CheckCircle2,
-  Calendar,
-  Cpu,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -53,7 +42,7 @@ import {
   ProjectData,
 } from "@/components/redesign/ProjectModal";
 import { SkillsMatrix } from "@/components/redesign/SkillsMatrix";
-import { TextMorph, StaggeredText } from "@/components/redesign/MotionText";
+import { TextMorph } from "@/components/redesign/MotionText";
 
 const FEATURED_PROJECTS: ProjectData[] = [
   {
@@ -240,7 +229,7 @@ export default function Portfolio() {
       <header
         className="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl border-b transition-all duration-300"
         style={{
-          backgroundColor: "rgba(8, 12, 22, 0.75)",
+          backgroundColor: "rgba(8, 12, 22, 0.8)",
           borderColor: palette.borderDark,
         }}
       >
@@ -251,9 +240,10 @@ export default function Portfolio() {
               <a
                 href="#home"
                 className="flex items-center gap-2 group cursor-pointer"
+                aria-label="Home - B Dhruv Portfolio"
               >
                 <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm tracking-wider shadow-lg border transition-transform group-hover:scale-105"
+                  className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs tracking-wider shadow-lg border transition-transform group-hover:scale-105"
                   style={{
                     backgroundColor: `${palette.primary}20`,
                     borderColor: palette.borderDark,
@@ -263,10 +253,10 @@ export default function Portfolio() {
                   BD
                 </div>
                 <div className="hidden sm:block">
-                  <span className="font-bold text-base tracking-tight text-white group-hover:text-slate-200">
+                  <span className="font-bold text-sm tracking-tight text-white group-hover:text-slate-200">
                     B Dhruv
                   </span>
-                  <span className="block text-[10px] text-slate-400 font-mono">
+                  <span className="block text-xs text-slate-400 font-mono">
                     AI & Data Science
                   </span>
                 </div>
@@ -276,7 +266,7 @@ export default function Portfolio() {
 
           {/* Quick Action Badges */}
           <div className="flex items-center gap-3">
-            {/* Skiper UI Live Status Beacon */}
+            {/* Issue 5: Standardized text-xs (12px min) */}
             <div
               className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium backdrop-blur-md"
               style={{
@@ -294,7 +284,7 @@ export default function Portfolio() {
                   style={{ backgroundColor: palette.accent }}
                 />
               </span>
-              <span className="text-slate-300 text-[11px]">
+              <span className="text-slate-300 text-xs">
                 Available for AI Internships
               </span>
             </div>
@@ -302,16 +292,13 @@ export default function Portfolio() {
             {/* Realtime Colors Theme Switcher */}
             <PaletteSwitcher />
 
-            {/* Resume Button */}
+            {/* Issue 24: Header Resume button uses subtle outlined secondary styling, keeping Explore Projects as primary CTA */}
             <Magnetic strength={0.25}>
               <Button
                 asChild
+                variant="outline"
                 size="sm"
-                className="rounded-full text-xs font-semibold px-4 shadow-lg text-white"
-                style={{
-                  backgroundColor: palette.primary,
-                  boxShadow: `0 0 16px ${palette.glow}`,
-                }}
+                className="rounded-full text-xs font-medium px-3.5 py-1.5 text-slate-200 border border-white/15 bg-white/5 hover:bg-white/10 hover:text-white transition-all shadow-sm"
               >
                 <a href="/Resume.pdf" download>
                   <Download className="w-3.5 h-3.5 mr-1.5" />
@@ -325,12 +312,12 @@ export default function Portfolio() {
 
       {/* Main Content */}
       <main className="relative z-10 pt-20">
-        {/* HERO SECTION */}
+        {/* HERO SECTION - Issues 13 & 25: Streamlined interactive density, clear visual hierarchy */}
         <section
           id="home"
-          className="min-h-[90vh] flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-12 pb-16 relative overflow-hidden"
+          className="min-h-[85vh] flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-10 pb-16 relative overflow-hidden"
         >
-          <div className="max-w-5xl mx-auto text-center space-y-8">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
             {/* Status Pill */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -354,13 +341,13 @@ export default function Portfolio() {
               </span>
             </motion.div>
 
-            {/* Main Headline with Motion Primitives Text Roll */}
+            {/* Main Headline */}
             <div className="space-y-4">
               <motion.h1
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.15 }}
-                className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.08]"
+                className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.1]"
               >
                 Hi, I'm{" "}
                 <span
@@ -373,7 +360,8 @@ export default function Portfolio() {
                 </span>
               </motion.h1>
 
-              <div className="text-xl sm:text-2xl md:text-3xl text-slate-300 font-medium flex items-center justify-center gap-2 flex-wrap min-h-[44px]">
+              {/* Issue 14: Clear, cohesive specialization headline with animated dynamic role */}
+              <div className="text-lg sm:text-2xl text-slate-300 font-medium flex items-center justify-center gap-2 flex-wrap min-h-[40px]">
                 <span className="text-slate-400">Specializing in</span>
                 <TextMorph
                   words={[
@@ -386,7 +374,7 @@ export default function Portfolio() {
                   style={{
                     color: palette.accent,
                     textDecorationColor: palette.primary,
-                  } as any}
+                  }}
                 />
               </div>
             </div>
@@ -396,7 +384,7 @@ export default function Portfolio() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-sm sm:text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed"
+              className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed"
             >
               Second-year undergraduate at KLH University maintaining a{" "}
               <span className="font-semibold text-white">9.0+ CGPA</span>.
@@ -404,25 +392,25 @@ export default function Portfolio() {
               modern full-stack engineering.
             </motion.p>
 
-            {/* Hero CTAs (Magnetic & Radiant) */}
+            {/* Hero CTAs (Issue 13 & 25: Clear primary vs secondary CTA + clean social handles) */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-wrap items-center justify-center gap-4 pt-2"
             >
-              <Magnetic strength={0.3}>
+              <Magnetic strength={0.25}>
                 <Button
                   onClick={() => scrollTo("projects")}
                   size="lg"
-                  className="relative group overflow-hidden px-8 py-6 rounded-2xl text-base font-semibold shadow-2xl text-white border-0 transition-transform active:scale-95"
+                  className="relative group overflow-hidden px-8 py-5 rounded-xl text-sm font-semibold shadow-xl text-white border-0 transition-transform active:scale-95"
                   style={{
                     backgroundColor: palette.primary,
-                    boxShadow: `0 10px 25px -5px ${palette.glow}`,
+                    boxShadow: `0 8px 20px -4px ${palette.glow}`,
                   }}
                 >
-                  <span className="relative z-10 flex items-center gap-2.5">
-                    <FolderOpen className="w-5 h-5" />
+                  <span className="relative z-10 flex items-center gap-2">
+                    <FolderOpen className="w-4 h-4" />
                     Explore Projects
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </span>
@@ -435,95 +423,61 @@ export default function Portfolio() {
                 </Button>
               </Magnetic>
 
-              <Magnetic strength={0.3}>
+              <Magnetic strength={0.25}>
                 <Button
                   onClick={() => scrollTo("contact")}
                   variant="outline"
                   size="lg"
-                  className="px-8 py-6 rounded-2xl text-base font-semibold border-2 transition-all hover:bg-white/5 active:scale-95"
+                  className="px-8 py-5 rounded-xl text-sm font-semibold border transition-all hover:bg-white/5 active:scale-95 text-slate-200"
                   style={{
                     borderColor: palette.borderDark,
-                    color: "#f8fafc",
                     backgroundColor: "rgba(255,255,255,0.02)",
                   }}
                 >
-                  <Mail className="w-5 h-5 mr-2" style={{ color: palette.accent }} />
+                  <Mail className="w-4 h-4 mr-2" style={{ color: palette.accent }} />
                   Let's Connect
                 </Button>
               </Magnetic>
-            </motion.div>
 
-            {/* Social Icons & Email Quick Copy */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="flex flex-wrap items-center justify-center gap-3 pt-4"
-            >
-              {[
-                {
-                  href: "https://github.com/Dhruv-1309",
-                  label: "GitHub",
-                  icon: Github,
-                },
-                {
-                  href: "https://www.linkedin.com/in/dhruvb-tech",
-                  label: "LinkedIn",
-                  icon: Linkedin,
-                },
-                {
-                  href: "mailto:dhruvb324@gmail.com",
-                  label: "Email",
-                  icon: Mail,
-                },
-              ].map((social) => {
-                const Icon = social.icon;
-                return (
-                  <Magnetic key={social.label} strength={0.35}>
-                    <a
-                      href={social.href}
-                      target={social.href.startsWith("http") ? "_blank" : undefined}
-                      rel={social.href.startsWith("http") ? "noreferrer" : undefined}
-                      className="w-11 h-11 rounded-2xl border flex items-center justify-center text-slate-300 hover:text-white transition-all backdrop-blur-md hover:scale-110 shadow-sm"
-                      style={{
-                        backgroundColor: "rgba(255, 255, 255, 0.04)",
-                        borderColor: palette.borderDark,
-                      }}
-                      aria-label={social.label}
-                    >
-                      <Icon className="w-5 h-5" />
-                    </a>
-                  </Magnetic>
-                );
-              })}
-
-              {/* Copy Email Button */}
-              <button
-                onClick={handleCopyEmail}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-2xl border text-xs font-mono text-slate-300 hover:text-white transition-all backdrop-blur-md"
-                style={{
-                  backgroundColor: "rgba(255, 255, 255, 0.03)",
-                  borderColor: palette.borderDark,
-                }}
-              >
-                {copiedEmail ? (
-                  <>
-                    <Check className="w-4 h-4 text-emerald-400" />
-                    <span className="text-emerald-400">Copied email!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5 text-slate-400" />
-                    <span>dhruvb324@gmail.com</span>
-                  </>
-                )}
-              </button>
+              {/* Connected Profiles (GitHub & LinkedIn) */}
+              <div className="flex items-center gap-2 pl-2">
+                <Magnetic strength={0.3}>
+                  <a
+                    href="https://github.com/Dhruv-1309"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-10 h-10 rounded-xl border flex items-center justify-center text-slate-300 hover:text-white transition-all backdrop-blur-md hover:scale-105 shadow-sm"
+                    style={{
+                      backgroundColor: "rgba(255, 255, 255, 0.04)",
+                      borderColor: palette.borderDark,
+                    }}
+                    aria-label="GitHub Profile"
+                  >
+                    <Github className="w-4 h-4" />
+                  </a>
+                </Magnetic>
+                <Magnetic strength={0.3}>
+                  <a
+                    href="https://www.linkedin.com/in/dhruvb-tech"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-10 h-10 rounded-xl border flex items-center justify-center text-slate-300 hover:text-white transition-all backdrop-blur-md hover:scale-105 shadow-sm"
+                    style={{
+                      backgroundColor: "rgba(255, 255, 255, 0.04)",
+                      borderColor: palette.borderDark,
+                    }}
+                    aria-label="LinkedIn Profile"
+                  >
+                    <Linkedin className="w-4 h-4" />
+                  </a>
+                </Magnetic>
+              </div>
             </motion.div>
           </div>
         </section>
 
         {/* Skiper UI Infinite Tech Marquee */}
-        <section className="relative z-10 border-y border-white/5 py-3 bg-black/20">
+        <section className="relative z-10 border-y border-white/5 py-3 bg-black/20" aria-label="Core Technology Ribbon">
           <TechMarquee />
         </section>
 
@@ -533,11 +487,12 @@ export default function Portfolio() {
         {/* ABOUT & ACADEMICS SECTION */}
         <section
           id="about"
-          className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+          className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
         >
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+          <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
+            {/* Issue 6: Replaced 28-char all-caps with readable title case */}
             <span
-              className="text-xs font-mono uppercase tracking-widest px-3 py-1 rounded-full border inline-block"
+              className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
               style={{
                 backgroundColor: `${palette.primary}15`,
                 borderColor: palette.borderDark,
@@ -546,7 +501,7 @@ export default function Portfolio() {
             >
               Academic Background & Vision
             </span>
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
               Engineering Intelligent Systems
             </h2>
             <p className="text-slate-400 text-sm sm:text-base">
@@ -556,72 +511,71 @@ export default function Portfolio() {
           </div>
 
           <div className="grid lg:grid-cols-12 gap-8 items-stretch">
-            {/* Education & Academic Excellence (TiltCard + Spotlight) */}
+            {/* Education Card */}
             <div className="lg:col-span-6 space-y-6">
               <TiltCard maxTilt={8}>
                 <SpotlightCard className="p-6 sm:p-8 h-full flex flex-col justify-between">
                   <div className="space-y-6">
-                    <div className="flex items-center justify-between">
-                      <div
-                        className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-xl border"
-                        style={{
-                          backgroundColor: `${palette.primary}25`,
-                          borderColor: `${palette.primary}44`,
-                          color: palette.accent,
-                        }}
-                      >
-                        <GraduationCap className="w-7 h-7" />
-                      </div>
-
-                      <div
-                        className="flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold"
-                        style={{
-                          backgroundColor: "rgba(16, 185, 129, 0.1)",
-                          borderColor: "rgba(16, 185, 129, 0.3)",
-                          color: "#34d399",
-                        }}
-                      >
-                        <Award className="w-4 h-4" />
-                        <span>Academic Distinction</span>
-                      </div>
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg border"
+                      style={{
+                        backgroundColor: `${palette.primary}25`,
+                        borderColor: `${palette.primary}44`,
+                        color: palette.accent,
+                      }}
+                    >
+                      <GraduationCap className="w-6 h-6" />
                     </div>
 
+                    {/* Issue 16: Positioned Academic Distinction badge right beside the degree title for clear grouping */}
                     <div className="space-y-2">
-                      <h3 className="text-2xl font-bold text-white tracking-tight">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-medium"
+                          style={{
+                            backgroundColor: "rgba(16, 185, 129, 0.1)",
+                            borderColor: "rgba(16, 185, 129, 0.3)",
+                            color: "#34d399",
+                          }}
+                        >
+                          <Award className="w-3.5 h-3.5" />
+                          <span>Academic Distinction</span>
+                        </span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
                         B.Tech in Artificial Intelligence & Data Science
                       </h3>
                       <p
-                        className="text-base font-semibold"
+                        className="text-sm font-semibold"
                         style={{ color: palette.primary }}
                       >
                         KLH University, Hyderabad
                       </p>
-                      <p className="text-sm text-slate-400">
+                      <p className="text-xs text-slate-400">
                         Second Year Undergraduate (2023 – 2027)
                       </p>
                     </div>
 
-                    <p className="text-slate-300 text-sm leading-relaxed">
+                    <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
                       Rigorous coursework encompassing Data Structures & Algorithms,
                       Object-Oriented Programming, Database Management Systems,
                       Calculus, Linear Algebra, Probability & Statistics, and Applied
                       Machine Learning.
                     </p>
 
-                    {/* CGPA Badge HUD */}
+                    {/* CGPA Badge HUD - Issue 7: Replaced 30-char all-caps with sentence case */}
                     <div
-                      className="p-4 rounded-2xl border flex items-center justify-between"
+                      className="p-4 rounded-xl border flex items-center justify-between"
                       style={{
                         backgroundColor: "rgba(255,255,255,0.02)",
                         borderColor: palette.borderDark,
                       }}
                     >
                       <div>
-                        <p className="text-xs text-slate-400 font-mono uppercase">
+                        <p className="text-xs text-slate-400 font-medium">
                           Cumulative Grade Point Average
                         </p>
                         <p
-                          className="text-3xl font-extrabold tracking-tight mt-0.5"
+                          className="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5"
                           style={{ color: palette.accent }}
                         >
                           9.0+ CGPA
@@ -631,7 +585,7 @@ export default function Portfolio() {
                         <span className="text-xs text-emerald-400 font-medium">
                           Top Tier Percentile
                         </span>
-                        <p className="text-[11px] text-slate-400">Consistent Record</p>
+                        <p className="text-xs text-slate-400">Consistent Record</p>
                       </div>
                     </div>
                   </div>
@@ -654,14 +608,14 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* SKILLS SECTION */}
+        {/* SKILLS SECTION - Issue 17: Reduced mb-14 to mb-8 for tight visual grouping with filter pills */}
         <section
           id="skills"
-          className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+          className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
         >
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+          <div className="text-center max-w-3xl mx-auto mb-8 space-y-3">
             <span
-              className="text-xs font-mono uppercase tracking-widest px-3 py-1 rounded-full border inline-block"
+              className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
               style={{
                 backgroundColor: `${palette.primary}15`,
                 borderColor: palette.borderDark,
@@ -670,7 +624,7 @@ export default function Portfolio() {
             >
               Technical Core & Proficiency
             </span>
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
               Skills Matrix & Competencies
             </h2>
             <p className="text-slate-400 text-sm sm:text-base">
@@ -688,11 +642,11 @@ export default function Portfolio() {
         {/* FEATURED PROJECTS SECTION */}
         <section
           id="projects"
-          className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+          className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
         >
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+          <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
             <span
-              className="text-xs font-mono uppercase tracking-widest px-3 py-1 rounded-full border inline-block"
+              className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
               style={{
                 backgroundColor: `${palette.primary}15`,
                 borderColor: palette.borderDark,
@@ -701,7 +655,7 @@ export default function Portfolio() {
             >
               Applied Engineering
             </span>
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
               Featured Projects
             </h2>
             <p className="text-slate-400 text-sm sm:text-base">
@@ -717,6 +671,7 @@ export default function Portfolio() {
 
               return (
                 <TiltCard key={project.id} maxTilt={6}>
+                  {/* Issue 20 & 23: Flexbox card column layout with pinned footer */}
                   <SpotlightCard className="h-full flex flex-col justify-between overflow-hidden relative group">
                     {/* Animaster Lib BorderBeam on Flagship */}
                     {isFlagship && (
@@ -728,9 +683,9 @@ export default function Portfolio() {
                       />
                     )}
 
-                    <div>
+                    <div className="flex-1 flex flex-col">
                       {/* Image Thumbnail */}
-                      <div className="relative aspect-video w-full overflow-hidden rounded-t-xl">
+                      <div className="relative aspect-video w-full overflow-hidden rounded-t-xl flex-shrink-0">
                         <Image
                           src={project.image}
                           alt={project.title}
@@ -741,19 +696,19 @@ export default function Portfolio() {
 
                         {isFlagship && (
                           <div
-                            className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase border shadow-md flex items-center gap-1 text-white"
+                            className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-bold tracking-wider border shadow-md flex items-center gap-1 text-white"
                             style={{
                               backgroundColor: palette.primary,
                               borderColor: `${palette.primary}88`,
                             }}
                           >
                             <Star className="w-3 h-3 fill-current" />
-                            Flagship Project
+                            Flagship
                           </div>
                         )}
 
                         <span
-                          className="absolute bottom-3 right-3 text-[10px] font-mono px-2.5 py-1 rounded-full border backdrop-blur-md"
+                          className="absolute bottom-3 right-3 text-xs font-medium px-2.5 py-1 rounded-full border backdrop-blur-md"
                           style={{
                             backgroundColor: "rgba(0,0,0,0.6)",
                             borderColor: palette.borderDark,
@@ -764,28 +719,27 @@ export default function Portfolio() {
                         </span>
                       </div>
 
-                      {/* Content */}
-                      <div className="p-6 space-y-4">
-                        <div>
-                          <h3 className="text-xl font-bold text-white group-hover:text-slate-200 transition-colors">
+                      {/* Content - Issue 23: Tightened vertical spacing to keep description, tags, and actions cohesive */}
+                      <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div className="space-y-2">
+                          <h3 className="text-lg font-bold text-white group-hover:text-slate-200 transition-colors">
                             {project.title}
                           </h3>
-                          <p className="text-xs text-slate-400 mt-1 line-clamp-2">
+                          <p className="text-xs text-slate-400 line-clamp-2">
                             {project.subtitle}
+                          </p>
+                          <p className="text-xs text-slate-300 leading-relaxed line-clamp-3 pt-1">
+                            {project.description}
                           </p>
                         </div>
 
-                        <p className="text-xs text-slate-300 leading-relaxed line-clamp-3">
-                          {project.description}
-                        </p>
-
-                        {/* Tech Badges */}
-                        <div className="flex flex-wrap gap-1.5 pt-1">
+                        {/* Tech Badges - Issue 21: Standardized min-height container for consistent spacing across cards */}
+                        <div className="min-h-[52px] flex flex-wrap content-start gap-1.5 pt-2">
                           {project.techStack.slice(0, 4).map((tech) => (
                             <Badge
                               key={tech}
                               variant="outline"
-                              className="text-[10px] font-mono px-2 py-0.5 border text-slate-300"
+                              className="text-xs font-medium px-2.5 py-0.5 border text-slate-300 rounded-md"
                               style={{ borderColor: palette.borderDark }}
                             >
                               {tech}
@@ -794,7 +748,7 @@ export default function Portfolio() {
                           {project.techStack.length > 4 && (
                             <Badge
                               variant="outline"
-                              className="text-[10px] font-mono px-2 py-0.5 border text-slate-400"
+                              className="text-xs font-medium px-2 py-0.5 border text-slate-400 rounded-md"
                               style={{ borderColor: palette.borderDark }}
                             >
                               +{project.techStack.length - 4}
@@ -804,27 +758,29 @@ export default function Portfolio() {
                       </div>
                     </div>
 
-                    {/* Card Footer Actions */}
-                    <div className="p-6 pt-0 flex items-center justify-between border-t border-white/5 mt-4">
+                    {/* Card Footer Actions - Issue 20 & 30: mt-auto for perfect vertical alignment and labeled GitHub button */}
+                    <div className="p-6 pt-4 mt-auto flex items-center justify-between border-t border-white/5">
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => setSelectedProject(project)}
-                        className="text-xs font-semibold px-0 text-white hover:text-white flex items-center gap-1 group/btn"
+                        className="text-xs font-semibold px-0 text-white hover:text-white flex items-center gap-1.5 group/btn cursor-pointer"
                         style={{ color: palette.accent }}
                       >
                         Deep-Dive Details
                         <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                       </Button>
 
+                      {/* Issue 30: Added clear 'View Code' label to GitHub button */}
                       <a
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
-                        aria-label="View on GitHub"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs font-medium text-slate-300 hover:text-white transition-colors"
+                        aria-label={`View ${project.title} source code on GitHub`}
                       >
-                        <Github className="w-4 h-4" />
+                        <Github className="w-3.5 h-3.5" />
+                        <span>Source Code</span>
                       </a>
                     </div>
                   </SpotlightCard>
@@ -837,10 +793,10 @@ export default function Portfolio() {
         {/* RESUME SECTION */}
         <section
           id="resume"
-          className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto scroll-mt-20"
+          className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto scroll-mt-20"
         >
           <TiltCard maxTilt={5}>
-            <SpotlightCard className="p-8 sm:p-12 relative overflow-hidden">
+            <SpotlightCard className="p-8 sm:p-10 relative overflow-hidden">
               <BorderBeam
                 size={300}
                 duration={14}
@@ -848,38 +804,38 @@ export default function Portfolio() {
                 colorTo={palette.accent}
               />
 
-              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
-                <div className="space-y-3 max-w-xl">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-mono text-slate-300">
+              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+                <div className="space-y-2.5 max-w-lg">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-medium text-slate-300">
                     <CheckCircle2
                       className="w-3.5 h-3.5"
                       style={{ color: palette.accent }}
                     />
                     ATS-Optimized Curriculum Vitae
                   </div>
-                  <h3 className="text-3xl sm:text-4xl font-bold text-white">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white">
                     B Dhruv — Official Resume
                   </h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">
+                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
                     Detailed breakdown of university coursework, AI & Data Science
                     projects, core competencies in Python, Java, SQL, Prompt
                     Engineering, and verified academic credentials.
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-center gap-4 flex-shrink-0">
+                <div className="flex-shrink-0">
                   <Magnetic strength={0.3}>
                     <Button
                       asChild
                       size="lg"
-                      className="px-8 py-6 rounded-2xl text-base font-semibold shadow-2xl text-white"
+                      className="px-7 py-5 rounded-xl text-sm font-semibold shadow-xl text-white"
                       style={{
                         backgroundColor: palette.primary,
-                        boxShadow: `0 10px 30px -5px ${palette.glow}`,
+                        boxShadow: `0 8px 24px -4px ${palette.glow}`,
                       }}
                     >
                       <a href="/Resume.pdf" download>
-                        <Download className="w-5 h-5 mr-2" />
+                        <Download className="w-4 h-4 mr-2" />
                         Download PDF
                       </a>
                     </Button>
@@ -890,14 +846,14 @@ export default function Portfolio() {
           </TiltCard>
         </section>
 
-        {/* CONTACT SECTION */}
+        {/* CONTACT SECTION - Issue 12 & 25: Fixed heading hierarchy H2 -> H3 and consolidated 1-click email copy action */}
         <section
           id="contact"
-          className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+          className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
         >
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+          <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
             <span
-              className="text-xs font-mono uppercase tracking-widest px-3 py-1 rounded-full border inline-block"
+              className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
               style={{
                 backgroundColor: `${palette.primary}15`,
                 borderColor: palette.borderDark,
@@ -906,7 +862,7 @@ export default function Portfolio() {
             >
               Get In Touch
             </span>
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
               Let's Build Something Meaningful
             </h2>
             <p className="text-slate-400 text-sm sm:text-base">
@@ -916,20 +872,20 @@ export default function Portfolio() {
           </div>
 
           <div className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {/* Email Card */}
-            <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-4px]">
+            {/* Email Card - Issue 12: h3 instead of h4 */}
+            <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-2px]">
               <div
-                className="w-12 h-12 rounded-2xl mx-auto flex items-center justify-center border shadow-lg"
+                className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
                 style={{
                   backgroundColor: `${palette.primary}20`,
                   borderColor: `${palette.primary}44`,
                   color: palette.accent,
                 }}
               >
-                <Mail className="w-6 h-6" />
+                <Mail className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="font-bold text-white text-base">Direct Email</h4>
+                <h3 className="font-bold text-white text-base">Direct Email</h3>
                 <p className="text-xs text-slate-400 mt-1">Quickest response</p>
               </div>
               <a
@@ -942,19 +898,19 @@ export default function Portfolio() {
             </SpotlightCard>
 
             {/* LinkedIn Card */}
-            <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-4px]">
+            <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-2px]">
               <div
-                className="w-12 h-12 rounded-2xl mx-auto flex items-center justify-center border shadow-lg"
+                className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
                 style={{
                   backgroundColor: "rgba(59, 130, 246, 0.2)",
                   borderColor: "rgba(59, 130, 246, 0.4)",
                   color: "#60a5fa",
                 }}
               >
-                <Linkedin className="w-6 h-6" />
+                <Linkedin className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="font-bold text-white text-base">LinkedIn</h4>
+                <h3 className="font-bold text-white text-base">LinkedIn</h3>
                 <p className="text-xs text-slate-400 mt-1">Professional network</p>
               </div>
               <a
@@ -969,19 +925,19 @@ export default function Portfolio() {
             </SpotlightCard>
 
             {/* GitHub Card */}
-            <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-4px]">
+            <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-2px]">
               <div
-                className="w-12 h-12 rounded-2xl mx-auto flex items-center justify-center border shadow-lg"
+                className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
                 style={{
                   backgroundColor: "rgba(168, 85, 247, 0.2)",
                   borderColor: "rgba(168, 85, 247, 0.4)",
                   color: "#c084fc",
                 }}
               >
-                <Github className="w-6 h-6" />
+                <Github className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="font-bold text-white text-base">GitHub</h4>
+                <h3 className="font-bold text-white text-base">GitHub</h3>
                 <p className="text-xs text-slate-400 mt-1">Code repositories</p>
               </div>
               <a
@@ -995,22 +951,47 @@ export default function Portfolio() {
               </a>
             </SpotlightCard>
           </div>
+
+          {/* Issue 25: 1-Click Copy Email Action grouped cleanly into Contact section */}
+          <div className="flex justify-center pt-8">
+            <button
+              onClick={handleCopyEmail}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-mono text-slate-300 hover:text-white transition-all backdrop-blur-md cursor-pointer shadow-sm hover:bg-white/5"
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.03)",
+                borderColor: palette.borderDark,
+              }}
+              aria-label="Copy email address to clipboard"
+            >
+              {copiedEmail ? (
+                <>
+                  <Check className="w-4 h-4 text-emerald-400" />
+                  <span className="text-emerald-400 font-medium">Copied dhruvb324@gmail.com!</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4 text-slate-400" />
+                  <span>Click to copy email: dhruvb324@gmail.com</span>
+                </>
+              )}
+            </button>
+          </div>
         </section>
 
-        {/* FOOTER */}
+        {/* FOOTER - Issues 9 & 10: Standardized text sizes (12px min) */}
         <footer
-          className="border-t py-12 px-4 sm:px-6 lg:px-8 mt-12 pb-28 text-center text-xs text-slate-500 space-y-3"
+          className="border-t py-10 px-4 sm:px-6 lg:px-8 mt-12 pb-28 text-center text-xs text-slate-400 space-y-2.5"
           style={{ borderColor: palette.borderDark }}
         >
-          <p className="text-slate-400">
+          <p className="text-slate-300">
             Designed & Developed by{" "}
             <span className="text-white font-semibold">B Dhruv</span>.
           </p>
-          <p className="text-[11px] text-slate-500">
+          <p className="text-xs text-slate-400">
             Crafted with Next.js, Framer Motion, Motion Primitives, Haikei SVG
             Generators, Realtime Colors, Animaster Lib, Skiper UI, and Vengeance UI.
           </p>
-          <p className="text-[10px] text-slate-600 font-mono">
+          <p className="text-xs text-slate-400 font-mono">
             KLH University • Artificial Intelligence & Data Science • 2025–2026
           </p>
         </footer>

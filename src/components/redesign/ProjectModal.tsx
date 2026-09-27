@@ -52,7 +52,7 @@ export function ProjectModal({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ type: "spring", duration: 0.5, bounce: 0.2 }}
-          className="relative w-full max-w-3xl my-8 rounded-3xl border shadow-2xl overflow-hidden z-10 max-h-[90vh] flex flex-col"
+          className="relative w-full max-w-3xl my-8 rounded-2xl border shadow-2xl overflow-hidden z-10 max-h-[90vh] flex flex-col"
           style={{
             backgroundColor: palette.cardDark,
             borderColor: palette.borderDark,

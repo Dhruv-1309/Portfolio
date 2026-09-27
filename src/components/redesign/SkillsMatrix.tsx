@@ -10,10 +10,8 @@ import {
   Layers,
   Sparkles,
   GitBranch,
-  Terminal,
   Activity,
   Workflow,
-  CheckCircle,
 } from "lucide-react";
 import { usePortfolioTheme } from "./ThemeContext";
 import { SpotlightCard } from "./SpotlightCard";
@@ -130,24 +128,27 @@ export function SkillsMatrix() {
       : ALL_SKILLS.filter((s) => s.category === selectedCat);
 
   return (
-    <div className="space-y-8">
-      {/* Category Filter Pills (Vengeance UI Cyber Bar) */}
-      <div className="flex flex-wrap items-center justify-center gap-2">
+    /* Issue 17: Tighten container spacing so filter bar is grouped cleanly with skill cards */
+    <div className="space-y-6">
+      {/* Category Filter Pills (Issue 29: Increased horizontal gap from gap-2 to gap-3 sm:gap-4 to eliminate glow clutter) */}
+      <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4" role="tablist" aria-label="Skills filter">
         {CATEGORIES.map((cat) => {
           const isActive = selectedCat === cat.id;
           return (
             <button
               key={cat.id}
+              role="tab"
+              aria-selected={isActive}
               onClick={() => setSelectedCat(cat.id)}
-              className={`relative px-4 py-2 rounded-xl text-xs font-medium transition-all ${
+              className={`relative px-4 py-2 rounded-xl text-xs font-medium transition-all cursor-pointer ${
                 isActive
-                  ? "text-white shadow-lg"
-                  : "text-slate-400 hover:text-white hover:bg-white/5"
+                  ? "text-white shadow-md font-semibold"
+                  : "text-slate-300 hover:text-white hover:bg-white/5"
               }`}
               style={{
                 backgroundColor: isActive ? palette.primary : "rgba(255,255,255,0.03)",
                 border: `1px solid ${isActive ? palette.primary : palette.borderDark}`,
-                boxShadow: isActive ? `0 0 15px ${palette.glow}` : "none",
+                boxShadow: isActive ? `0 0 10px ${palette.glow}` : "none",
               }}
             >
               {cat.label}
@@ -159,7 +160,7 @@ export function SkillsMatrix() {
       {/* Skills Grid */}
       <motion.div
         layout
-        className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+        className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pt-2"
       >
         <AnimatePresence>
           {filteredSkills.map((skill) => {
@@ -173,9 +174,9 @@ export function SkillsMatrix() {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.25 }}
               >
-                <SpotlightCard className="p-5 h-full flex flex-col justify-between hover:translate-y-[-2px]">
+                <SpotlightCard className="p-6 h-full flex flex-col justify-between hover:translate-y-[-2px]">
                   <div>
-                    <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-start justify-between gap-3 mb-4">
                       <div
                         className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md flex-shrink-0"
                         style={{
@@ -186,8 +187,10 @@ export function SkillsMatrix() {
                       >
                         <Icon className="w-5 h-5" />
                       </div>
+
+                      {/* Issue 19: Replaced text-[10px] all-caps with legible text-xs title case */}
                       <span
-                        className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full border"
+                        className="text-xs font-medium px-3 py-1 rounded-full border"
                         style={{
                           backgroundColor: "rgba(255,255,255,0.04)",
                           borderColor: palette.borderDark,
@@ -198,16 +201,18 @@ export function SkillsMatrix() {
                       </span>
                     </div>
 
-                    <h4 className="text-base font-bold text-white mb-1">
+                    {/* Issue 11: Correct heading level H3 (previous heading was H2) */}
+                    <h3 className="text-lg font-bold text-white mb-2">
                       {skill.name}
-                    </h4>
-                    <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                    </h3>
+                    <p className="text-xs text-slate-300 leading-relaxed mb-6">
                       {skill.description}
                     </p>
                   </div>
 
                   <div>
-                    <div className="flex items-center justify-between text-xs mb-1.5 font-mono">
+                    {/* Issue 18: Generous vertical spacing before progress bar */}
+                    <div className="flex items-center justify-between text-xs mb-3 font-mono">
                       <span className="text-slate-400">{skill.experience}</span>
                       <span className="font-semibold text-slate-200">
                         {skill.level}%
