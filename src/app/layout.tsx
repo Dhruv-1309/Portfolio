@@ -3,10 +3,11 @@ import "./globals.css";
 import VisualEditsMessenger from "../visual-edits/VisualEditsMessenger";
 import ErrorReporter from "@/components/ErrorReporter";
 import Script from "next/script";
+import { ThemeProvider } from "@/components/redesign/ThemeContext";
 
 export const metadata: Metadata = {
-  title: "Portfolio - AI & Data Science Student",
-  description: "Portfolio of a B.Tech student specializing in Artificial Intelligence and Data Science at KLH University, Hyderabad",
+  title: "B Dhruv | AI & Data Science Portfolio",
+  description: "Portfolio of B Dhruv, second-year B.Tech student specializing in Artificial Intelligence and Data Science at KLH University, Hyderabad. CGPA: 9+",
   icons: {
     icon: "/next.svg",
     shortcut: "/next.svg",
@@ -21,20 +22,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className="antialiased">
-        <ErrorReporter />
-        <Script
-          src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts//route-messenger.js"
-          strategy="afterInteractive"
-          data-target-origin="*"
-          data-message-type="ROUTE_CHANGE"
-          data-include-search-params="true"
-          data-only-in-iframe="true"
-          data-debug="true"
-          data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
-        />
-        {children}
-        <VisualEditsMessenger />
+      <body className="antialiased bg-[#080c16] text-slate-100 selection:bg-indigo-500/30 selection:text-indigo-200">
+        <ThemeProvider>
+          <ErrorReporter />
+          <Script
+            src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts//route-messenger.js"
+            strategy="afterInteractive"
+            data-target-origin="*"
+            data-message-type="ROUTE_CHANGE"
+            data-include-search-params="true"
+            data-only-in-iframe="true"
+            data-debug="true"
+            data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
+          />
+          {children}
+          <VisualEditsMessenger />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,14 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Mail,
   Github,
@@ -21,1015 +15,1015 @@ import {
   ArrowRight,
   GraduationCap,
   Award,
-  TrendingDown,
   ExternalLink,
-  Home,
-  User,
-  FolderOpen,
-  MessageSquare,
   ChevronDown,
-  Menu,
-  X,
+  Layers,
+  Activity,
+  Terminal,
+  Copy,
+  Check,
+  FolderOpen,
+  ArrowUpRight,
+  User,
+  Star,
+  CheckCircle2,
+  Calendar,
+  Cpu,
 } from "lucide-react";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+
+// Redesign Modules
+import { usePortfolioTheme } from "@/components/redesign/ThemeContext";
+import { PaletteSwitcher } from "@/components/redesign/PaletteSwitcher";
+import {
+  HaikeiBackground,
+  HaikeiWaveDivider,
+} from "@/components/redesign/HaikeiBackground";
+import { SpotlightCard } from "@/components/redesign/SpotlightCard";
+import { TiltCard } from "@/components/redesign/TiltCard";
+import { BorderBeam } from "@/components/redesign/BorderBeam";
+import { Magnetic } from "@/components/redesign/MagneticButton";
+import { FloatingDock } from "@/components/redesign/FloatingDock";
+import { TechMarquee } from "@/components/redesign/TechMarquee";
+import { InteractiveTerminal } from "@/components/redesign/InteractiveTerminal";
+import {
+  ProjectModal,
+  ProjectData,
+} from "@/components/redesign/ProjectModal";
+import { SkillsMatrix } from "@/components/redesign/SkillsMatrix";
+import { TextMorph, StaggeredText } from "@/components/redesign/MotionText";
+
+const FEATURED_PROJECTS: ProjectData[] = [
+  {
+    id: "spending-tracker",
+    title: "Digital Spending Tracker",
+    subtitle: "Data-driven expense intelligence & predictive runway forecasting",
+    category: "AI & Data Science",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop",
+    description:
+      "A sophisticated expense intelligence system that leverages statistical models (Z-score anomaly detection) and predictive regression to forecast budget depletion and optimize spending habits.",
+    overview:
+      "Developed to solve the opacity in personal finances. Instead of basic spreadsheets, this system automatically cleans transactional feeds, models spending velocity, calculates standard deviations, and alerts users before anomalous expenses compromise monthly savings goals.",
+    features: [
+      {
+        title: "Statistical Anomaly Detection",
+        description: "Utilizes Z-score mathematical models to flag unusual transactions beyond standard deviation thresholds.",
+      },
+      {
+        title: "Predictive Balance Runway",
+        description: "Calculates precise depletion dates based on rolling consumption rates and fixed recurring liabilities.",
+      },
+      {
+        title: "Automated Categorization",
+        description: "Rule-based and heuristic classification algorithms for merchant mapping and spending breakdown.",
+      },
+      {
+        title: "Actionable Intelligence",
+        description: "Generates data-backed recommendations to optimize cash flow and curb avoidable expenditures.",
+      },
+    ],
+    metrics: [
+      { label: "Anomaly Accuracy", value: "94.2%" },
+      { label: "Data Engine", value: "Pandas/NumPy" },
+      { label: "Runway Error", value: "±2 Days" },
+    ],
+    techStack: [
+      "Python",
+      "Data Science",
+      "Statistical Analysis",
+      "Pandas",
+      "NumPy",
+      "Data Visualization",
+    ],
+    githubUrl: "https://github.com/Dhruv-1309",
+  },
+  {
+    id: "prompt-studio",
+    title: "AI Prompt Optimization Studio",
+    subtitle: "Systematic GenAI prompt benchmarking & token efficiency engine",
+    category: "Generative AI",
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=450&fit=crop",
+    description:
+      "A developer utility for designing, testing, and evaluating complex LLM prompts with token economy analysis and structured JSON Schema validation.",
+    overview:
+      "Prompt engineering is often treated as trial-and-error. This studio introduces formal prompt evaluation metrics, comparing zero-shot vs few-shot chain-of-thought efficiency to minimize hallucinations and API costs.",
+    features: [
+      {
+        title: "Few-Shot Prompt Formulator",
+        description: "Automated template expansion with dynamic dynamic few-shot context injection.",
+      },
+      {
+        title: "Token Cost Optimizer",
+        description: "Identifies semantic redundancies to reduce prompt token footprint by up to 28%.",
+      },
+      {
+        title: "Structured Schema Verifier",
+        description: "Ensures model outputs strictly adhere to target JSON schemas without deviation.",
+      },
+      {
+        title: "Benchmark Comparison",
+        description: "Side-by-side response quality scoring based on coherence and guideline adherence.",
+      },
+    ],
+    metrics: [
+      { label: "Token Savings", value: "~28%" },
+      { label: "Output Schema Pass", value: "99.1%" },
+      { label: "Latency Gain", value: "1.4x" },
+    ],
+    techStack: [
+      "Python",
+      "Prompt Engineering",
+      "LLM Workflows",
+      "JSON Schema",
+      "Evaluation Metrics",
+    ],
+    githubUrl: "https://github.com/Dhruv-1309",
+  },
+  {
+    id: "academic-analytics",
+    title: "Predictive Academic Milestone Model",
+    subtitle: "Supervised machine learning for performance forecasting",
+    category: "Machine Learning",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop",
+    description:
+      "An end-to-end machine learning pipeline that predicts examination outcomes and identifies critical academic milestones using historical educational datasets.",
+    overview:
+      "Built using Python and Scikit-Learn to uncover correlations between attendance patterns, continuous assessment milestones, and final semester performance to provide early proactive interventions.",
+    features: [
+      {
+        title: "Feature Importance Analysis",
+        description: "Reveals the highest predictive indicators for academic achievement across student cohorts.",
+      },
+      {
+        title: "Ensemble Classification",
+        description: "Combines Random Forest and Logistic Regression models for robust generalization.",
+      },
+      {
+        title: "Data Preprocessing Pipeline",
+        description: "Robust handling of missing values, standard scaling, and categorical encoding.",
+      },
+      {
+        title: "Interactive Visualizations",
+        description: "Heatmaps and ROC-AUC curve dashboards to interpret model decisions.",
+      },
+    ],
+    metrics: [
+      { label: "Model Accuracy", value: "88.6%" },
+      { label: "F1 Score", value: "0.87" },
+      { label: "Algorithms", value: "RF & Ridge" },
+    ],
+    techStack: [
+      "Python",
+      "Scikit-Learn",
+      "Pandas",
+      "NumPy",
+      "Matplotlib",
+      "Seaborn",
+    ],
+    githubUrl: "https://github.com/Dhruv-1309",
+  },
+];
 
 export default function Portfolio() {
-  const [scrolled, setScrolled] = useState(false);
-  const [isProjectExpanded, setIsProjectExpanded] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { palette } = usePortfolioTheme();
+  const [activeSection, setActiveSection] = useState<string>("home");
+  const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
+  // Track active section for floating dock
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      const sections = ["home", "about", "skills", "projects", "resume", "contact"];
+      const scrollPos = window.scrollY + 200;
+
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on resize to desktop
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsMobileMenuOpen(false);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("dhruvb324@gmail.com");
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
 
-  const skills = [
-    { name: "Python", icon: Code2, color: "from-blue-500 to-cyan-500" },
-    { name: "Core Java", icon: Code2, color: "from-orange-500 to-red-500" },
-    { name: "SQL", icon: Database, color: "from-indigo-500 to-purple-500" },
-    {
-      name: "Prompt Engineering",
-      icon: Brain,
-      color: "from-green-500 to-emerald-500",
-    },
-  ];
-
-  const navigationItems = [
-    { id: "home", label: "Home", icon: Home },
-    { id: "about", label: "About", icon: User },
-    { id: "projects", label: "Projects", icon: FolderOpen },
-    { id: "resume", label: "Resume", icon: Download },
-    { id: "contact", label: "Contact", icon: MessageSquare },
-  ];
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    // Close menu after a small delay to ensure scroll initiates
-    setTimeout(() => {
-      setIsMobileMenuOpen(false);
-    }, 100);
-  };
-
-  // Animation variants
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  };
-
-  const fadeIn = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
-  };
-
-  const scaleIn = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1 },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Navigation */}
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-background/95 backdrop-blur-xl border-b border-border/60 shadow-lg"
-            : "bg-background/80 backdrop-blur-xl border-b border-border/40"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
-          <div className="flex items-center justify-between">
-            <motion.h2
-              className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
-              B Dhruv
-            </motion.h2>
+    <div
+      className="min-h-screen text-slate-100 transition-colors duration-500 relative selection:bg-white/20"
+      style={{ backgroundColor: palette.bgDark }}
+    >
+      {/* Haikei Organic Background Art */}
+      <HaikeiBackground />
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-3">
-              {navigationItems.map((item, index) => (
-                <motion.button
-                  key={item.id}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * index, duration: 0.4 }}
-                  onClick={() => scrollToSection(item.id)}
-                  className="relative group px-4 py-2 rounded-xl overflow-hidden"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+      {/* Top Glass Header */}
+      <header
+        className="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl border-b transition-all duration-300"
+        style={{
+          backgroundColor: "rgba(8, 12, 22, 0.75)",
+          borderColor: palette.borderDark,
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          {/* Logo / Brand */}
+          <div className="flex items-center gap-3">
+            <Magnetic strength={0.2}>
+              <a
+                href="#home"
+                className="flex items-center gap-2 group cursor-pointer"
+              >
+                <div
+                  className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm tracking-wider shadow-lg border transition-transform group-hover:scale-105"
+                  style={{
+                    backgroundColor: `${palette.primary}20`,
+                    borderColor: palette.borderDark,
+                    color: palette.accent,
+                  }}
                 >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-violet-600/10 opacity-0 group-hover:opacity-100 transition-opacity"
-                    whileHover={{ scale: 1.1 }}
-                  />
-                  <div className="relative flex items-center gap-2">
-                    <motion.div
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <item.icon className="w-4 h-4 text-muted-foreground group-hover:text-blue-600 transition-colors" />
-                    </motion.div>
-                    <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                      {item.label}
-                    </span>
-                  </div>
-                  <motion.span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-violet-600 group-hover:w-full transition-all duration-300" />
-                </motion.button>
-              ))}
+                  BD
+                </div>
+                <div className="hidden sm:block">
+                  <span className="font-bold text-base tracking-tight text-white group-hover:text-slate-200">
+                    B Dhruv
+                  </span>
+                  <span className="block text-[10px] text-slate-400 font-mono">
+                    AI & Data Science
+                  </span>
+                </div>
+              </a>
+            </Magnetic>
+          </div>
+
+          {/* Quick Action Badges */}
+          <div className="flex items-center gap-3">
+            {/* Skiper UI Live Status Beacon */}
+            <div
+              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium backdrop-blur-md"
+              style={{
+                backgroundColor: "rgba(255,255,255,0.03)",
+                borderColor: palette.borderDark,
+              }}
+            >
+              <span className="relative flex h-2 w-2">
+                <span
+                  className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                  style={{ backgroundColor: palette.accent }}
+                />
+                <span
+                  className="relative inline-flex rounded-full h-2 w-2"
+                  style={{ backgroundColor: palette.accent }}
+                />
+              </span>
+              <span className="text-slate-300 text-[11px]">
+                Available for AI Internships
+              </span>
             </div>
 
-            {/* Mobile Menu Button */}
-            <motion.button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-accent transition-colors"
-              whileTap={{ scale: 0.95 }}
-              aria-label="Toggle menu"
-            >
-              <AnimatePresence mode="wait">
-                {isMobileMenuOpen ? (
-                  <motion.div
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <X className="w-6 h-6" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="menu"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Menu className="w-6 h-6" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
+            {/* Realtime Colors Theme Switcher */}
+            <PaletteSwitcher />
+
+            {/* Resume Button */}
+            <Magnetic strength={0.25}>
+              <Button
+                asChild
+                size="sm"
+                className="rounded-full text-xs font-semibold px-4 shadow-lg text-white"
+                style={{
+                  backgroundColor: palette.primary,
+                  boxShadow: `0 0 16px ${palette.glow}`,
+                }}
+              >
+                <a href="/Resume.pdf" download>
+                  <Download className="w-3.5 h-3.5 mr-1.5" />
+                  Resume
+                </a>
+              </Button>
+            </Magnetic>
           </div>
         </div>
+      </header>
 
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
+      {/* Main Content */}
+      <main className="relative z-10 pt-20">
+        {/* HERO SECTION */}
+        <section
+          id="home"
+          className="min-h-[90vh] flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-12 pb-16 relative overflow-hidden"
+        >
+          <div className="max-w-5xl mx-auto text-center space-y-8">
+            {/* Status Pill */}
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden border-t border-border/40 bg-background/95 backdrop-blur-xl overflow-hidden"
-            >
-              <div className="px-4 py-4 space-y-2">
-                {navigationItems.map((item, index) => (
-                  <motion.button
-                    key={item.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ delay: index * 0.1 }}
-                    onClick={() => scrollToSection(item.id)}
-                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-accent transition-colors text-left group"
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <item.icon className="w-5 h-5 text-muted-foreground group-hover:text-blue-600 transition-colors" />
-                    <span className="text-base font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                      {item.label}
-                    </span>
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.nav>
-
-      {/* Hero Section */}
-      <section
-        id="home"
-        className="pt-24 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6 relative overflow-hidden scroll-mt-20"
-      >
-        {/* Animated background gradient */}
-        <motion.div
-          className="absolute inset-0 opacity-30"
-          animate={{
-            background: [
-              "radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%)",
-              "radial-gradient(circle at 80% 50%, rgba(139, 92, 246, 0.3) 0%, transparent 50%)",
-              "radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%)",
-            ],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-        />
-
-        <div className="max-w-7xl mx-auto relative">
-          <div className="max-w-4xl mx-auto text-center space-y-6 sm:space-y-8">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-xs sm:text-sm font-medium"
-            >
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              >
-                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
-              </motion.div>
-              AI & Data Science Student
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-tight"
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border shadow-inner backdrop-blur-xl"
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.04)",
+                borderColor: palette.borderDark,
+              }}
             >
-              Hi, I'm{" "}
-              <motion.span
-                className="bg-gradient-to-r from-blue-600 via-violet-600 to-purple-600 bg-clip-text text-transparent inline-block"
-                animate={{
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+              <Sparkles
+                className="w-4 h-4 animate-spin"
+                style={{
+                  color: palette.accent,
+                  animationDuration: "8s",
                 }}
-                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-                style={{ backgroundSize: "200% 200%" }}
-              >
-                B Dhruv
-              </motion.span>
-            </motion.h1>
+              />
+              <span className="text-xs sm:text-sm font-medium text-slate-300">
+                KLH University, Hyderabad • B.Tech AI & Data Science
+              </span>
+            </motion.div>
 
+            {/* Main Headline with Motion Primitives Text Roll */}
+            <div className="space-y-4">
+              <motion.h1
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.15 }}
+                className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.08]"
+              >
+                Hi, I'm{" "}
+                <span
+                  className="bg-clip-text text-transparent bg-gradient-to-r"
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, #ffffff 20%, ${palette.primary} 70%, ${palette.accent} 100%)`,
+                  }}
+                >
+                  B Dhruv
+                </span>
+              </motion.h1>
+
+              <div className="text-xl sm:text-2xl md:text-3xl text-slate-300 font-medium flex items-center justify-center gap-2 flex-wrap min-h-[44px]">
+                <span className="text-slate-400">Specializing in</span>
+                <TextMorph
+                  words={[
+                    "Artificial Intelligence",
+                    "Data Science & Analytics",
+                    "Prompt Engineering",
+                    "Machine Learning Pipelines",
+                  ]}
+                  className="font-bold underline decoration-2 underline-offset-8"
+                  style={{
+                    color: palette.accent,
+                    textDecorationColor: palette.primary,
+                  } as any}
+                />
+              </div>
+            </div>
+
+            {/* Subtitle */}
             <motion.p
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-base sm:text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 sm:px-0"
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-sm sm:text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed"
             >
-              Second-year B.Tech student at KLH University, Hyderabad.
-              Passionate about building intelligent solutions through artificial
-              intelligence and data science.
+              Second-year undergraduate at KLH University maintaining a{" "}
+              <span className="font-semibold text-white">9.0+ CGPA</span>.
+              Architecting intelligent software by bridging statistical rigor with
+              modern full-stack engineering.
             </motion.p>
 
+            {/* Hero CTAs (Magnetic & Radiant) */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center pt-4 px-4 sm:px-0"
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex flex-wrap items-center justify-center gap-4 pt-2"
             >
-              <motion.div
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full sm:w-auto"
-              >
+              <Magnetic strength={0.3}>
                 <Button
-                  onClick={() => scrollToSection("projects")}
+                  onClick={() => scrollTo("projects")}
                   size="lg"
-                  className="w-full sm:w-auto relative overflow-hidden bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white shadow-2xl border-0 px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg font-semibold rounded-2xl group"
+                  className="relative group overflow-hidden px-8 py-6 rounded-2xl text-base font-semibold shadow-2xl text-white border-0 transition-transform active:scale-95"
+                  style={{
+                    backgroundColor: palette.primary,
+                    boxShadow: `0 10px 25px -5px ${palette.glow}`,
+                  }}
                 >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-violet-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity"
-                    initial={{ x: "-100%" }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.5 }}
-                  />
-                  <span className="relative flex items-center justify-center gap-3">
+                  <span className="relative z-10 flex items-center gap-2.5">
                     <FolderOpen className="w-5 h-5" />
-                    View My Work
-                    <motion.div
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      <ArrowRight className="w-5 h-5" />
-                    </motion.div>
+                    Explore Projects
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </span>
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{
+                      background: `linear-gradient(90deg, ${palette.primary}, ${palette.secondary})`,
+                    }}
+                  />
                 </Button>
-              </motion.div>
+              </Magnetic>
 
-              <motion.div
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full sm:w-auto"
-              >
+              <Magnetic strength={0.3}>
                 <Button
-                  onClick={() => scrollToSection("contact")}
-                  size="lg"
+                  onClick={() => scrollTo("contact")}
                   variant="outline"
-                  className="w-full sm:w-auto relative overflow-hidden border-2 border-blue-500/50 hover:border-blue-500 bg-background/50 backdrop-blur-xl hover:bg-blue-500/10 px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg font-semibold rounded-2xl group transition-all"
+                  size="lg"
+                  className="px-8 py-6 rounded-2xl text-base font-semibold border-2 transition-all hover:bg-white/5 active:scale-95"
+                  style={{
+                    borderColor: palette.borderDark,
+                    color: "#f8fafc",
+                    backgroundColor: "rgba(255,255,255,0.02)",
+                  }}
                 >
-                  <motion.div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-violet-600/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <span className="relative flex items-center justify-center gap-3">
-                    <MessageSquare className="w-5 h-5" />
-                    Get in Touch
-                    <motion.div
-                      className="opacity-0 group-hover:opacity-100 transition-opacity"
-                      animate={{ x: [0, 3, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      <ArrowRight className="w-5 h-5" />
-                    </motion.div>
-                  </span>
+                  <Mail className="w-5 h-5 mr-2" style={{ color: palette.accent }} />
+                  Let's Connect
                 </Button>
-              </motion.div>
+              </Magnetic>
             </motion.div>
 
-            {/* Social Links */}
+            {/* Social Icons & Email Quick Copy */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="flex items-center justify-center gap-3 sm:gap-4 pt-6 sm:pt-8"
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="flex flex-wrap items-center justify-center gap-3 pt-4"
             >
               {[
-                { href: "https://github.com/Dhruv-1309", icon: Github },
                 {
-                  href: "https://www.linkedin.com/in/dhruvb-tech",
-                  icon: Linkedin,
+                  href: "https://github.com/Dhruv-1309",
+                  label: "GitHub",
+                  icon: Github,
                 },
-                { href: "mailto:dhruvb324@gmail.com", icon: Mail },
-              ].map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.href}
-                  target={social.href.startsWith("http") ? "_blank" : undefined}
-                  rel={
-                    social.href.startsWith("http")
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-                  className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-muted hover:bg-accent flex items-center justify-center transition-all"
-                  whileHover={{
-                    scale: 1.2,
-                    rotate: 360,
-                    boxShadow: "0 0 20px rgba(59, 130, 246, 0.5)",
-                  }}
-                  whileTap={{ scale: 0.9 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <social.icon className="w-5 h-5" />
-                </motion.a>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section
-        id="about"
-        className="py-16 sm:py-24 px-4 sm:px-6 bg-muted/30 relative overflow-hidden scroll-mt-20"
-      >
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeInUp}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12 sm:mb-16"
-          >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
-              About Me
-            </h2>
-            <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto px-4">
-              Driven by curiosity and a passion for innovation in AI and data
-              science
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="grid lg:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto"
-          >
-            {/* Education Card */}
-            <motion.div variants={fadeInUp}>
-              <Card className="border-2 hover:border-blue-500/50 transition-all hover:shadow-xl group h-full">
-                <CardHeader className="space-y-4">
-                  <motion.div
-                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center shadow-lg"
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <GraduationCap className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-                  </motion.div>
-                  <div>
-                    <CardTitle className="text-2xl sm:text-3xl">
-                      Education
-                    </CardTitle>
-                    <CardDescription className="text-sm sm:text-base mt-2">
-                      Academic Journey
-                    </CardDescription>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <motion.div
-                    className="space-y-2"
-                    whileHover={{ x: 5 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <h3 className="font-bold text-lg sm:text-xl">
-                      B.Tech in AI & Data Science
-                    </h3>
-                    <p className="text-muted-foreground font-medium text-sm sm:text-base">
-                      KLH University, Hyderabad
-                    </p>
-                    <p className="text-xs sm:text-sm text-muted-foreground">
-                      Currently in Second Year
-                    </p>
-                  </motion.div>
-
-                  <motion.div
-                    className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 border border-green-200 dark:border-green-800"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <motion.div
-                      animate={{ rotate: [0, 15, -15, 0] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        repeatDelay: 3,
-                      }}
-                    >
-                      <Award className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                    </motion.div>
-                    <div>
-                      <p className="font-bold text-base sm:text-lg">CGPA: 9+</p>
-                      <p className="text-xs sm:text-sm text-muted-foreground">
-                        Maintaining excellent academic performance
-                      </p>
-                    </div>
-                  </motion.div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Skills Card */}
-            <motion.div variants={fadeInUp}>
-              <Card className="border-2 hover:border-violet-500/50 transition-all hover:shadow-xl group h-full">
-                <CardHeader className="space-y-4">
-                  <motion.div
-                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg"
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <Brain className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-                  </motion.div>
-                  <div>
-                    <CardTitle className="text-2xl sm:text-3xl">
-                      Technical Skills
-                    </CardTitle>
-                    <CardDescription className="text-sm sm:text-base mt-2">
-                      Core Competencies
-                    </CardDescription>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <motion.div
-                    className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4"
-                    variants={staggerContainer}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                  >
-                    {skills.map((skill, index) => (
-                      <motion.div
-                        key={skill.name}
-                        variants={fadeInUp}
-                        whileHover={{
-                          scale: 1.05,
-                          y: -5,
-                          boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
-                        }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                        className="group relative overflow-hidden p-3 sm:p-4 rounded-xl border-2 hover:border-transparent transition-all bg-card cursor-pointer"
-                      >
-                        <motion.div
-                          className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-10 transition-opacity`}
-                          initial={{ scale: 0 }}
-                          whileHover={{ scale: 1 }}
-                          transition={{ duration: 0.3 }}
-                        />
-                        <div className="relative flex items-center gap-3">
-                          <motion.div
-                            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br ${skill.color} flex items-center justify-center shadow-md`}
-                            whileHover={{ rotate: 360 }}
-                            transition={{ duration: 0.5 }}
-                          >
-                            <skill.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                          </motion.div>
-                          <span className="font-semibold text-sm sm:text-base">
-                            {skill.name}
-                          </span>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </motion.div>
-
-                  <p className="text-xs sm:text-sm text-muted-foreground italic border-l-2 border-violet-500 pl-4">
-                    Continuously learning and expanding my technical expertise
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section
-        id="projects"
-        className="py-16 sm:py-24 px-4 sm:px-6 scroll-mt-20"
-      >
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeInUp}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12 sm:mb-16"
-          >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
-              Featured Projects
-            </h2>
-            <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto px-4">
-              Showcasing practical applications of data science and programming
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="max-w-5xl mx-auto"
-          >
-            <motion.div
-              layout
-              onClick={() => setIsProjectExpanded(!isProjectExpanded)}
-              className="cursor-pointer"
-              whileHover={{ scale: isProjectExpanded ? 1 : 1.02 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Card
-                className={`border-2 hover:border-blue-500/50 transition-all hover:shadow-2xl group ${
-                  isProjectExpanded ? "" : "max-w-md mx-auto"
-                }`}
-              >
-                <CardHeader className="space-y-4 sm:space-y-6">
-                  <div className="flex items-start justify-between gap-4">
-                    <motion.div
-                      className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center shadow-lg flex-shrink-0"
-                      whileHover={{ rotate: 360, scale: 1.1 }}
-                      transition={{ duration: 0.6 }}
-                    >
-                      <TrendingDown className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-                    </motion.div>
-                    <motion.div
-                      animate={{ rotate: isProjectExpanded ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground" />
-                    </motion.div>
-                  </div>
-                  <div>
-                    <CardTitle
-                      className={`${isProjectExpanded ? "text-2xl sm:text-3xl md:text-4xl" : "text-xl sm:text-2xl"} mb-2 sm:mb-3 transition-all`}
-                    >
-                      Digital Spending Tracker
-                    </CardTitle>
-                    <CardDescription
-                      className={`${isProjectExpanded ? "text-base sm:text-lg" : "text-sm sm:text-base"} transition-all`}
-                    >
-                      An intelligent expense management system powered by data
-                      science
-                    </CardDescription>
-                  </div>
-                </CardHeader>
-
-                <AnimatePresence>
-                  {isProjectExpanded && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.5, ease: "easeInOut" }}
-                    >
-                      <CardContent className="space-y-6 sm:space-y-8">
-                        {/* Project Image */}
-                        <motion.div
-                          className="relative aspect-video rounded-2xl overflow-hidden border-2 shadow-lg"
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.2 }}
-                          whileHover={{ scale: 1.02 }}
-                        >
-                          <Image
-                            src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop"
-                            alt="Digital Spending Tracker"
-                            width={800}
-                            height={450}
-                            className="object-cover transition-transform duration-500 group-hover:scale-110"
-                          />
-                        </motion.div>
-
-                        {/* Project Description */}
-                        <motion.div
-                          className="space-y-2 sm:space-y-3"
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.3 }}
-                        >
-                          <h4 className="font-bold text-lg sm:text-xl">
-                            Project Overview
-                          </h4>
-                          <p className="text-muted-foreground leading-relaxed text-sm sm:text-base md:text-lg">
-                            A sophisticated expense tracking application that
-                            leverages data science techniques to provide users
-                            with intelligent insights into their spending
-                            patterns and financial health.
-                          </p>
-                        </motion.div>
-
-                        {/* Key Features */}
-                        <div className="space-y-3 sm:space-y-4">
-                          <h4 className="font-bold text-lg sm:text-xl">
-                            Key Features
-                          </h4>
-                          <motion.div
-                            className="grid gap-3 sm:gap-4"
-                            variants={staggerContainer}
-                            initial="hidden"
-                            animate="visible"
-                          >
-                            {[
-                              {
-                                title: "Expense Tracking",
-                                description:
-                                  "Comprehensive system to log and categorize daily expenses",
-                              },
-                              {
-                                title: "Statistical Analysis",
-                                description:
-                                  "Calculates average spending and z-scores to identify unusual spending patterns",
-                              },
-                              {
-                                title: "Predictive Analytics",
-                                description:
-                                  "Estimates when current balance will be depleted based on spending rate",
-                              },
-                              {
-                                title: "Smart Insights",
-                                description:
-                                  "Provides actionable recommendations to improve financial management",
-                              },
-                            ].map((feature, index) => (
-                              <motion.div
-                                key={index}
-                                className="flex gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-muted/50 border hover:border-blue-500/50 hover:bg-muted transition-all"
-                                variants={fadeInUp}
-                                whileHover={{
-                                  x: 10,
-                                  boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
-                                }}
-                                transition={{ type: "spring", stiffness: 300 }}
-                              >
-                                <motion.div
-                                  className="w-2 h-2 rounded-full bg-blue-600 mt-2 flex-shrink-0"
-                                  animate={{ scale: [1, 1.5, 1] }}
-                                  transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                    delay: index * 0.2,
-                                  }}
-                                />
-                                <div>
-                                  <p className="font-semibold text-sm sm:text-base md:text-lg mb-1">
-                                    {feature.title}
-                                  </p>
-                                  <p className="text-muted-foreground text-xs sm:text-sm md:text-base">
-                                    {feature.description}
-                                  </p>
-                                </div>
-                              </motion.div>
-                            ))}
-                          </motion.div>
-                        </div>
-
-                        {/* Tech Stack */}
-                        <motion.div
-                          className="space-y-3 sm:space-y-4"
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.4 }}
-                        >
-                          <h4 className="font-bold text-lg sm:text-xl">
-                            Technologies Used
-                          </h4>
-                          <div className="flex flex-wrap gap-2">
-                            {[
-                              "Python",
-                              "Data Science",
-                              "Statistical Analysis",
-                              "Pandas",
-                              "NumPy",
-                              "Data Visualization",
-                            ].map((tech, index) => (
-                              <motion.div
-                                key={tech}
-                                initial={{ opacity: 0, scale: 0 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 0.5 + index * 0.1 }}
-                                whileHover={{ scale: 1.1, y: -2 }}
-                              >
-                                <Badge
-                                  variant="secondary"
-                                  className="px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium border hover:bg-accent hover:border-blue-500 transition-all"
-                                >
-                                  {tech}
-                                </Badge>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </motion.div>
-                      </CardContent>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </Card>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Resume Section */}
-      <section
-        id="resume"
-        className="py-16 sm:py-24 px-4 sm:px-6 scroll-mt-20"
-      >
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeInUp}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-10 sm:mb-12"
-          >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
-              Resume
-            </h2>
-            <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto px-4">
-              Download a PDF copy of my resume for a quick overview of my
-              experience and skills.
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7 }}
-          >
-            <Card className="border-2 hover:border-blue-500/50 transition-all hover:shadow-xl">
-              <CardContent className="p-6 sm:p-8">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div>
-                    <h3 className="text-xl sm:text-2xl font-bold mb-1">
-                      B Dhruv - Resume
-                    </h3>
-                    <p className="text-sm sm:text-base text-muted-foreground">
-                      PDF format, optimized for recruiters and ATS
-                    </p>
-                  </div>
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white shadow-lg">
-                      <a href="/Resume.pdf" download>
-                        <Download className="w-5 h-5" />
-                        Download Resume
-                      </a>
-                    </Button>
-                  </motion.div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section
-        id="contact"
-        className="py-16 sm:py-24 px-4 sm:px-6 bg-muted/30 scroll-mt-20"
-      >
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeInUp}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12 sm:mb-16"
-          >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
-              Let's Connect
-            </h2>
-            <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto px-4">
-              Open to opportunities, collaborations, and conversations
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-          >
-            <Card className="border-2">
-              <CardContent className="p-6 sm:p-8">
-                <motion.div
-                  className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8"
-                  variants={staggerContainer}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                >
-                  {[
-                    {
-                      href: "mailto:dhruvb324@gmail.com",
-                      icon: Mail,
-                      gradient: "from-blue-500 to-cyan-600",
-                      borderColor: "blue-500",
-                      title: "Email",
-                      subtitle: "dhruvb324@gmail.com",
-                    },
-                    {
-                      href: "https://github.com/Dhruv-1309",
-                      icon: Github,
-                      gradient: "from-violet-500 to-purple-600",
-                      borderColor: "violet-500",
-                      title: "GitHub",
-                      subtitle: "@Dhruv-1309",
-                    },
-                    {
-                      href: "https://www.linkedin.com/in/dhruvb-tech",
-                      icon: Linkedin,
-                      gradient: "from-blue-500 to-blue-700",
-                      borderColor: "blue-500",
-                      title: "LinkedIn",
-                      subtitle: "dhruvb-tech",
-                    },
-                  ].map((contact, index) => (
-                    <motion.a
-                      key={index}
-                      href={contact.href}
-                      target={
-                        contact.href.startsWith("http") ? "_blank" : undefined
-                      }
-                      rel={
-                        contact.href.startsWith("http")
-                          ? "noopener noreferrer"
-                          : undefined
-                      }
-                      variants={fadeInUp}
-                      whileHover={{
-                        y: -8,
-                        boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                      className={`group flex items-center gap-3 sm:gap-4 p-4 sm:p-6 rounded-2xl border-2 hover:border-${contact.borderColor} bg-card hover:bg-accent/50 transition-all cursor-pointer`}
-                    >
-                      <motion.div
-                        className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${contact.gradient} flex items-center justify-center shadow-md`}
-                        whileHover={{ rotate: 360, scale: 1.1 }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        <contact.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-                      </motion.div>
-                      <div>
-                        <p className="font-bold text-base sm:text-lg">
-                          {contact.title}
-                        </p>
-                        <p className="text-xs sm:text-sm text-muted-foreground break-all">
-                          {contact.subtitle}
-                        </p>
-                      </div>
-                    </motion.a>
-                  ))}
-                </motion.div>
-
-                <motion.div
-                  className="text-center pt-6 sm:pt-8 border-t"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.6 }}
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Button
-                      size="lg"
-                      className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white shadow-lg hover:shadow-2xl transition-all"
-                    >
-                      <Mail className="w-5 h-5 mr-2" />
-                      Send a Message
-                    </Button>
-                  </motion.div>
-                </motion.div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <motion.footer
-        className="py-8 sm:py-12 px-4 sm:px-6 border-t"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
-            <p className="text-muted-foreground text-sm">
-              © 2025 B Dhruv. Built with Next.js and Tailwind CSS.
-            </p>
-            <div className="flex items-center gap-4 sm:gap-6 flex-wrap justify-center">
-              {[
-                { href: "https://github.com/Dhruv-1309", label: "GitHub" },
                 {
                   href: "https://www.linkedin.com/in/dhruvb-tech",
                   label: "LinkedIn",
+                  icon: Linkedin,
                 },
-                { href: "mailto:dhruvb324@gmail.com", label: "Contact" },
-              ].map((link, index) => (
-                <motion.a
-                  key={index}
-                  href={link.href}
-                  target={link.href.startsWith("http") ? "_blank" : undefined}
-                  rel={
-                    link.href.startsWith("http")
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-                  className="text-muted-foreground hover:text-foreground transition-colors relative text-sm"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                >
-                  {link.label}
-                  <motion.span
-                    className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-violet-600"
-                    whileHover={{ width: "100%" }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.a>
-              ))}
+                {
+                  href: "mailto:dhruvb324@gmail.com",
+                  label: "Email",
+                  icon: Mail,
+                },
+              ].map((social) => {
+                const Icon = social.icon;
+                return (
+                  <Magnetic key={social.label} strength={0.35}>
+                    <a
+                      href={social.href}
+                      target={social.href.startsWith("http") ? "_blank" : undefined}
+                      rel={social.href.startsWith("http") ? "noreferrer" : undefined}
+                      className="w-11 h-11 rounded-2xl border flex items-center justify-center text-slate-300 hover:text-white transition-all backdrop-blur-md hover:scale-110 shadow-sm"
+                      style={{
+                        backgroundColor: "rgba(255, 255, 255, 0.04)",
+                        borderColor: palette.borderDark,
+                      }}
+                      aria-label={social.label}
+                    >
+                      <Icon className="w-5 h-5" />
+                    </a>
+                  </Magnetic>
+                );
+              })}
+
+              {/* Copy Email Button */}
+              <button
+                onClick={handleCopyEmail}
+                className="flex items-center gap-2 px-3.5 py-2 rounded-2xl border text-xs font-mono text-slate-300 hover:text-white transition-all backdrop-blur-md"
+                style={{
+                  backgroundColor: "rgba(255, 255, 255, 0.03)",
+                  borderColor: palette.borderDark,
+                }}
+              >
+                {copiedEmail ? (
+                  <>
+                    <Check className="w-4 h-4 text-emerald-400" />
+                    <span className="text-emerald-400">Copied email!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5 text-slate-400" />
+                    <span>dhruvb324@gmail.com</span>
+                  </>
+                )}
+              </button>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Skiper UI Infinite Tech Marquee */}
+        <section className="relative z-10 border-y border-white/5 py-3 bg-black/20">
+          <TechMarquee />
+        </section>
+
+        {/* Haikei Organic Wave Divider */}
+        <HaikeiWaveDivider />
+
+        {/* ABOUT & ACADEMICS SECTION */}
+        <section
+          id="about"
+          className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+        >
+          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+            <span
+              className="text-xs font-mono uppercase tracking-widest px-3 py-1 rounded-full border inline-block"
+              style={{
+                backgroundColor: `${palette.primary}15`,
+                borderColor: palette.borderDark,
+                color: palette.accent,
+              }}
+            >
+              Academic Background & Vision
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+              Engineering Intelligent Systems
+            </h2>
+            <p className="text-slate-400 text-sm sm:text-base">
+              Committed to deep technical mastery in AI, mathematical reasoning,
+              and robust software development.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-12 gap-8 items-stretch">
+            {/* Education & Academic Excellence (TiltCard + Spotlight) */}
+            <div className="lg:col-span-6 space-y-6">
+              <TiltCard maxTilt={8}>
+                <SpotlightCard className="p-6 sm:p-8 h-full flex flex-col justify-between">
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <div
+                        className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-xl border"
+                        style={{
+                          backgroundColor: `${palette.primary}25`,
+                          borderColor: `${palette.primary}44`,
+                          color: palette.accent,
+                        }}
+                      >
+                        <GraduationCap className="w-7 h-7" />
+                      </div>
+
+                      <div
+                        className="flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold"
+                        style={{
+                          backgroundColor: "rgba(16, 185, 129, 0.1)",
+                          borderColor: "rgba(16, 185, 129, 0.3)",
+                          color: "#34d399",
+                        }}
+                      >
+                        <Award className="w-4 h-4" />
+                        <span>Academic Distinction</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <h3 className="text-2xl font-bold text-white tracking-tight">
+                        B.Tech in Artificial Intelligence & Data Science
+                      </h3>
+                      <p
+                        className="text-base font-semibold"
+                        style={{ color: palette.primary }}
+                      >
+                        KLH University, Hyderabad
+                      </p>
+                      <p className="text-sm text-slate-400">
+                        Second Year Undergraduate (2023 – 2027)
+                      </p>
+                    </div>
+
+                    <p className="text-slate-300 text-sm leading-relaxed">
+                      Rigorous coursework encompassing Data Structures & Algorithms,
+                      Object-Oriented Programming, Database Management Systems,
+                      Calculus, Linear Algebra, Probability & Statistics, and Applied
+                      Machine Learning.
+                    </p>
+
+                    {/* CGPA Badge HUD */}
+                    <div
+                      className="p-4 rounded-2xl border flex items-center justify-between"
+                      style={{
+                        backgroundColor: "rgba(255,255,255,0.02)",
+                        borderColor: palette.borderDark,
+                      }}
+                    >
+                      <div>
+                        <p className="text-xs text-slate-400 font-mono uppercase">
+                          Cumulative Grade Point Average
+                        </p>
+                        <p
+                          className="text-3xl font-extrabold tracking-tight mt-0.5"
+                          style={{ color: palette.accent }}
+                        >
+                          9.0+ CGPA
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-xs text-emerald-400 font-medium">
+                          Top Tier Percentile
+                        </span>
+                        <p className="text-[11px] text-slate-400">Consistent Record</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-6 border-t border-white/5 flex items-center gap-2 text-xs text-slate-400">
+                    <CheckCircle2
+                      className="w-4 h-4"
+                      style={{ color: palette.accent }}
+                    />
+                    <span>Active participant in university AI & tech workshops</span>
+                  </div>
+                </SpotlightCard>
+              </TiltCard>
+            </div>
+
+            {/* Interactive Vengeance UI Developer Terminal */}
+            <div className="lg:col-span-6 flex flex-col justify-center">
+              <InteractiveTerminal />
             </div>
           </div>
-        </div>
-      </motion.footer>
+        </section>
+
+        {/* SKILLS SECTION */}
+        <section
+          id="skills"
+          className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+        >
+          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+            <span
+              className="text-xs font-mono uppercase tracking-widest px-3 py-1 rounded-full border inline-block"
+              style={{
+                backgroundColor: `${palette.primary}15`,
+                borderColor: palette.borderDark,
+                color: palette.accent,
+              }}
+            >
+              Technical Core & Proficiency
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+              Skills Matrix & Competencies
+            </h2>
+            <p className="text-slate-400 text-sm sm:text-base">
+              Carefully honed toolset across artificial intelligence, systems
+              programming, data analytics, and modern software design.
+            </p>
+          </div>
+
+          <SkillsMatrix />
+        </section>
+
+        {/* Haikei Organic Wave Divider (Flipped) */}
+        <HaikeiWaveDivider flip={true} />
+
+        {/* FEATURED PROJECTS SECTION */}
+        <section
+          id="projects"
+          className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+        >
+          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+            <span
+              className="text-xs font-mono uppercase tracking-widest px-3 py-1 rounded-full border inline-block"
+              style={{
+                backgroundColor: `${palette.primary}15`,
+                borderColor: palette.borderDark,
+                color: palette.accent,
+              }}
+            >
+              Applied Engineering
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+              Featured Projects
+            </h2>
+            <p className="text-slate-400 text-sm sm:text-base">
+              Production-oriented solutions spanning statistical anomaly
+              detection, prompt evaluation frameworks, and machine learning models.
+            </p>
+          </div>
+
+          {/* Projects Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+            {FEATURED_PROJECTS.map((project, idx) => {
+              const isFlagship = idx === 0;
+
+              return (
+                <TiltCard key={project.id} maxTilt={6}>
+                  <SpotlightCard className="h-full flex flex-col justify-between overflow-hidden relative group">
+                    {/* Animaster Lib BorderBeam on Flagship */}
+                    {isFlagship && (
+                      <BorderBeam
+                        size={240}
+                        duration={10}
+                        colorFrom={palette.primary}
+                        colorTo={palette.accent}
+                      />
+                    )}
+
+                    <div>
+                      {/* Image Thumbnail */}
+                      <div className="relative aspect-video w-full overflow-hidden rounded-t-xl">
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+
+                        {isFlagship && (
+                          <div
+                            className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase border shadow-md flex items-center gap-1 text-white"
+                            style={{
+                              backgroundColor: palette.primary,
+                              borderColor: `${palette.primary}88`,
+                            }}
+                          >
+                            <Star className="w-3 h-3 fill-current" />
+                            Flagship Project
+                          </div>
+                        )}
+
+                        <span
+                          className="absolute bottom-3 right-3 text-[10px] font-mono px-2.5 py-1 rounded-full border backdrop-blur-md"
+                          style={{
+                            backgroundColor: "rgba(0,0,0,0.6)",
+                            borderColor: palette.borderDark,
+                            color: palette.accent,
+                          }}
+                        >
+                          {project.category}
+                        </span>
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-6 space-y-4">
+                        <div>
+                          <h3 className="text-xl font-bold text-white group-hover:text-slate-200 transition-colors">
+                            {project.title}
+                          </h3>
+                          <p className="text-xs text-slate-400 mt-1 line-clamp-2">
+                            {project.subtitle}
+                          </p>
+                        </div>
+
+                        <p className="text-xs text-slate-300 leading-relaxed line-clamp-3">
+                          {project.description}
+                        </p>
+
+                        {/* Tech Badges */}
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {project.techStack.slice(0, 4).map((tech) => (
+                            <Badge
+                              key={tech}
+                              variant="outline"
+                              className="text-[10px] font-mono px-2 py-0.5 border text-slate-300"
+                              style={{ borderColor: palette.borderDark }}
+                            >
+                              {tech}
+                            </Badge>
+                          ))}
+                          {project.techStack.length > 4 && (
+                            <Badge
+                              variant="outline"
+                              className="text-[10px] font-mono px-2 py-0.5 border text-slate-400"
+                              style={{ borderColor: palette.borderDark }}
+                            >
+                              +{project.techStack.length - 4}
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Card Footer Actions */}
+                    <div className="p-6 pt-0 flex items-center justify-between border-t border-white/5 mt-4">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setSelectedProject(project)}
+                        className="text-xs font-semibold px-0 text-white hover:text-white flex items-center gap-1 group/btn"
+                        style={{ color: palette.accent }}
+                      >
+                        Deep-Dive Details
+                        <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                      </Button>
+
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                        aria-label="View on GitHub"
+                      >
+                        <Github className="w-4 h-4" />
+                      </a>
+                    </div>
+                  </SpotlightCard>
+                </TiltCard>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* RESUME SECTION */}
+        <section
+          id="resume"
+          className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto scroll-mt-20"
+        >
+          <TiltCard maxTilt={5}>
+            <SpotlightCard className="p-8 sm:p-12 relative overflow-hidden">
+              <BorderBeam
+                size={300}
+                duration={14}
+                colorFrom={palette.primary}
+                colorTo={palette.accent}
+              />
+
+              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+                <div className="space-y-3 max-w-xl">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-mono text-slate-300">
+                    <CheckCircle2
+                      className="w-3.5 h-3.5"
+                      style={{ color: palette.accent }}
+                    />
+                    ATS-Optimized Curriculum Vitae
+                  </div>
+                  <h3 className="text-3xl sm:text-4xl font-bold text-white">
+                    B Dhruv — Official Resume
+                  </h3>
+                  <p className="text-slate-300 text-sm leading-relaxed">
+                    Detailed breakdown of university coursework, AI & Data Science
+                    projects, core competencies in Python, Java, SQL, Prompt
+                    Engineering, and verified academic credentials.
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-center gap-4 flex-shrink-0">
+                  <Magnetic strength={0.3}>
+                    <Button
+                      asChild
+                      size="lg"
+                      className="px-8 py-6 rounded-2xl text-base font-semibold shadow-2xl text-white"
+                      style={{
+                        backgroundColor: palette.primary,
+                        boxShadow: `0 10px 30px -5px ${palette.glow}`,
+                      }}
+                    >
+                      <a href="/Resume.pdf" download>
+                        <Download className="w-5 h-5 mr-2" />
+                        Download PDF
+                      </a>
+                    </Button>
+                  </Magnetic>
+                </div>
+              </div>
+            </SpotlightCard>
+          </TiltCard>
+        </section>
+
+        {/* CONTACT SECTION */}
+        <section
+          id="contact"
+          className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+        >
+          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+            <span
+              className="text-xs font-mono uppercase tracking-widest px-3 py-1 rounded-full border inline-block"
+              style={{
+                backgroundColor: `${palette.primary}15`,
+                borderColor: palette.borderDark,
+                color: palette.accent,
+              }}
+            >
+              Get In Touch
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+              Let's Build Something Meaningful
+            </h2>
+            <p className="text-slate-400 text-sm sm:text-base">
+              Actively seeking Summer AI/ML internships, research assistantships,
+              and collaborative engineering challenges.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {/* Email Card */}
+            <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-4px]">
+              <div
+                className="w-12 h-12 rounded-2xl mx-auto flex items-center justify-center border shadow-lg"
+                style={{
+                  backgroundColor: `${palette.primary}20`,
+                  borderColor: `${palette.primary}44`,
+                  color: palette.accent,
+                }}
+              >
+                <Mail className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="font-bold text-white text-base">Direct Email</h4>
+                <p className="text-xs text-slate-400 mt-1">Quickest response</p>
+              </div>
+              <a
+                href="mailto:dhruvb324@gmail.com"
+                className="inline-block text-xs font-semibold hover:underline break-all"
+                style={{ color: palette.primary }}
+              >
+                dhruvb324@gmail.com
+              </a>
+            </SpotlightCard>
+
+            {/* LinkedIn Card */}
+            <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-4px]">
+              <div
+                className="w-12 h-12 rounded-2xl mx-auto flex items-center justify-center border shadow-lg"
+                style={{
+                  backgroundColor: "rgba(59, 130, 246, 0.2)",
+                  borderColor: "rgba(59, 130, 246, 0.4)",
+                  color: "#60a5fa",
+                }}
+              >
+                <Linkedin className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="font-bold text-white text-base">LinkedIn</h4>
+                <p className="text-xs text-slate-400 mt-1">Professional network</p>
+              </div>
+              <a
+                href="https://www.linkedin.com/in/dhruvb-tech"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block text-xs font-semibold hover:underline"
+                style={{ color: palette.primary }}
+              >
+                in/dhruvb-tech
+              </a>
+            </SpotlightCard>
+
+            {/* GitHub Card */}
+            <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-4px]">
+              <div
+                className="w-12 h-12 rounded-2xl mx-auto flex items-center justify-center border shadow-lg"
+                style={{
+                  backgroundColor: "rgba(168, 85, 247, 0.2)",
+                  borderColor: "rgba(168, 85, 247, 0.4)",
+                  color: "#c084fc",
+                }}
+              >
+                <Github className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="font-bold text-white text-base">GitHub</h4>
+                <p className="text-xs text-slate-400 mt-1">Code repositories</p>
+              </div>
+              <a
+                href="https://github.com/Dhruv-1309"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block text-xs font-semibold hover:underline"
+                style={{ color: palette.primary }}
+              >
+                @Dhruv-1309
+              </a>
+            </SpotlightCard>
+          </div>
+        </section>
+
+        {/* FOOTER */}
+        <footer
+          className="border-t py-12 px-4 sm:px-6 lg:px-8 mt-12 pb-28 text-center text-xs text-slate-500 space-y-3"
+          style={{ borderColor: palette.borderDark }}
+        >
+          <p className="text-slate-400">
+            Designed & Developed by{" "}
+            <span className="text-white font-semibold">B Dhruv</span>.
+          </p>
+          <p className="text-[11px] text-slate-500">
+            Crafted with Next.js, Framer Motion, Motion Primitives, Haikei SVG
+            Generators, Realtime Colors, Animaster Lib, Skiper UI, and Vengeance UI.
+          </p>
+          <p className="text-[10px] text-slate-600 font-mono">
+            KLH University • Artificial Intelligence & Data Science • 2025–2026
+          </p>
+        </footer>
+      </main>
+
+      {/* Skiper UI Interactive Floating Navigation Dock */}
+      <FloatingDock activeSection={activeSection} />
+
+      {/* Vengeance UI Interactive Project Deep-Dive Modal */}
+      <ProjectModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
     </div>
   );
 }
