@@ -228,7 +228,14 @@ export default function Portfolio() {
       if (!ticking) {
         requestAnimationFrame(() => {
           const sections = ["home", "about", "skills", "projects", "resume", "contact"];
-          const scrollPos = window.scrollY + 200;
+          const scrollPos = window.scrollY + 160;
+
+          // If scrolled near document bottom, activate contact
+          if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60) {
+            setActiveSection("contact");
+            ticking = false;
+            return;
+          }
 
           for (const section of sections) {
             const el = document.getElementById(section);
@@ -578,14 +585,14 @@ export default function Portfolio() {
         {/* ABOUT & EDUCATION SECTION */}
         <section
           id="about"
-          className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+          className="pt-6 pb-12 sm:pt-8 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
         >
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
-            className="text-center max-w-3xl mx-auto mb-12 space-y-3"
+            className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-2.5"
           >
             <span
               className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
@@ -703,14 +710,14 @@ export default function Portfolio() {
         {/* SKILLS SECTION */}
         <section
           id="skills"
-          className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+          className="pt-6 pb-12 sm:pt-8 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
         >
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
-            className="text-center max-w-3xl mx-auto mb-8 space-y-3"
+            className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-2.5"
           >
             <span
               className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
@@ -739,14 +746,14 @@ export default function Portfolio() {
         {/* PROJECTS SECTION */}
         <section
           id="projects"
-          className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+          className="pt-6 pb-12 sm:pt-8 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
         >
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
-            className="text-center max-w-3xl mx-auto mb-12 space-y-3"
+            className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-2.5"
           >
             <span
               className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
@@ -912,7 +919,7 @@ export default function Portfolio() {
         {/* RESUME SECTION */}
         <section
           id="resume"
-          className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto scroll-mt-20"
+          className="pt-6 pb-12 sm:pt-8 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto scroll-mt-20"
         >
           <motion.div
             initial="hidden"
@@ -977,14 +984,14 @@ export default function Portfolio() {
         {/* CONTACT SECTION */}
         <section
           id="contact"
-          className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+          className="pt-6 pb-12 sm:pt-8 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
         >
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
-            className="text-center max-w-3xl mx-auto mb-12 space-y-3"
+            className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-2.5"
           >
             <span
               className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
@@ -1138,7 +1145,7 @@ export default function Portfolio() {
 
         {/* FOOTER */}
         <footer
-          className="border-t py-10 px-4 sm:px-6 lg:px-8 mt-12 pb-28 text-center text-xs text-slate-400 space-y-2.5"
+          className="border-t py-8 px-4 sm:px-6 lg:px-8 mt-8 pb-24 text-center text-xs text-slate-400 space-y-2"
           style={{ borderColor: palette.borderDark }}
         >
           <p className="text-slate-300">

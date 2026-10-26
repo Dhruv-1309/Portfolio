@@ -99,7 +99,7 @@ export function HaikeiWaveDivider({ flip = false }: { flip?: boolean }) {
       }`}
     >
       <svg
-        className="relative block w-full h-12 sm:h-20 opacity-30"
+        className="relative block w-full h-8 sm:h-12 opacity-25"
         data-name="Layer 1"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1200 120"
