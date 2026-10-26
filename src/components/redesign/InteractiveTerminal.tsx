@@ -78,12 +78,20 @@ export function InteractiveTerminal() {
   const { palette } = usePortfolioTheme();
   const [activeCmd, setActiveCmd] = useState<string>("dhruv.profile");
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleCopy = () => {
     navigator.clipboard.writeText("npx dhruv-portfolio");
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    copyTimeoutRef.current = setTimeout(() => setCopied(false), 2000);
   };
+
+  React.useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   return (
     <div

@@ -41,7 +41,7 @@ export function HaikeiBackground() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full blur-3xl opacity-25"
+        className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full blur-3xl opacity-25 will-change-transform"
         style={{
           background: `radial-gradient(circle, ${palette.primary} 0%, ${palette.secondary} 40%, transparent 70%)`,
         }}
@@ -60,7 +60,7 @@ export function HaikeiBackground() {
           ease: "easeInOut",
           delay: 2,
         }}
-        className="absolute -top-24 -right-32 w-[650px] h-[650px] rounded-full blur-3xl opacity-20"
+        className="absolute -top-24 -right-32 w-[650px] h-[650px] rounded-full blur-3xl opacity-20 will-change-transform"
         style={{
           background: `radial-gradient(circle, ${palette.secondary} 0%, ${palette.accent} 45%, transparent 70%)`,
         }}
@@ -77,7 +77,7 @@ export function HaikeiBackground() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full blur-[140px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full blur-[140px] pointer-events-none will-change-transform"
         style={{
           background: `radial-gradient(circle, ${palette.primary} 0%, ${palette.accent} 60%, transparent 80%)`,
         }}

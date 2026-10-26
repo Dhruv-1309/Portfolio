@@ -22,7 +22,7 @@ export function BorderBeam({
 }: BorderBeamProps) {
   const { palette } = usePortfolioTheme();
   const from = colorFrom || palette.primary;
-  const to = colorTo || palette.secondary;
+  const to = colorTo || palette.accent;
 
   return (
     <div

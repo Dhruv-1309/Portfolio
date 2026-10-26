@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   Mail,
   Github,
@@ -214,38 +214,55 @@ const VERIFIED_PROJECTS: ProjectData[] = [
 
 export default function Portfolio() {
   const { palette } = usePortfolioTheme();
+  const shouldReduceMotion = useReducedMotion();
   const [activeSection, setActiveSection] = useState<string>("home");
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const copyTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Track active section for floating dock
+  // Track active section for floating dock with throttled rAF
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ["home", "about", "skills", "projects", "resume", "contact"];
-      const scrollPos = window.scrollY + 200;
+    let ticking = false;
 
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(section);
-            break;
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const sections = ["home", "about", "skills", "projects", "resume", "contact"];
+          const scrollPos = window.scrollY + 200;
+
+          for (const section of sections) {
+            const el = document.getElementById(section);
+            if (el) {
+              const top = el.offsetTop;
+              const height = el.offsetHeight;
+              if (scrollPos >= top && scrollPos < top + height) {
+                setActiveSection(section);
+                break;
+              }
+            }
           }
-        }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText("dhruvb324@gmail.com");
     setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2000);
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    copyTimeoutRef.current = setTimeout(() => setCopiedEmail(false), 2000);
   };
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -273,7 +290,7 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo / Brand */}
           <div className="flex items-center gap-3">
-            <Magnetic strength={0.25}>
+            <Magnetic strength={0.12}>
               <a
                 href="#home"
                 className="flex items-center gap-2 group cursor-pointer"
@@ -333,12 +350,12 @@ export default function Portfolio() {
             <PaletteSwitcher />
 
             {/* Resume Button in Header */}
-            <Magnetic strength={0.25}>
+            <Magnetic strength={0.18}>
               <Button
                 asChild
                 variant="outline"
                 size="sm"
-                className="rounded-full text-xs font-medium px-3.5 py-1.5 text-slate-200 border border-white/15 bg-white/5 hover:bg-white/10 hover:text-white transition-all shadow-sm"
+                className="rounded-full text-xs font-medium px-3.5 py-1.5 text-slate-200 border border-white/15 bg-white/5 hover:bg-white/10 hover:border-white/30 hover:text-white transition-all shadow-sm"
               >
                 <motion.a
                   href="/Resume.pdf"
@@ -370,7 +387,9 @@ export default function Portfolio() {
           >
             {/* Status Pill with rotating sparkle */}
             <motion.div
-              variants={fadeInUp}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border shadow-inner backdrop-blur-xl"
               style={{
                 backgroundColor: "rgba(255, 255, 255, 0.04)",
@@ -389,7 +408,12 @@ export default function Portfolio() {
             </motion.div>
 
             {/* Name with Animated Shimmer Gradient */}
-            <motion.div variants={fadeInUp} className="space-y-3">
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="space-y-3"
+            >
               <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.1]">
                 Hi, I'm{" "}
                 <motion.span
@@ -434,7 +458,9 @@ export default function Portfolio() {
 
             {/* Professional Summary from Resume */}
             <motion.p
-              variants={fadeInUp}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
               className="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed pt-1"
             >
               Building web and Android application prototypes. Exploring software development
@@ -444,10 +470,12 @@ export default function Portfolio() {
 
             {/* Hero CTAs with Magnetic Spring & Hover Ripple */}
             <motion.div
-              variants={fadeInUp}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.35 }}
               className="flex flex-wrap items-center justify-center gap-4 pt-2"
             >
-              <Magnetic strength={0.3}>
+              <Magnetic strength={0.18}>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button
                     onClick={() => scrollTo("projects")}
@@ -478,7 +506,7 @@ export default function Portfolio() {
                 </motion.div>
               </Magnetic>
 
-              <Magnetic strength={0.3}>
+              <Magnetic strength={0.18}>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button
                     asChild
@@ -500,14 +528,14 @@ export default function Portfolio() {
 
               {/* Social Profiles with Magnetic Lift */}
               <div className="flex items-center gap-2 pl-2">
-                <Magnetic strength={0.35}>
+                <Magnetic strength={0.2}>
                   <motion.a
                     href="https://github.com/Dhruv-1309"
                     target="_blank"
                     rel="noreferrer"
                     whileHover={{ scale: 1.15, y: -2 }}
                     whileTap={{ scale: 0.9 }}
-                    className="w-10 h-10 rounded-xl border flex items-center justify-center text-slate-300 hover:text-white transition-colors backdrop-blur-md shadow-sm"
+                    className="w-10 h-10 rounded-xl border flex items-center justify-center text-slate-300 hover:text-white transition-all duration-150 backdrop-blur-md shadow-sm"
                     style={{
                       backgroundColor: "rgba(255, 255, 255, 0.04)",
                       borderColor: palette.borderDark,
@@ -517,14 +545,14 @@ export default function Portfolio() {
                     <Github className="w-4 h-4" />
                   </motion.a>
                 </Magnetic>
-                <Magnetic strength={0.35}>
+                <Magnetic strength={0.2}>
                   <motion.a
                     href="https://www.linkedin.com/in/dhruvb-tech"
                     target="_blank"
                     rel="noreferrer"
                     whileHover={{ scale: 1.15, y: -2 }}
                     whileTap={{ scale: 0.9 }}
-                    className="w-10 h-10 rounded-xl border flex items-center justify-center text-slate-300 hover:text-white transition-colors backdrop-blur-md shadow-sm"
+                    className="w-10 h-10 rounded-xl border flex items-center justify-center text-slate-300 hover:text-white transition-all duration-150 backdrop-blur-md shadow-sm"
                     style={{
                       backgroundColor: "rgba(255, 255, 255, 0.04)",
                       borderColor: palette.borderDark,
@@ -555,7 +583,7 @@ export default function Portfolio() {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
             className="text-center max-w-3xl mx-auto mb-12 space-y-3"
           >
@@ -599,14 +627,7 @@ export default function Portfolio() {
 
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
-                        <span
-                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-medium"
-                          style={{
-                            backgroundColor: "rgba(16, 185, 129, 0.1)",
-                            borderColor: "rgba(16, 185, 129, 0.3)",
-                            color: "#34d399",
-                          }}
-                        >
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-medium text-emerald-400 border-emerald-500/30 bg-emerald-500/10">
                           <Award className="w-3.5 h-3.5" />
                           <span>Academic Standing</span>
                         </span>
@@ -687,7 +708,7 @@ export default function Portfolio() {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
             className="text-center max-w-3xl mx-auto mb-8 space-y-3"
           >
@@ -723,7 +744,7 @@ export default function Portfolio() {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
             className="text-center max-w-3xl mx-auto mb-12 space-y-3"
           >
@@ -749,7 +770,7 @@ export default function Portfolio() {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch"
           >
@@ -776,7 +797,8 @@ export default function Portfolio() {
                             src={project.image}
                             alt={project.title}
                             fill
-                            className="object-cover transition-transform duration-700 group-hover:scale-108"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
 
@@ -895,7 +917,7 @@ export default function Portfolio() {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
           >
             <TiltCard maxTilt={5}>
@@ -927,7 +949,7 @@ export default function Portfolio() {
                   </div>
 
                   <div className="flex-shrink-0">
-                    <Magnetic strength={0.3}>
+                    <Magnetic strength={0.18}>
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                         <Button
                           asChild
@@ -960,7 +982,7 @@ export default function Portfolio() {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
             className="text-center max-w-3xl mx-auto mb-12 space-y-3"
           >
@@ -985,13 +1007,13 @@ export default function Portfolio() {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
             className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto"
           >
             {/* Email Card */}
             <motion.div variants={fadeInUp}>
-              <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-2px] transition-transform">
+              <SpotlightCard className="p-6 text-center space-y-4">
                 <motion.div
                   whileHover={{ rotate: 360, scale: 1.1 }}
                   transition={{ duration: 0.5 }}
@@ -1020,7 +1042,7 @@ export default function Portfolio() {
 
             {/* LinkedIn Card */}
             <motion.div variants={fadeInUp}>
-              <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-2px] transition-transform">
+              <SpotlightCard className="p-6 text-center space-y-4">
                 <motion.div
                   whileHover={{ rotate: 360, scale: 1.1 }}
                   transition={{ duration: 0.5 }}
@@ -1051,7 +1073,7 @@ export default function Portfolio() {
 
             {/* GitHub Card */}
             <motion.div variants={fadeInUp}>
-              <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-2px] transition-transform">
+              <SpotlightCard className="p-6 text-center space-y-4">
                 <motion.div
                   whileHover={{ rotate: 360, scale: 1.1 }}
                   transition={{ duration: 0.5 }}
