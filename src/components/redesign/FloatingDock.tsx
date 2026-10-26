@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import {
   motion,
   useMotionValue,
@@ -107,6 +107,51 @@ function DockIcon({
 export function FloatingDock({ activeSection }: { activeSection: string }) {
   const mouseX = useMotionValue(Infinity);
   const { palette } = usePortfolioTheme();
+  const [isVisible, setIsVisible] = useState(true);
+  const [isDockHovered, setIsDockHovered] = useState(false);
+  const [isDockFocused, setIsDockFocused] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const resetTimer = useCallback(() => {
+    setIsVisible(true);
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = setTimeout(() => {
+      setIsVisible(false);
+    }, 2800);
+  }, []);
+
+  useEffect(() => {
+    // If the dock itself is hovered or keyboard-focused, keep it visible without hiding
+    if (isDockHovered || isDockFocused) {
+      setIsVisible(true);
+      if (timerRef.current) clearTimeout(timerRef.current);
+      return;
+    }
+
+    // Start initial countdown on mount
+    resetTimer();
+
+    const handleActivity = () => {
+      resetTimer();
+    };
+
+    window.addEventListener("mousemove", handleActivity, { passive: true });
+    window.addEventListener("scroll", handleActivity, { passive: true });
+    window.addEventListener("touchstart", handleActivity, { passive: true });
+    window.addEventListener("touchmove", handleActivity, { passive: true });
+    window.addEventListener("keydown", handleActivity, { passive: true });
+
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      window.removeEventListener("mousemove", handleActivity);
+      window.removeEventListener("scroll", handleActivity);
+      window.removeEventListener("touchstart", handleActivity);
+      window.removeEventListener("touchmove", handleActivity);
+      window.removeEventListener("keydown", handleActivity);
+    };
+  }, [isDockHovered, isDockFocused, resetTimer]);
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -118,15 +163,36 @@ export function FloatingDock({ activeSection }: { activeSection: string }) {
   return (
     <nav
       aria-label="Quick Page Navigation Dock"
-      className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 px-2 max-w-full"
+      className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 px-2 max-w-full pointer-events-none"
     >
       <motion.div
         initial={{ y: 80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: "spring", damping: 20, stiffness: 200, delay: 0.3 }}
+        animate={{
+          y: isVisible ? 0 : 80,
+          opacity: isVisible ? 1 : 0,
+          scale: isVisible ? 1 : 0.96,
+        }}
+        transition={{
+          type: "spring",
+          damping: 24,
+          stiffness: 260,
+          mass: 0.7,
+        }}
+        onMouseEnter={() => setIsDockHovered(true)}
+        onMouseLeave={() => {
+          setIsDockHovered(false);
+          mouseX.set(Infinity);
+        }}
+        onFocus={() => setIsDockFocused(true)}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget)) {
+            setIsDockFocused(false);
+          }
+        }}
         onMouseMove={(e) => mouseX.set(e.pageX)}
-        onMouseLeave={() => mouseX.set(Infinity)}
-        className="flex items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-2xl border shadow-2xl backdrop-blur-2xl"
+        className={`flex items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-2xl border shadow-2xl backdrop-blur-2xl transition-shadow ${
+          isVisible ? "pointer-events-auto" : "pointer-events-none"
+        }`}
         style={{
           backgroundColor: "rgba(10, 15, 29, 0.9)",
           borderColor: palette.borderDark,
