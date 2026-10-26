@@ -6,8 +6,8 @@ import Script from "next/script";
 import { ThemeProvider } from "@/components/redesign/ThemeContext";
 
 export const metadata: Metadata = {
-  title: "B Dhruv | AI & Data Science Portfolio",
-  description: "Portfolio of B Dhruv, second-year B.Tech student specializing in Artificial Intelligence and Data Science at KLH University, Hyderabad. CGPA: 9+",
+  title: "Dhruv B | Software Development Engineer Intern Candidate",
+  description: "Portfolio of Dhruv B, B.Tech student in Artificial Intelligence and Data Science at KL University (CGPA: 9.58 / 10.0). Java, Python, Spring Boot, React, Kotlin, Data Structures & Algorithms.",
   icons: {
     icon: "/next.svg",
     shortcut: "/next.svg",

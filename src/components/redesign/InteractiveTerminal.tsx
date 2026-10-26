@@ -9,53 +9,67 @@ const COMMAND_MAP: Record<string, React.ReactNode> = {
   "dhruv.profile": (
     <div className="space-y-1 text-slate-300 text-xs sm:text-sm">
       <p className="text-emerald-400">✓ Student Profile Initialized</p>
-      <p>Name: <span className="text-white font-semibold">B Dhruv</span></p>
-      <p>Institution: <span className="text-cyan-400">KLH University, Hyderabad</span></p>
-      <p>Major: <span className="text-indigo-400">B.Tech in Artificial Intelligence & Data Science</span></p>
-      <p>Academic Standing: <span className="text-amber-400 font-bold">CGPA: 9.0+</span> (Distinction / Top Tier)</p>
-      <p>Current Year: <span className="text-slate-400">2nd Year</span></p>
+      <p>Name: <span className="text-white font-semibold">Dhruv B</span></p>
+      <p>Role: <span className="text-cyan-400">Software Development Engineer Intern Candidate</span></p>
+      <p>University: <span className="text-indigo-400">KL University (Hyderabad, India)</span></p>
+      <p>Degree: <span className="text-slate-200">B.Tech in Artificial Intelligence & Data Science</span></p>
+      <p>Graduation: <span className="text-slate-400">Class of 2028 (2024 – Expected 2028)</span></p>
+      <p>Academic Standing: <span className="text-amber-400 font-bold">CGPA: 9.58 / 10.0</span></p>
     </div>
   ),
   "dhruv.skills": (
-    <div className="space-y-1 text-slate-300 text-xs sm:text-sm">
-      <p className="text-emerald-400">✓ Loaded Core Tech Stack (10 modules)</p>
+    <div className="space-y-1.5 text-slate-300 text-xs sm:text-sm">
+      <p className="text-emerald-400">✓ Verified Technical Skills (Resume-Aligned)</p>
       <p>
-        <span className="text-indigo-400 font-medium">Languages:</span> Python, Core Java, SQL, TypeScript/JavaScript
+        <span className="text-indigo-400 font-medium">Languages:</span> Java, Python, JavaScript (ES6+), C (Fundamentals)
       </p>
       <p>
-        <span className="text-cyan-400 font-medium">AI / ML:</span> Prompt Engineering, LLM Workflows, Predictive Modeling, Scikit-Learn
+        <span className="text-cyan-400 font-medium">CS Fundamentals:</span> Data Structures & Algorithms, Object-Oriented Programming (OOP)
       </p>
       <p>
-        <span className="text-emerald-400 font-medium">Data Science:</span> Pandas, NumPy, Statistical Z-Score Analysis, Matplotlib
+        <span className="text-emerald-400 font-medium">Backend & Databases:</span> Spring Boot, REST APIs, PostgreSQL, Firebase, Cloud Firestore
       </p>
       <p>
-        <span className="text-violet-400 font-medium">DevOps & Tools:</span> Git, GitHub, Linux Shell, Next.js, Tailwind CSS
+        <span className="text-violet-400 font-medium">Web:</span> React, TypeScript, HTML5, CSS3
       </p>
+      <p>
+        <span className="text-amber-400 font-medium">Android:</span> Kotlin, Android Development
+      </p>
+      <p>
+        <span className="text-slate-400 font-medium">Tools:</span> Git, GitHub, VS Code
+      </p>
+    </div>
+  ),
+  "dhruv.projects": (
+    <div className="space-y-2 text-slate-300 text-xs sm:text-sm">
+      <p className="text-emerald-400">✓ 3 Verified Academic Projects</p>
+      <div>
+        <p className="text-white font-medium">1. DSA Tracker — Problem Practice Web App</p>
+        <p className="text-slate-400">
+          React (Vite + TypeScript), Spring Boot REST API, PostgreSQL, JWT Authentication. Attempt-logging with spaced repetition revisit queues.
+        </p>
+      </div>
+      <div>
+        <p className="text-white font-medium">2. CP Contest Tracker (CodeCountdown) — Android App</p>
+        <p className="text-slate-400">
+          Kotlin, MVVM, Retrofit 2, Coroutines, Material Design 3. Tracks contests from Codeforces, LeetCode, CodeChef, and AtCoder with AlarmManager reminders.
+        </p>
+      </div>
+      <div>
+        <p className="text-white font-medium">3. Digital Spending Tracker — Web App</p>
+        <p className="text-slate-400">
+          JavaScript (ES6+), Firebase Auth, Cloud Firestore, Chart.js. Category anomaly detection using Z-score threshold of 2, Excel export.
+        </p>
+      </div>
     </div>
   ),
   "dhruv.contact": (
     <div className="space-y-1 text-slate-300 text-xs sm:text-sm">
-      <p className="text-emerald-400">✓ Active Contact Channels</p>
+      <p className="text-emerald-400">✓ Direct Contact Details</p>
       <p>Email: <a href="mailto:dhruvb324@gmail.com" className="text-cyan-400 hover:underline">dhruvb324@gmail.com</a></p>
+      <p>Phone: <span className="text-slate-300">+91-9933260140</span></p>
       <p>LinkedIn: <a href="https://www.linkedin.com/in/dhruvb-tech" target="_blank" rel="noreferrer" className="text-indigo-400 hover:underline">linkedin.com/in/dhruvb-tech</a></p>
       <p>GitHub: <a href="https://github.com/Dhruv-1309" target="_blank" rel="noreferrer" className="text-violet-400 hover:underline">github.com/Dhruv-1309</a></p>
-    </div>
-  ),
-  "dhruv.projects": (
-    <div className="space-y-1 text-slate-300 text-xs sm:text-sm">
-      <p className="text-emerald-400">✓ 3 Production Repositories Discovered</p>
-      <p className="text-white font-medium">1. Digital Spending Tracker</p>
-      <p className="text-slate-400">
-        &gt; Anomaly detection (Z-scores), depletion runway modeling, Pandas/NumPy engine
-      </p>
-      <p className="text-white font-medium mt-1">2. AI Prompt Optimization & Eval Studio</p>
-      <p className="text-slate-400">
-        &gt; GenAI prompt benchmarking, token economy analysis, heuristic scoring
-      </p>
-      <p className="text-white font-medium mt-1">3. Predictive Academic Performance Classifier</p>
-      <p className="text-slate-400">
-        &gt; Supervised regression & classification for student milestone forecasting
-      </p>
     </div>
   ),
 };
@@ -79,7 +93,7 @@ export function InteractiveTerminal() {
         borderColor: palette.borderDark,
       }}
     >
-      {/* Vengeance UI Cyber Terminal Header */}
+      {/* Header */}
       <div
         className="flex items-center justify-between px-5 py-3.5 border-b"
         style={{
@@ -93,11 +107,10 @@ export function InteractiveTerminal() {
           <div className="w-3 h-3 rounded-full bg-emerald-500/80 border border-emerald-600" />
           <span className="ml-2 text-slate-300 text-xs flex items-center gap-2 font-sans font-medium">
             <Terminal className="w-4 h-4 text-slate-400" />
-            dhruv@klh-university: ~
+            dhruv@kl-university: ~
           </span>
         </div>
 
-        {/* Issue 28: Generous padding and clear button affordance */}
         <button
           onClick={handleCopy}
           className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/10 text-xs text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 transition-colors shadow-sm"
@@ -118,7 +131,7 @@ export function InteractiveTerminal() {
         </button>
       </div>
 
-      {/* Terminal Command Quick Pills - Issue 15, 22, 27: Clear interactive button affordance, generous gap */}
+      {/* Quick Pills */}
       <div className="flex items-center gap-2.5 px-4 py-3 overflow-x-auto border-b border-white/5 bg-black/20">
         <span className="text-slate-400 text-xs font-mono font-semibold mr-1 flex-shrink-0">
           EXEC:
@@ -160,7 +173,7 @@ export function InteractiveTerminal() {
       {/* Terminal Body */}
       <div className="p-5 min-h-[220px] space-y-3 leading-relaxed">
         <div className="flex items-center gap-2 text-slate-400 text-xs">
-          <span className="text-emerald-400">dhruv@ai-workstation</span>
+          <span className="text-emerald-400">dhruv@sde-workstation</span>
           <span>:</span>
           <span className="text-cyan-400">~/portfolio</span>
           <span>$</span>
@@ -186,18 +199,18 @@ export function InteractiveTerminal() {
         </AnimatePresence>
       </div>
 
-      {/* Issue 8: Standardized body text size (12px min) */}
+      {/* Footer */}
       <div
         className="px-5 py-2.5 flex items-center justify-between text-xs text-slate-400 border-t font-sans"
         style={{ borderColor: palette.borderDark }}
       >
-        <span>Status: System Operational</span>
+        <span>Status: SDE Intern Candidate</span>
         <span className="flex items-center gap-2">
           <span
             className="w-2 h-2 rounded-full animate-ping"
             style={{ backgroundColor: palette.primary }}
           />
-          Available for Internships
+          Open for SDE Internships
         </span>
       </div>
     </div>

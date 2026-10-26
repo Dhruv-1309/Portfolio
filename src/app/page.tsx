@@ -18,6 +18,8 @@ import {
   ArrowUpRight,
   Star,
   CheckCircle2,
+  Phone,
+  FileText,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -42,134 +44,149 @@ import {
   ProjectData,
 } from "@/components/redesign/ProjectModal";
 import { SkillsMatrix } from "@/components/redesign/SkillsMatrix";
-import { TextMorph } from "@/components/redesign/MotionText";
 
-const FEATURED_PROJECTS: ProjectData[] = [
+// Priority 1.1 — Exactly 3 verified projects from resume
+const VERIFIED_PROJECTS: ProjectData[] = [
+  {
+    id: "dsa-tracker",
+    title: "DSA Tracker",
+    subtitle: "Problem Practice & Revision Scheduling Web App",
+    category: "Full-Stack Web",
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=450&fit=crop",
+    description:
+      "A web app to organize and track DSA practice problems by topic, log attempt details, and schedule revisits.",
+    overview:
+      "Built with a React (Vite + TypeScript) frontend and a Spring Boot REST API backend using PostgreSQL, implementing JWT-based authentication and user-specific data access. Features a spaced-repetition revisit queue and an approval-based friend sharing system.",
+    features: [
+      {
+        title: "Attempt-Logging Architecture",
+        description:
+          "Records thinking ability, coding ability, time/space complexity, and confidence score per problem attempt.",
+      },
+      {
+        title: "Revisit Queue System",
+        description:
+          "Problem status is auto-derived from the latest attempt, driving a structured spaced-repetition queue based on stored next-review dates.",
+      },
+      {
+        title: "Secure JWT Authentication",
+        description:
+          "Stateless token-based authentication with Spring Security and role-guarded user-specific database scoping.",
+      },
+      {
+        title: "Friend-Sharing & Heatmap",
+        description:
+          "Approval-based permission model allowing peer users read-only access to full problem logs, approach notes, and contribution activity heatmaps.",
+      },
+    ],
+    metrics: [
+      { label: "Frontend", value: "React + TS" },
+      { label: "Backend API", value: "Spring Boot" },
+      { label: "Database", value: "PostgreSQL" },
+    ],
+    techStack: [
+      "React",
+      "TypeScript",
+      "Spring Boot",
+      "PostgreSQL",
+      "JWT",
+      "Vite",
+      "REST APIs",
+    ],
+    githubUrl: "https://github.com/Dhruv-1309",
+  },
+  {
+    id: "cp-tracker",
+    title: "CP Contest Tracker (CodeCountdown)",
+    subtitle: "Contest Aggregator & Reminder Android App",
+    category: "Android Application",
+    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=450&fit=crop",
+    description:
+      "An Android app that pulls upcoming competitive programming contests from Codeforces, LeetCode, CodeChef, and AtCoder and sends local reminders.",
+    overview:
+      "Developed in Kotlin using MVVM and Repository Pattern, integrating the CLIST API (v4) via Retrofit 2 and Kotlin Coroutines to display live and upcoming contests with custom filtering and reliable background alarm notifications.",
+    features: [
+      {
+        title: "Live Contest Synchronization",
+        description:
+          "Integrates CLIST API (v4) with Retrofit 2 and Kotlin Coroutines for asynchronous, non-blocking contest ingestion.",
+      },
+      {
+        title: "Day & Platform Filtering",
+        description:
+          "Scrollable day-selector and multi-choice platform filter chips styled with Material Design 3, backed by LiveData state observation.",
+      },
+      {
+        title: "Local Notification Reminders",
+        description:
+          "Schedules exact alerts via AlarmManager and NotificationCompat, paired with a BootReceiver to persist reminders across device reboots.",
+      },
+      {
+        title: "Preference Persistence",
+        description:
+          "Caches user theme choices and selected contest platform filters locally using SharedPreferences.",
+      },
+    ],
+    metrics: [
+      { label: "Language", value: "Kotlin" },
+      { label: "Architecture", value: "MVVM" },
+      { label: "UI System", value: "Material 3" },
+    ],
+    techStack: [
+      "Kotlin",
+      "Android",
+      "MVVM",
+      "Retrofit 2",
+      "Coroutines",
+      "Material Design 3",
+      "AlarmManager",
+    ],
+    githubUrl: "https://github.com/Dhruv-1309",
+  },
   {
     id: "spending-tracker",
     title: "Digital Spending Tracker",
-    subtitle: "Data-driven expense intelligence & predictive runway forecasting",
-    category: "AI & Data Science",
+    subtitle: "Personal Finance & Statistical Anomaly Web App",
+    category: "Web Application",
     image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop",
     description:
-      "A sophisticated expense intelligence system that leverages statistical models (Z-score anomaly detection) and predictive regression to forecast budget depletion and optimize spending habits.",
+      "A browser-based personal finance tracker with category charts, Z-score anomaly detection, and Excel export.",
     overview:
-      "Developed to solve the opacity in personal finances. Instead of basic spreadsheets, this system automatically cleans transactional feeds, models spending velocity, calculates standard deviations, and alerts users before anomalous expenses compromise monthly savings goals.",
+      "Built with HTML5, CSS3, JavaScript (ES6+), and Firebase to deliver real-time personal expense management. Features category-level spending anomaly detection using mathematical Z-scores and visual trend breakdown.",
     features: [
       {
-        title: "Statistical Anomaly Detection",
-        description: "Utilizes Z-score mathematical models to flag unusual transactions beyond standard deviation thresholds.",
+        title: "Z-Score Anomaly Detection",
+        description:
+          "Calculates historical category mean and standard deviation, flagging transactions that exceed a Z-score threshold of 2.",
       },
       {
-        title: "Predictive Balance Runway",
-        description: "Calculates precise depletion dates based on rolling consumption rates and fixed recurring liabilities.",
+        title: "Firebase Cloud Sync",
+        description:
+          "Secured multi-device transaction history and custom category creation powered by Firebase Authentication and Cloud Firestore.",
       },
       {
-        title: "Automated Categorization",
-        description: "Rule-based and heuristic classification algorithms for merchant mapping and spending breakdown.",
+        title: "Interactive Chart.js Dashboard",
+        description:
+          "Visualizes spending distribution by category, timeline progression, and day-of-week consumption patterns.",
       },
       {
-        title: "Actionable Intelligence",
-        description: "Generates data-backed recommendations to optimize cash flow and curb avoidable expenditures.",
+        title: "Excel Data Export",
+        description:
+          "One-click complete transaction history download formatted for spreadsheet analysis and record keeping.",
       },
     ],
     metrics: [
-      { label: "Anomaly Accuracy", value: "94.2%" },
-      { label: "Data Engine", value: "Pandas/NumPy" },
-      { label: "Runway Error", value: "±2 Days" },
+      { label: "Anomaly Filter", value: "Z-Score ≥ 2" },
+      { label: "Cloud Store", value: "Firestore" },
+      { label: "Visuals", value: "Chart.js" },
     ],
     techStack: [
-      "Python",
-      "Data Science",
-      "Statistical Analysis",
-      "Pandas",
-      "NumPy",
-      "Data Visualization",
-    ],
-    githubUrl: "https://github.com/Dhruv-1309",
-  },
-  {
-    id: "prompt-studio",
-    title: "AI Prompt Optimization Studio",
-    subtitle: "Systematic GenAI prompt benchmarking & token efficiency engine",
-    category: "Generative AI",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=450&fit=crop",
-    description:
-      "A developer utility for designing, testing, and evaluating complex LLM prompts with token economy analysis and structured JSON Schema validation.",
-    overview:
-      "Prompt engineering is often treated as trial-and-error. This studio introduces formal prompt evaluation metrics, comparing zero-shot vs few-shot chain-of-thought efficiency to minimize hallucinations and API costs.",
-    features: [
-      {
-        title: "Few-Shot Prompt Formulator",
-        description: "Automated template expansion with dynamic dynamic few-shot context injection.",
-      },
-      {
-        title: "Token Cost Optimizer",
-        description: "Identifies semantic redundancies to reduce prompt token footprint by up to 28%.",
-      },
-      {
-        title: "Structured Schema Verifier",
-        description: "Ensures model outputs strictly adhere to target JSON schemas without deviation.",
-      },
-      {
-        title: "Benchmark Comparison",
-        description: "Side-by-side response quality scoring based on coherence and guideline adherence.",
-      },
-    ],
-    metrics: [
-      { label: "Token Savings", value: "~28%" },
-      { label: "Output Schema Pass", value: "99.1%" },
-      { label: "Latency Gain", value: "1.4x" },
-    ],
-    techStack: [
-      "Python",
-      "Prompt Engineering",
-      "LLM Workflows",
-      "JSON Schema",
-      "Evaluation Metrics",
-    ],
-    githubUrl: "https://github.com/Dhruv-1309",
-  },
-  {
-    id: "academic-analytics",
-    title: "Predictive Academic Milestone Model",
-    subtitle: "Supervised machine learning for performance forecasting",
-    category: "Machine Learning",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop",
-    description:
-      "An end-to-end machine learning pipeline that predicts examination outcomes and identifies critical academic milestones using historical educational datasets.",
-    overview:
-      "Built using Python and Scikit-Learn to uncover correlations between attendance patterns, continuous assessment milestones, and final semester performance to provide early proactive interventions.",
-    features: [
-      {
-        title: "Feature Importance Analysis",
-        description: "Reveals the highest predictive indicators for academic achievement across student cohorts.",
-      },
-      {
-        title: "Ensemble Classification",
-        description: "Combines Random Forest and Logistic Regression models for robust generalization.",
-      },
-      {
-        title: "Data Preprocessing Pipeline",
-        description: "Robust handling of missing values, standard scaling, and categorical encoding.",
-      },
-      {
-        title: "Interactive Visualizations",
-        description: "Heatmaps and ROC-AUC curve dashboards to interpret model decisions.",
-      },
-    ],
-    metrics: [
-      { label: "Model Accuracy", value: "88.6%" },
-      { label: "F1 Score", value: "0.87" },
-      { label: "Algorithms", value: "RF & Ridge" },
-    ],
-    techStack: [
-      "Python",
-      "Scikit-Learn",
-      "Pandas",
-      "NumPy",
-      "Matplotlib",
-      "Seaborn",
+      "JavaScript (ES6+)",
+      "HTML5",
+      "CSS3",
+      "Firebase",
+      "Cloud Firestore",
+      "Chart.js",
     ],
     githubUrl: "https://github.com/Dhruv-1309",
   },
@@ -222,7 +239,7 @@ export default function Portfolio() {
       className="min-h-screen text-slate-100 transition-colors duration-500 relative selection:bg-white/20"
       style={{ backgroundColor: palette.bgDark }}
     >
-      {/* Haikei Organic Background Art */}
+      {/* Haikei Background */}
       <HaikeiBackground />
 
       {/* Top Glass Header */}
@@ -240,7 +257,7 @@ export default function Portfolio() {
               <a
                 href="#home"
                 className="flex items-center gap-2 group cursor-pointer"
-                aria-label="Home - B Dhruv Portfolio"
+                aria-label="Home - Dhruv B Portfolio"
               >
                 <div
                   className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs tracking-wider shadow-lg border transition-transform group-hover:scale-105"
@@ -250,14 +267,14 @@ export default function Portfolio() {
                     color: palette.accent,
                   }}
                 >
-                  BD
+                  DB
                 </div>
-                <div className="hidden sm:block">
+                <div>
                   <span className="font-bold text-sm tracking-tight text-white group-hover:text-slate-200">
-                    B Dhruv
+                    Dhruv B
                   </span>
                   <span className="block text-xs text-slate-400 font-mono">
-                    AI & Data Science
+                    Software Engineer in Training
                   </span>
                 </div>
               </a>
@@ -266,7 +283,7 @@ export default function Portfolio() {
 
           {/* Quick Action Badges */}
           <div className="flex items-center gap-3">
-            {/* Issue 5: Standardized text-xs (12px min) */}
+            {/* Status Beacon */}
             <div
               className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium backdrop-blur-md"
               style={{
@@ -285,14 +302,14 @@ export default function Portfolio() {
                 />
               </span>
               <span className="text-slate-300 text-xs">
-                Available for AI Internships
+                Open for SDE Internships
               </span>
             </div>
 
             {/* Realtime Colors Theme Switcher */}
             <PaletteSwitcher />
 
-            {/* Issue 24: Header Resume button uses subtle outlined secondary styling, keeping Explore Projects as primary CTA */}
+            {/* Resume Button in Header */}
             <Magnetic strength={0.25}>
               <Button
                 asChild
@@ -300,9 +317,9 @@ export default function Portfolio() {
                 size="sm"
                 className="rounded-full text-xs font-medium px-3.5 py-1.5 text-slate-200 border border-white/15 bg-white/5 hover:bg-white/10 hover:text-white transition-all shadow-sm"
               >
-                <a href="/Resume.pdf" download>
+                <a href="/Resume.pdf" download="Dhruv_B_Resume.pdf">
                   <Download className="w-3.5 h-3.5 mr-1.5" />
-                  Resume
+                  Resume (PDF)
                 </a>
               </Button>
             </Magnetic>
@@ -312,7 +329,7 @@ export default function Portfolio() {
 
       {/* Main Content */}
       <main className="relative z-10 pt-20">
-        {/* HERO SECTION - Issues 13 & 25: Streamlined interactive density, clear visual hierarchy */}
+        {/* HERO SECTION — Priority 1.3 & Priority 3.1: Aligned exactly with resume */}
         <section
           id="home"
           className="min-h-[85vh] flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-10 pb-16 relative overflow-hidden"
@@ -330,19 +347,16 @@ export default function Portfolio() {
               }}
             >
               <Sparkles
-                className="w-4 h-4 animate-spin"
-                style={{
-                  color: palette.accent,
-                  animationDuration: "8s",
-                }}
+                className="w-4 h-4"
+                style={{ color: palette.accent }}
               />
               <span className="text-xs sm:text-sm font-medium text-slate-300">
-                KLH University, Hyderabad • B.Tech AI & Data Science
+                KL University • B.Tech in Artificial Intelligence & Data Science • CGPA: 9.58 / 10.0
               </span>
             </motion.div>
 
-            {/* Main Headline */}
-            <div className="space-y-4">
+            {/* Name & SDE Headline */}
+            <div className="space-y-3">
               <motion.h1
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -356,43 +370,37 @@ export default function Portfolio() {
                     backgroundImage: `linear-gradient(135deg, #ffffff 20%, ${palette.primary} 70%, ${palette.accent} 100%)`,
                   }}
                 >
-                  B Dhruv
+                  Dhruv B
                 </span>
               </motion.h1>
 
-              {/* Issue 14: Clear, cohesive specialization headline with animated dynamic role */}
-              <div className="text-lg sm:text-2xl text-slate-300 font-medium flex items-center justify-center gap-2 flex-wrap min-h-[40px]">
-                <span className="text-slate-400">Specializing in</span>
-                <TextMorph
-                  words={[
-                    "Artificial Intelligence",
-                    "Data Science & Analytics",
-                    "Prompt Engineering",
-                    "Machine Learning Pipelines",
-                  ]}
-                  className="font-bold underline decoration-2 underline-offset-8"
-                  style={{
-                    color: palette.accent,
-                    textDecorationColor: palette.primary,
-                  }}
-                />
-              </div>
+              {/* Priority 1.3 Headline: SDE Intern Candidate */}
+              <p
+                className="text-lg sm:text-2xl font-semibold tracking-tight"
+                style={{ color: palette.accent }}
+              >
+                Software Engineer in Training | Java · Python · Full-Stack
+              </p>
+
+              {/* Priority 3.1 Subtext: Degree, University, Graduation Year, CGPA */}
+              <p className="text-sm sm:text-base text-slate-300 font-medium max-w-2xl mx-auto">
+                B.Tech in AI & Data Science @ KL University • Class of 2028 • <span className="text-white font-bold">CGPA: 9.58 / 10.0</span>
+              </p>
             </div>
 
-            {/* Subtitle */}
+            {/* Professional Summary from Resume */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed"
+              className="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed pt-1"
             >
-              Second-year undergraduate at KLH University maintaining a{" "}
-              <span className="font-semibold text-white">9.0+ CGPA</span>.
-              Architecting intelligent software by bridging statistical rigor with
-              modern full-stack engineering.
+              Building web and Android application prototypes. Exploring software development
+              with Java, Python, REST APIs, databases, and frontend technologies. Focused on
+              strengthening implementation, testing, and problem-solving through hands-on projects.
             </motion.p>
 
-            {/* Hero CTAs (Issue 13 & 25: Clear primary vs secondary CTA + clean social handles) */}
+            {/* Hero CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -425,7 +433,7 @@ export default function Portfolio() {
 
               <Magnetic strength={0.25}>
                 <Button
-                  onClick={() => scrollTo("contact")}
+                  asChild
                   variant="outline"
                   size="lg"
                   className="px-8 py-5 rounded-xl text-sm font-semibold border transition-all hover:bg-white/5 active:scale-95 text-slate-200"
@@ -434,12 +442,14 @@ export default function Portfolio() {
                     backgroundColor: "rgba(255,255,255,0.02)",
                   }}
                 >
-                  <Mail className="w-4 h-4 mr-2" style={{ color: palette.accent }} />
-                  Let's Connect
+                  <a href="/Resume.pdf" download="Dhruv_B_Resume.pdf">
+                    <Download className="w-4 h-4 mr-2" style={{ color: palette.accent }} />
+                    Download Resume (PDF)
+                  </a>
                 </Button>
               </Magnetic>
 
-              {/* Connected Profiles (GitHub & LinkedIn) */}
+              {/* Profiles */}
               <div className="flex items-center gap-2 pl-2">
                 <Magnetic strength={0.3}>
                   <a
@@ -477,20 +487,19 @@ export default function Portfolio() {
         </section>
 
         {/* Skiper UI Infinite Tech Marquee */}
-        <section className="relative z-10 border-y border-white/5 py-3 bg-black/20" aria-label="Core Technology Ribbon">
+        <section className="relative z-10 border-y border-white/5 py-2 bg-black/20" aria-label="Core Technology Ribbon">
           <TechMarquee />
         </section>
 
         {/* Haikei Organic Wave Divider */}
         <HaikeiWaveDivider />
 
-        {/* ABOUT & ACADEMICS SECTION */}
+        {/* ABOUT & EDUCATION SECTION — Priority 1.2 & Priority 3.2 */}
         <section
           id="about"
           className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
         >
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-            {/* Issue 6: Replaced 28-char all-caps with readable title case */}
             <span
               className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
               style={{
@@ -499,14 +508,14 @@ export default function Portfolio() {
                 color: palette.accent,
               }}
             >
-              Academic Background & Vision
+              Academic Background & Education
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-              Engineering Intelligent Systems
+              Education & Engineering Foundation
             </h2>
             <p className="text-slate-400 text-sm sm:text-base">
-              Committed to deep technical mastery in AI, mathematical reasoning,
-              and robust software development.
+              Dedicated student at KL University focused on data structures, algorithms,
+              backend architectures, and mobile prototypes.
             </p>
           </div>
 
@@ -526,7 +535,6 @@ export default function Portfolio() {
                       <GraduationCap className="w-6 h-6" />
                     </div>
 
-                    {/* Issue 16: Positioned Academic Distinction badge right beside the degree title for clear grouping */}
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <span
@@ -538,31 +546,30 @@ export default function Portfolio() {
                           }}
                         >
                           <Award className="w-3.5 h-3.5" />
-                          <span>Academic Distinction</span>
+                          <span>Academic Standing</span>
                         </span>
                       </div>
                       <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                        B.Tech in Artificial Intelligence & Data Science
+                        Bachelor of Technology – Artificial Intelligence & Data Science
                       </h3>
                       <p
                         className="text-sm font-semibold"
                         style={{ color: palette.primary }}
                       >
-                        KLH University, Hyderabad
+                        KL University, Hyderabad, Telangana, India
                       </p>
                       <p className="text-xs text-slate-400">
-                        Second Year Undergraduate (2023 – 2027)
+                        2024 – Expected 2028 (Undergraduate)
                       </p>
                     </div>
 
                     <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                      Rigorous coursework encompassing Data Structures & Algorithms,
-                      Object-Oriented Programming, Database Management Systems,
-                      Calculus, Linear Algebra, Probability & Statistics, and Applied
-                      Machine Learning.
+                      Solid foundation in Data Structures & Algorithms, Object-Oriented Programming (OOP),
+                      Database Management Systems, and Software Development. Project experience spanning
+                      Java, Python, Spring Boot, React, and Android development with Kotlin.
                     </p>
 
-                    {/* CGPA Badge HUD - Issue 7: Replaced 30-char all-caps with sentence case */}
+                    {/* Exact CGPA: 9.58 / 10.0 */}
                     <div
                       className="p-4 rounded-xl border flex items-center justify-between"
                       style={{
@@ -578,14 +585,14 @@ export default function Portfolio() {
                           className="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5"
                           style={{ color: palette.accent }}
                         >
-                          9.0+ CGPA
+                          9.58 / 10.0
                         </p>
                       </div>
                       <div className="text-right">
                         <span className="text-xs text-emerald-400 font-medium">
-                          Top Tier Percentile
+                          Verified Official Grade
                         </span>
-                        <p className="text-xs text-slate-400">Consistent Record</p>
+                        <p className="text-xs text-slate-400">KL University</p>
                       </div>
                     </div>
                   </div>
@@ -595,20 +602,20 @@ export default function Portfolio() {
                       className="w-4 h-4"
                       style={{ color: palette.accent }}
                     />
-                    <span>Active participant in university AI & tech workshops</span>
+                    <span>AI Fluency for Students – Certificate of Completion (2024)</span>
                   </div>
                 </SpotlightCard>
               </TiltCard>
             </div>
 
-            {/* Interactive Vengeance UI Developer Terminal */}
+            {/* Interactive Terminal */}
             <div className="lg:col-span-6 flex flex-col justify-center">
               <InteractiveTerminal />
             </div>
           </div>
         </section>
 
-        {/* SKILLS SECTION - Issue 17: Reduced mb-14 to mb-8 for tight visual grouping with filter pills */}
+        {/* SKILLS SECTION — Priority 2: Exactly matches resume, no ratings/bars */}
         <section
           id="skills"
           className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
@@ -622,14 +629,13 @@ export default function Portfolio() {
                 color: palette.accent,
               }}
             >
-              Technical Core & Proficiency
+              Technical Core
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-              Skills Matrix & Competencies
+              Technical Skills
             </h2>
             <p className="text-slate-400 text-sm sm:text-base">
-              Carefully honed toolset across artificial intelligence, systems
-              programming, data analytics, and modern software design.
+              Verified skills directly supported by project implementations and coursework.
             </p>
           </div>
 
@@ -639,7 +645,7 @@ export default function Portfolio() {
         {/* Haikei Organic Wave Divider (Flipped) */}
         <HaikeiWaveDivider flip={true} />
 
-        {/* FEATURED PROJECTS SECTION */}
+        {/* PROJECTS SECTION — Priority 1.1 & Priority 3.3: 3 verified projects */}
         <section
           id="projects"
           className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
@@ -653,27 +659,24 @@ export default function Portfolio() {
                 color: palette.accent,
               }}
             >
-              Applied Engineering
+              Verified Academic Projects
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
               Featured Projects
             </h2>
             <p className="text-slate-400 text-sm sm:text-base">
-              Production-oriented solutions spanning statistical anomaly
-              detection, prompt evaluation frameworks, and machine learning models.
+              Concrete implementations built, tested, and verifiable in an engineering interview.
             </p>
           </div>
 
           {/* Projects Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
-            {FEATURED_PROJECTS.map((project, idx) => {
+            {VERIFIED_PROJECTS.map((project, idx) => {
               const isFlagship = idx === 0;
 
               return (
                 <TiltCard key={project.id} maxTilt={6}>
-                  {/* Issue 20 & 23: Flexbox card column layout with pinned footer */}
                   <SpotlightCard className="h-full flex flex-col justify-between overflow-hidden relative group">
-                    {/* Animaster Lib BorderBeam on Flagship */}
                     {isFlagship && (
                       <BorderBeam
                         size={240}
@@ -719,13 +722,13 @@ export default function Portfolio() {
                         </span>
                       </div>
 
-                      {/* Content - Issue 23: Tightened vertical spacing to keep description, tags, and actions cohesive */}
+                      {/* Content */}
                       <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                         <div className="space-y-2">
                           <h3 className="text-lg font-bold text-white group-hover:text-slate-200 transition-colors">
                             {project.title}
                           </h3>
-                          <p className="text-xs text-slate-400 line-clamp-2">
+                          <p className="text-xs text-slate-400 font-medium">
                             {project.subtitle}
                           </p>
                           <p className="text-xs text-slate-300 leading-relaxed line-clamp-3 pt-1">
@@ -733,7 +736,7 @@ export default function Portfolio() {
                           </p>
                         </div>
 
-                        {/* Tech Badges - Issue 21: Standardized min-height container for consistent spacing across cards */}
+                        {/* Tech Badges */}
                         <div className="min-h-[52px] flex flex-wrap content-start gap-1.5 pt-2">
                           {project.techStack.slice(0, 4).map((tech) => (
                             <Badge
@@ -758,7 +761,7 @@ export default function Portfolio() {
                       </div>
                     </div>
 
-                    {/* Card Footer Actions - Issue 20 & 30: mt-auto for perfect vertical alignment and labeled GitHub button */}
+                    {/* Card Footer Actions */}
                     <div className="p-6 pt-4 mt-auto flex items-center justify-between border-t border-white/5">
                       <Button
                         variant="ghost"
@@ -771,7 +774,6 @@ export default function Portfolio() {
                         <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                       </Button>
 
-                      {/* Issue 30: Added clear 'View Code' label to GitHub button */}
                       <a
                         href={project.githubUrl}
                         target="_blank"
@@ -790,7 +792,7 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* RESUME SECTION */}
+        {/* RESUME SECTION — Priority 3.4 */}
         <section
           id="resume"
           className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto scroll-mt-20"
@@ -811,15 +813,15 @@ export default function Portfolio() {
                       className="w-3.5 h-3.5"
                       style={{ color: palette.accent }}
                     />
-                    ATS-Optimized Curriculum Vitae
+                    Verified PDF Resume
                   </div>
                   <h3 className="text-2xl sm:text-3xl font-bold text-white">
-                    B Dhruv — Official Resume
+                    Dhruv B — Official Resume
                   </h3>
                   <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                    Detailed breakdown of university coursework, AI & Data Science
-                    projects, core competencies in Python, Java, SQL, Prompt
-                    Engineering, and verified academic credentials.
+                    Software Development Engineer Intern Candidate. Comprehensive record of university
+                    coursework at KL University, academic projects (DSA Tracker, CP Contest Tracker,
+                    Digital Spending Tracker), and verified technical skills.
                   </p>
                 </div>
 
@@ -828,15 +830,15 @@ export default function Portfolio() {
                     <Button
                       asChild
                       size="lg"
-                      className="px-7 py-5 rounded-xl text-sm font-semibold shadow-xl text-white"
+                      className="px-7 py-5 rounded-xl text-sm font-semibold shadow-xl text-white cursor-pointer"
                       style={{
                         backgroundColor: palette.primary,
                         boxShadow: `0 8px 24px -4px ${palette.glow}`,
                       }}
                     >
-                      <a href="/Resume.pdf" download>
+                      <a href="/Resume.pdf" download="Dhruv_B_Resume.pdf">
                         <Download className="w-4 h-4 mr-2" />
-                        Download PDF
+                        Download Resume (PDF)
                       </a>
                     </Button>
                   </Magnetic>
@@ -846,7 +848,7 @@ export default function Portfolio() {
           </TiltCard>
         </section>
 
-        {/* CONTACT SECTION - Issue 12 & 25: Fixed heading hierarchy H2 -> H3 and consolidated 1-click email copy action */}
+        {/* CONTACT SECTION — Priority 3.5 */}
         <section
           id="contact"
           className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
@@ -860,19 +862,18 @@ export default function Portfolio() {
                 color: palette.accent,
               }}
             >
-              Get In Touch
+              Contact & Profiles
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-              Let's Build Something Meaningful
+              Get In Touch
             </h2>
             <p className="text-slate-400 text-sm sm:text-base">
-              Actively seeking Summer AI/ML internships, research assistantships,
-              and collaborative engineering challenges.
+              Available for Software Development Engineer (SDE) internship opportunities and technical conversations.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {/* Email Card - Issue 12: h3 instead of h4 */}
+            {/* Email Card */}
             <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-2px]">
               <div
                 className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
@@ -886,7 +887,7 @@ export default function Portfolio() {
               </div>
               <div>
                 <h3 className="font-bold text-white text-base">Direct Email</h3>
-                <p className="text-xs text-slate-400 mt-1">Quickest response</p>
+                <p className="text-xs text-slate-400 mt-1">Primary communication</p>
               </div>
               <a
                 href="mailto:dhruvb324@gmail.com"
@@ -938,7 +939,7 @@ export default function Portfolio() {
               </div>
               <div>
                 <h3 className="font-bold text-white text-base">GitHub</h3>
-                <p className="text-xs text-slate-400 mt-1">Code repositories</p>
+                <p className="text-xs text-slate-400 mt-1">Project repositories</p>
               </div>
               <a
                 href="https://github.com/Dhruv-1309"
@@ -947,12 +948,12 @@ export default function Portfolio() {
                 className="inline-block text-xs font-semibold hover:underline"
                 style={{ color: palette.primary }}
               >
-                @Dhruv-1309
+                github.com/Dhruv-1309
               </a>
             </SpotlightCard>
           </div>
 
-          {/* Issue 25: 1-Click Copy Email Action grouped cleanly into Contact section */}
+          {/* Quick Copy Email Action */}
           <div className="flex justify-center pt-8">
             <button
               onClick={handleCopyEmail}
@@ -978,29 +979,28 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* FOOTER - Issues 9 & 10: Standardized text sizes (12px min) */}
+        {/* FOOTER */}
         <footer
           className="border-t py-10 px-4 sm:px-6 lg:px-8 mt-12 pb-28 text-center text-xs text-slate-400 space-y-2.5"
           style={{ borderColor: palette.borderDark }}
         >
           <p className="text-slate-300">
             Designed & Developed by{" "}
-            <span className="text-white font-semibold">B Dhruv</span>.
+            <span className="text-white font-semibold">Dhruv B</span>.
           </p>
           <p className="text-xs text-slate-400">
-            Crafted with Next.js, Framer Motion, Motion Primitives, Haikei SVG
-            Generators, Realtime Colors, Animaster Lib, Skiper UI, and Vengeance UI.
+            Software Development Engineer Intern Candidate • Java · Python · Spring Boot · React · Kotlin
           </p>
           <p className="text-xs text-slate-400 font-mono">
-            KLH University • Artificial Intelligence & Data Science • 2025–2026
+            KL University • B.Tech in Artificial Intelligence & Data Science • Class of 2028 • CGPA: 9.58 / 10.0
           </p>
         </footer>
       </main>
 
-      {/* Skiper UI Interactive Floating Navigation Dock */}
+      {/* Floating Navigation Dock */}
       <FloatingDock activeSection={activeSection} />
 
-      {/* Vengeance UI Interactive Project Deep-Dive Modal */}
+      {/* Project Deep-Dive Modal */}
       <ProjectModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}

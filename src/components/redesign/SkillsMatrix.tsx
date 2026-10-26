@@ -5,133 +5,106 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Code2,
   Database,
-  Brain,
   Cpu,
-  Layers,
-  Sparkles,
   GitBranch,
-  Activity,
+  Smartphone,
+  Layers,
+  Server,
+  FileCode,
   Workflow,
+  Sparkles,
 } from "lucide-react";
 import { usePortfolioTheme } from "./ThemeContext";
 import { SpotlightCard } from "./SpotlightCard";
+import { Badge } from "@/components/ui/badge";
 
-interface SkillItem {
-  name: string;
-  category: "ai" | "core" | "data" | "tools";
-  categoryLabel: string;
-  level: number;
-  experience: string;
+interface SkillCategory {
+  id: string;
+  title: string;
   icon: any;
+  skills: string[];
   description: string;
+  relevance: string;
 }
 
-const ALL_SKILLS: SkillItem[] = [
+const RESUME_SKILL_GROUPS: SkillCategory[] = [
   {
-    name: "Python",
-    category: "core",
-    categoryLabel: "Core Language",
-    level: 92,
-    experience: "Primary Language",
-    icon: Code2,
-    description: "Data pipelines, algorithmic problem solving, machine learning scripts, and backend logic.",
-  },
-  {
-    name: "Core Java",
-    category: "core",
-    categoryLabel: "Systems & OOP",
-    level: 85,
-    experience: "Academic & Systems",
+    id: "languages",
+    title: "Programming Languages",
     icon: Cpu,
-    description: "Object-oriented design patterns, memory management, data structures, and algorithms.",
+    skills: ["Java", "Python", "JavaScript (ES6+)", "C (Fundamentals)"],
+    description: "Object-oriented programming, algorithmic implementations, and core syntax fundamentals.",
+    relevance: "Used across DSA practice, Spring Boot backend, and Android apps",
   },
   {
-    name: "SQL & Databases",
-    category: "data",
-    categoryLabel: "Data Management",
-    level: 88,
-    experience: "Relational Modeling",
-    icon: Database,
-    description: "Complex multi-table queries, indexing, schema design, and aggregation pipelines.",
-  },
-  {
-    name: "Prompt Engineering",
-    category: "ai",
-    categoryLabel: "Generative AI",
-    level: 95,
-    experience: "Specialized Field",
-    icon: Brain,
-    description: "System instructions, Chain-of-Thought prompting, hallucination mitigation, and LLM benchmarking.",
-  },
-  {
-    name: "Pandas & NumPy",
-    category: "data",
-    categoryLabel: "Data Analysis",
-    level: 90,
-    experience: "Analytics Stack",
-    icon: Layers,
-    description: "Vectorized computations, time-series transforms, exploratory data analysis, and anomaly filtering.",
-  },
-  {
-    name: "Machine Learning (Scikit-Learn)",
-    category: "ai",
-    categoryLabel: "Applied ML",
-    level: 84,
-    experience: "Model Training",
-    icon: Activity,
-    description: "Classification, regression, cross-validation, feature scaling, and performance metrics (ROC-AUC, F1).",
-  },
-  {
-    name: "Statistical Analysis",
-    category: "data",
-    categoryLabel: "Data Science",
-    level: 86,
-    experience: "Mathematical Rigor",
+    id: "fundamentals",
+    title: "CS Fundamentals",
     icon: Sparkles,
-    description: "Z-score anomaly detection, probability distributions, variance analysis, and predictive modeling.",
+    skills: ["Data Structures & Algorithms", "Object-Oriented Programming (OOP)"],
+    description: "Time/space complexity analysis, memory models, modular design patterns, inheritance, and polymorphism.",
+    relevance: "Core focus for SDE problem solving and clean system architecture",
   },
   {
-    name: "Git & GitHub",
-    category: "tools",
-    categoryLabel: "Version Control",
-    level: 90,
-    experience: "Production Flow",
-    icon: GitBranch,
-    description: "Feature branch management, PR workflows, interactive rebasing, and repository hygiene.",
+    id: "backend",
+    title: "Backend & Databases",
+    icon: Server,
+    skills: ["Spring Boot", "REST APIs", "PostgreSQL", "Firebase", "Cloud Firestore"],
+    description: "RESTful endpoint design, relational database schemas, NoSQL document stores, and authentication.",
+    relevance: "Implemented in DSA Tracker (Spring Boot + PostgreSQL) & Digital Spending Tracker (Firestore)",
   },
   {
-    name: "Next.js & React",
-    category: "tools",
-    categoryLabel: "Modern Web",
-    level: 82,
-    experience: "Frontend Stack",
+    id: "web",
+    title: "Web Development",
     icon: Workflow,
-    description: "Component architecture, Tailwind styling, responsive mobile-first layouts, and SSR/SSG.",
+    skills: ["React", "TypeScript", "HTML5", "CSS3"],
+    description: "Modern component-driven web interfaces, strong typing, reactive state management, and semantic markup.",
+    relevance: "Built responsive frontend prototypes including DSA Tracker with React & Vite",
+  },
+  {
+    id: "android",
+    title: "Android Development",
+    icon: Smartphone,
+    skills: ["Kotlin", "Android Development", "MVVM", "Retrofit 2", "Coroutines"],
+    description: "Native mobile architecture using Repository pattern, asynchronous coroutines, and Material Design 3.",
+    relevance: "Demonstrated in CP Contest Tracker (CodeCountdown) Android App",
+  },
+  {
+    id: "tools",
+    title: "Developer Tools",
+    icon: GitBranch,
+    skills: ["Git", "GitHub", "VS Code"],
+    description: "Feature-branch workflows, commit discipline, pull requests, and standard development environments.",
+    relevance: "Daily workflow for all project repositories and version tracking",
   },
 ];
 
 const CATEGORIES = [
-  { id: "all", label: "All Technologies" },
-  { id: "ai", label: "AI & Machine Learning" },
-  { id: "core", label: "Core Programming" },
-  { id: "data", label: "Data Science & SQL" },
-  { id: "tools", label: "Tools & Frameworks" },
+  { id: "all", label: "All Skills" },
+  { id: "languages", label: "Languages" },
+  { id: "fundamentals", label: "CS Fundamentals" },
+  { id: "backend", label: "Backend & DBs" },
+  { id: "web", label: "Web" },
+  { id: "android", label: "Android" },
+  { id: "tools", label: "Tools" },
 ];
 
 export function SkillsMatrix() {
   const { palette } = usePortfolioTheme();
   const [selectedCat, setSelectedCat] = useState<string>("all");
 
-  const filteredSkills =
+  const filteredGroups =
     selectedCat === "all"
-      ? ALL_SKILLS
-      : ALL_SKILLS.filter((s) => s.category === selectedCat);
+      ? RESUME_SKILL_GROUPS
+      : RESUME_SKILL_GROUPS.filter((g) => g.id === selectedCat);
 
   return (
-    /* Issue 17: Tighten container spacing so filter bar is grouped cleanly with skill cards */
     <div className="space-y-6">
-      {/* Category Filter Pills (Issue 29: Increased horizontal gap from gap-2 to gap-3 sm:gap-4 to eliminate glow clutter) */}
-      <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4" role="tablist" aria-label="Skills filter">
+      {/* Category Filter Pills */}
+      <div
+        className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3"
+        role="tablist"
+        aria-label="Filter skills by technical category"
+      >
         {CATEGORIES.map((cat) => {
           const isActive = selectedCat === cat.id;
           return (
@@ -140,14 +113,14 @@ export function SkillsMatrix() {
               role="tab"
               aria-selected={isActive}
               onClick={() => setSelectedCat(cat.id)}
-              className={`relative px-4 py-2 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
                 isActive
                   ? "text-white shadow-md font-semibold"
-                  : "text-slate-300 hover:text-white hover:bg-white/5"
+                  : "text-slate-300 hover:text-white hover:bg-white/5 border border-white/10"
               }`}
               style={{
                 backgroundColor: isActive ? palette.primary : "rgba(255,255,255,0.03)",
-                border: `1px solid ${isActive ? palette.primary : palette.borderDark}`,
+                borderColor: isActive ? palette.primary : palette.borderDark,
                 boxShadow: isActive ? `0 0 10px ${palette.glow}` : "none",
               }}
             >
@@ -157,26 +130,27 @@ export function SkillsMatrix() {
         })}
       </div>
 
-      {/* Skills Grid */}
+      {/* Skills Group Cards (No Fake Progress Bars or Percentages) */}
       <motion.div
         layout
-        className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pt-2"
+        className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-2"
       >
         <AnimatePresence>
-          {filteredSkills.map((skill) => {
-            const Icon = skill.icon;
+          {filteredGroups.map((group) => {
+            const Icon = group.icon;
             return (
               <motion.div
-                key={skill.name}
+                key={group.id}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.25 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
               >
                 <SpotlightCard className="p-6 h-full flex flex-col justify-between hover:translate-y-[-2px]">
                   <div>
-                    <div className="flex items-start justify-between gap-3 mb-4">
+                    {/* Header */}
+                    <div className="flex items-center gap-3 mb-4">
                       <div
                         className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md flex-shrink-0"
                         style={{
@@ -187,51 +161,42 @@ export function SkillsMatrix() {
                       >
                         <Icon className="w-5 h-5" />
                       </div>
-
-                      {/* Issue 19: Replaced text-[10px] all-caps with legible text-xs title case */}
-                      <span
-                        className="text-xs font-medium px-3 py-1 rounded-full border"
-                        style={{
-                          backgroundColor: "rgba(255,255,255,0.04)",
-                          borderColor: palette.borderDark,
-                          color: palette.accent,
-                        }}
-                      >
-                        {skill.categoryLabel}
-                      </span>
+                      <div>
+                        <h3 className="text-base font-bold text-white">
+                          {group.title}
+                        </h3>
+                      </div>
                     </div>
 
-                    {/* Issue 11: Correct heading level H3 (previous heading was H2) */}
-                    <h3 className="text-lg font-bold text-white mb-2">
-                      {skill.name}
-                    </h3>
-                    <p className="text-xs text-slate-300 leading-relaxed mb-6">
-                      {skill.description}
+                    {/* Skill Badges */}
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {group.skills.map((skill) => (
+                        <Badge
+                          key={skill}
+                          variant="secondary"
+                          className="px-2.5 py-1 text-xs font-medium rounded-lg text-slate-200 border"
+                          style={{
+                            backgroundColor: "rgba(255, 255, 255, 0.05)",
+                            borderColor: palette.borderDark,
+                          }}
+                        >
+                          {skill}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                      {group.description}
                     </p>
                   </div>
 
-                  <div>
-                    {/* Issue 18: Generous vertical spacing before progress bar */}
-                    <div className="flex items-center justify-between text-xs mb-3 font-mono">
-                      <span className="text-slate-400">{skill.experience}</span>
-                      <span className="font-semibold text-slate-200">
-                        {skill.level}%
-                      </span>
-                    </div>
-
-                    {/* Progress Bar */}
-                    <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.level}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, ease: "easeOut" }}
-                        className="h-full rounded-full"
-                        style={{
-                          background: `linear-gradient(90deg, ${palette.primary}, ${palette.accent})`,
-                        }}
-                      />
-                    </div>
+                  {/* Context / Application footnote */}
+                  <div
+                    className="pt-3 border-t text-[11px] text-slate-400 font-mono"
+                    style={{ borderColor: palette.borderDark }}
+                  >
+                    <span className="text-slate-500">Context: </span>
+                    {group.relevance}
                   </div>
                 </SpotlightCard>
               </motion.div>
