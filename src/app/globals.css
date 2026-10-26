@@ -165,6 +165,14 @@
   }
 }
 
+.animate-border-beam {
+  animation: border-beam var(--duration, 10s) infinite linear;
+}
+
+@utility animate-border-beam {
+  animation: border-beam var(--duration, 10s) infinite linear;
+}
+
 /* Custom sleek scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

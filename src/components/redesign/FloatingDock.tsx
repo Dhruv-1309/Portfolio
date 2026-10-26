@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import {
   motion,
-  AnimatePresence,
+  useMotionValue,
+  useSpring,
+  useTransform,
 } from "framer-motion";
 import {
   Home,
@@ -33,24 +35,37 @@ const NAV_ITEMS: NavItem[] = [
 
 function DockIcon({
   item,
+  mouseX,
   activeSection,
   onClick,
 }: {
   item: NavItem;
+  mouseX: any;
   activeSection: string;
   onClick: () => void;
 }) {
-  const [hovered, setHovered] = useState(false);
+  const ref = useRef<HTMLButtonElement>(null);
   const { palette } = usePortfolioTheme();
+
+  const distance = useTransform(mouseX, (val: number) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
+    return val - bounds.x - bounds.width / 2;
+  });
+
+  // Dynamic Skiper UI spring magnification on cursor proximity
+  const iconScaleSync = useTransform(distance, [-100, 0, 100], [1, 1.35, 1]);
+  const iconScale = useSpring(iconScaleSync, { mass: 0.1, stiffness: 200, damping: 14 });
+
   const isActive = activeSection === item.id;
   const Icon = item.icon;
 
   return (
-    <button
+    <motion.button
+      ref={ref}
       onClick={onClick}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className={`relative flex flex-col items-center justify-center px-2.5 sm:px-3.5 py-1.5 rounded-xl transition-all cursor-pointer ${
+      whileHover={{ y: -4 }}
+      whileTap={{ scale: 0.9 }}
+      className={`relative flex flex-col items-center justify-center px-2.5 sm:px-3.5 py-1.5 rounded-xl transition-colors cursor-pointer ${
         isActive ? "text-white" : "text-slate-300 hover:text-white"
       }`}
       aria-label={`Navigate to ${item.label}`}
@@ -63,27 +78,34 @@ function DockIcon({
           className="absolute inset-0 rounded-xl shadow-md -z-10"
           style={{
             backgroundColor: palette.primary,
-            boxShadow: `0 0 12px ${palette.glow}`,
+            boxShadow: `0 0 16px ${palette.glow}`,
           }}
           transition={{ type: "spring", stiffness: 350, damping: 28 }}
         />
       )}
 
       {!isActive && (
-        <div className="absolute inset-0 rounded-xl bg-white/5 opacity-0 hover:opacity-100 transition-opacity -z-10" />
+        <motion.div
+          className="absolute inset-0 rounded-xl bg-white/5 opacity-0 hover:opacity-100 transition-opacity -z-10"
+          whileHover={{ scale: 1.05 }}
+        />
       )}
 
-      <Icon className="w-4 h-4 relative z-10 transition-transform" />
+      {/* Spring Magnified Icon */}
+      <motion.div style={{ scale: iconScale }}>
+        <Icon className="w-4 h-4 relative z-10 transition-transform" />
+      </motion.div>
 
-      {/* Issue 26: Persistent readable text label below icon */}
+      {/* Persistent text label */}
       <span className="text-xs font-medium relative z-10 mt-1 leading-none tracking-tight">
         {item.label}
       </span>
-    </button>
+    </motion.button>
   );
 }
 
 export function FloatingDock({ activeSection }: { activeSection: string }) {
+  const mouseX = useMotionValue(Infinity);
   const { palette } = usePortfolioTheme();
 
   const scrollTo = (id: string) => {
@@ -101,7 +123,9 @@ export function FloatingDock({ activeSection }: { activeSection: string }) {
       <motion.div
         initial={{ y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ type: "spring", damping: 20, stiffness: 200, delay: 0.5 }}
+        transition={{ type: "spring", damping: 20, stiffness: 200, delay: 0.3 }}
+        onMouseMove={(e) => mouseX.set(e.pageX)}
+        onMouseLeave={() => mouseX.set(Infinity)}
         className="flex items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-2xl border shadow-2xl backdrop-blur-2xl"
         style={{
           backgroundColor: "rgba(10, 15, 29, 0.9)",
@@ -113,6 +137,7 @@ export function FloatingDock({ activeSection }: { activeSection: string }) {
           <DockIcon
             key={item.id}
             item={item}
+            mouseX={mouseX}
             activeSection={activeSection}
             onClick={() => scrollTo(item.id)}
           />

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Mail,
   Github,
@@ -18,8 +18,7 @@ import {
   ArrowUpRight,
   Star,
   CheckCircle2,
-  Phone,
-  FileText,
+  Terminal,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -44,6 +43,27 @@ import {
   ProjectData,
 } from "@/components/redesign/ProjectModal";
 import { SkillsMatrix } from "@/components/redesign/SkillsMatrix";
+import { TextMorph } from "@/components/redesign/MotionText";
+
+// Animation Variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 25 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
 
 // Priority 1.1 — Exactly 3 verified projects from resume
 const VERIFIED_PROJECTS: ProjectData[] = [
@@ -253,14 +273,16 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo / Brand */}
           <div className="flex items-center gap-3">
-            <Magnetic strength={0.2}>
+            <Magnetic strength={0.25}>
               <a
                 href="#home"
                 className="flex items-center gap-2 group cursor-pointer"
                 aria-label="Home - Dhruv B Portfolio"
               >
-                <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs tracking-wider shadow-lg border transition-transform group-hover:scale-105"
+                <motion.div
+                  whileHover={{ rotate: [0, -10, 10, 0], scale: 1.08 }}
+                  transition={{ duration: 0.4 }}
+                  className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs tracking-wider shadow-lg border"
                   style={{
                     backgroundColor: `${palette.primary}20`,
                     borderColor: palette.borderDark,
@@ -268,9 +290,9 @@ export default function Portfolio() {
                   }}
                 >
                   DB
-                </div>
+                </motion.div>
                 <div>
-                  <span className="font-bold text-sm tracking-tight text-white group-hover:text-slate-200">
+                  <span className="font-bold text-sm tracking-tight text-white group-hover:text-slate-200 transition-colors">
                     Dhruv B
                   </span>
                   <span className="block text-xs text-slate-400 font-mono">
@@ -283,9 +305,10 @@ export default function Portfolio() {
 
           {/* Quick Action Badges */}
           <div className="flex items-center gap-3">
-            {/* Status Beacon */}
-            <div
-              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium backdrop-blur-md"
+            {/* Status Beacon with animated pulse */}
+            <motion.div
+              whileHover={{ scale: 1.04 }}
+              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium backdrop-blur-md cursor-default"
               style={{
                 backgroundColor: "rgba(255,255,255,0.03)",
                 borderColor: palette.borderDark,
@@ -304,7 +327,7 @@ export default function Portfolio() {
               <span className="text-slate-300 text-xs">
                 Open for SDE Internships
               </span>
-            </div>
+            </motion.div>
 
             {/* Realtime Colors Theme Switcher */}
             <PaletteSwitcher />
@@ -317,10 +340,15 @@ export default function Portfolio() {
                 size="sm"
                 className="rounded-full text-xs font-medium px-3.5 py-1.5 text-slate-200 border border-white/15 bg-white/5 hover:bg-white/10 hover:text-white transition-all shadow-sm"
               >
-                <a href="/Resume.pdf" download="Dhruv_B_Resume.pdf">
+                <motion.a
+                  href="/Resume.pdf"
+                  download="Dhruv_B_Resume.pdf"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <Download className="w-3.5 h-3.5 mr-1.5" />
                   Resume (PDF)
-                </a>
+                </motion.a>
               </Button>
             </Magnetic>
           </div>
@@ -329,70 +357,84 @@ export default function Portfolio() {
 
       {/* Main Content */}
       <main className="relative z-10 pt-20">
-        {/* HERO SECTION — Priority 1.3 & Priority 3.1: Aligned exactly with resume */}
+        {/* HERO SECTION with Motion Primitives Text Roll and Staggered Animations */}
         <section
           id="home"
           className="min-h-[85vh] flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-10 pb-16 relative overflow-hidden"
         >
-          <div className="max-w-4xl mx-auto text-center space-y-6">
-            {/* Status Pill */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            className="max-w-4xl mx-auto text-center space-y-6"
+          >
+            {/* Status Pill with rotating sparkle */}
             <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              variants={fadeInUp}
               className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border shadow-inner backdrop-blur-xl"
               style={{
                 backgroundColor: "rgba(255, 255, 255, 0.04)",
                 borderColor: palette.borderDark,
               }}
             >
-              <Sparkles
-                className="w-4 h-4"
-                style={{ color: palette.accent }}
-              />
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+              >
+                <Sparkles className="w-4 h-4" style={{ color: palette.accent }} />
+              </motion.div>
               <span className="text-xs sm:text-sm font-medium text-slate-300">
                 KL University • B.Tech in Artificial Intelligence & Data Science • CGPA: 9.58 / 10.0
               </span>
             </motion.div>
 
-            {/* Name & SDE Headline */}
-            <div className="space-y-3">
-              <motion.h1
-                initial={{ opacity: 0, y: 25 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.15 }}
-                className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.1]"
-              >
+            {/* Name with Animated Shimmer Gradient */}
+            <motion.div variants={fadeInUp} className="space-y-3">
+              <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.1]">
                 Hi, I'm{" "}
-                <span
-                  className="bg-clip-text text-transparent bg-gradient-to-r"
+                <motion.span
+                  className="bg-clip-text text-transparent bg-gradient-to-r inline-block"
                   style={{
-                    backgroundImage: `linear-gradient(135deg, #ffffff 20%, ${palette.primary} 70%, ${palette.accent} 100%)`,
+                    backgroundImage: `linear-gradient(135deg, #ffffff 15%, ${palette.primary} 70%, ${palette.accent} 100%)`,
+                    backgroundSize: "200% 200%",
                   }}
+                  animate={{
+                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  }}
+                  transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
                 >
                   Dhruv B
-                </span>
-              </motion.h1>
+                </motion.span>
+              </h1>
 
-              {/* Priority 1.3 Headline: SDE Intern Candidate */}
-              <p
-                className="text-lg sm:text-2xl font-semibold tracking-tight"
-                style={{ color: palette.accent }}
-              >
-                Software Engineer in Training | Java · Python · Full-Stack
-              </p>
+              {/* SDE Candidate Positioning with Motion Primitives TextMorph */}
+              <div className="text-lg sm:text-2xl font-semibold tracking-tight text-slate-200 flex items-center justify-center gap-2 flex-wrap min-h-[44px]">
+                <span className="text-slate-400">Software Engineer in Training | Building with</span>
+                <TextMorph
+                  words={[
+                    "Java & Spring Boot",
+                    "Data Structures & Algorithms",
+                    "React & TypeScript",
+                    "Kotlin & Android Apps",
+                    "PostgreSQL & REST APIs",
+                  ]}
+                  className="font-bold underline decoration-2 underline-offset-8"
+                  style={{
+                    color: palette.accent,
+                    textDecorationColor: palette.primary,
+                  }}
+                />
+              </div>
 
-              {/* Priority 3.1 Subtext: Degree, University, Graduation Year, CGPA */}
-              <p className="text-sm sm:text-base text-slate-300 font-medium max-w-2xl mx-auto">
+              {/* Subtext */}
+              <p className="text-sm sm:text-base text-slate-300 font-medium max-w-2xl mx-auto pt-1">
                 B.Tech in AI & Data Science @ KL University • Class of 2028 • <span className="text-white font-bold">CGPA: 9.58 / 10.0</span>
               </p>
-            </div>
+            </motion.div>
 
             {/* Professional Summary from Resume */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              variants={fadeInUp}
               className="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed pt-1"
             >
               Building web and Android application prototypes. Exploring software development
@@ -400,63 +442,72 @@ export default function Portfolio() {
               strengthening implementation, testing, and problem-solving through hands-on projects.
             </motion.p>
 
-            {/* Hero CTAs */}
+            {/* Hero CTAs with Magnetic Spring & Hover Ripple */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              variants={fadeInUp}
               className="flex flex-wrap items-center justify-center gap-4 pt-2"
             >
-              <Magnetic strength={0.25}>
-                <Button
-                  onClick={() => scrollTo("projects")}
-                  size="lg"
-                  className="relative group overflow-hidden px-8 py-5 rounded-xl text-sm font-semibold shadow-xl text-white border-0 transition-transform active:scale-95"
-                  style={{
-                    backgroundColor: palette.primary,
-                    boxShadow: `0 8px 20px -4px ${palette.glow}`,
-                  }}
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    <FolderOpen className="w-4 h-4" />
-                    Explore Projects
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+              <Magnetic strength={0.3}>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button
+                    onClick={() => scrollTo("projects")}
+                    size="lg"
+                    className="relative group overflow-hidden px-8 py-5 rounded-xl text-sm font-semibold shadow-xl text-white border-0 cursor-pointer"
                     style={{
-                      background: `linear-gradient(90deg, ${palette.primary}, ${palette.secondary})`,
+                      backgroundColor: palette.primary,
+                      boxShadow: `0 8px 24px -4px ${palette.glow}`,
                     }}
-                  />
-                </Button>
+                  >
+                    <span className="relative z-10 flex items-center gap-2">
+                      <FolderOpen className="w-4 h-4" />
+                      Explore Projects
+                      <motion.div
+                        animate={{ x: [0, 4, 0] }}
+                        transition={{ duration: 1.6, repeat: Infinity }}
+                      >
+                        <ArrowRight className="w-4 h-4" />
+                      </motion.div>
+                    </span>
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{
+                        background: `linear-gradient(90deg, ${palette.primary}, ${palette.secondary})`,
+                      }}
+                    />
+                  </Button>
+                </motion.div>
               </Magnetic>
 
-              <Magnetic strength={0.25}>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="px-8 py-5 rounded-xl text-sm font-semibold border transition-all hover:bg-white/5 active:scale-95 text-slate-200"
-                  style={{
-                    borderColor: palette.borderDark,
-                    backgroundColor: "rgba(255,255,255,0.02)",
-                  }}
-                >
-                  <a href="/Resume.pdf" download="Dhruv_B_Resume.pdf">
-                    <Download className="w-4 h-4 mr-2" style={{ color: palette.accent }} />
-                    Download Resume (PDF)
-                  </a>
-                </Button>
+              <Magnetic strength={0.3}>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="px-8 py-5 rounded-xl text-sm font-semibold border transition-all hover:bg-white/5 text-slate-200 cursor-pointer"
+                    style={{
+                      borderColor: palette.borderDark,
+                      backgroundColor: "rgba(255,255,255,0.02)",
+                    }}
+                  >
+                    <a href="/Resume.pdf" download="Dhruv_B_Resume.pdf">
+                      <Download className="w-4 h-4 mr-2" style={{ color: palette.accent }} />
+                      Download Resume (PDF)
+                    </a>
+                  </Button>
+                </motion.div>
               </Magnetic>
 
-              {/* Profiles */}
+              {/* Social Profiles with Magnetic Lift */}
               <div className="flex items-center gap-2 pl-2">
-                <Magnetic strength={0.3}>
-                  <a
+                <Magnetic strength={0.35}>
+                  <motion.a
                     href="https://github.com/Dhruv-1309"
                     target="_blank"
                     rel="noreferrer"
-                    className="w-10 h-10 rounded-xl border flex items-center justify-center text-slate-300 hover:text-white transition-all backdrop-blur-md hover:scale-105 shadow-sm"
+                    whileHover={{ scale: 1.15, y: -2 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="w-10 h-10 rounded-xl border flex items-center justify-center text-slate-300 hover:text-white transition-colors backdrop-blur-md shadow-sm"
                     style={{
                       backgroundColor: "rgba(255, 255, 255, 0.04)",
                       borderColor: palette.borderDark,
@@ -464,14 +515,16 @@ export default function Portfolio() {
                     aria-label="GitHub Profile"
                   >
                     <Github className="w-4 h-4" />
-                  </a>
+                  </motion.a>
                 </Magnetic>
-                <Magnetic strength={0.3}>
-                  <a
+                <Magnetic strength={0.35}>
+                  <motion.a
                     href="https://www.linkedin.com/in/dhruvb-tech"
                     target="_blank"
                     rel="noreferrer"
-                    className="w-10 h-10 rounded-xl border flex items-center justify-center text-slate-300 hover:text-white transition-all backdrop-blur-md hover:scale-105 shadow-sm"
+                    whileHover={{ scale: 1.15, y: -2 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="w-10 h-10 rounded-xl border flex items-center justify-center text-slate-300 hover:text-white transition-colors backdrop-blur-md shadow-sm"
                     style={{
                       backgroundColor: "rgba(255, 255, 255, 0.04)",
                       borderColor: palette.borderDark,
@@ -479,11 +532,11 @@ export default function Portfolio() {
                     aria-label="LinkedIn Profile"
                   >
                     <Linkedin className="w-4 h-4" />
-                  </a>
+                  </motion.a>
                 </Magnetic>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         </section>
 
         {/* Skiper UI Infinite Tech Marquee */}
@@ -494,12 +547,18 @@ export default function Portfolio() {
         {/* Haikei Organic Wave Divider */}
         <HaikeiWaveDivider />
 
-        {/* ABOUT & EDUCATION SECTION — Priority 1.2 & Priority 3.2 */}
+        {/* ABOUT & EDUCATION SECTION */}
         <section
           id="about"
           className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
         >
-          <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeInUp}
+            className="text-center max-w-3xl mx-auto mb-12 space-y-3"
+          >
             <span
               className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
               style={{
@@ -517,15 +576,18 @@ export default function Portfolio() {
               Dedicated student at KL University focused on data structures, algorithms,
               backend architectures, and mobile prototypes.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid lg:grid-cols-12 gap-8 items-stretch">
-            {/* Education Card */}
+            {/* Education Card (Animaster 3D Tilt + Motion Primitives Spotlight) */}
             <div className="lg:col-span-6 space-y-6">
               <TiltCard maxTilt={8}>
                 <SpotlightCard className="p-6 sm:p-8 h-full flex flex-col justify-between">
                   <div className="space-y-6">
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg border"
+                    <motion.div
+                      whileHover={{ rotate: 360, scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg border"
                       style={{
                         backgroundColor: `${palette.primary}25`,
                         borderColor: `${palette.primary}44`,
@@ -533,7 +595,7 @@ export default function Portfolio() {
                       }}
                     >
                       <GraduationCap className="w-6 h-6" />
-                    </div>
+                    </motion.div>
 
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
@@ -570,7 +632,9 @@ export default function Portfolio() {
                     </p>
 
                     {/* Exact CGPA: 9.58 / 10.0 */}
-                    <div
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 300 }}
                       className="p-4 rounded-xl border flex items-center justify-between"
                       style={{
                         backgroundColor: "rgba(255,255,255,0.02)",
@@ -594,7 +658,7 @@ export default function Portfolio() {
                         </span>
                         <p className="text-xs text-slate-400">KL University</p>
                       </div>
-                    </div>
+                    </motion.div>
                   </div>
 
                   <div className="pt-6 border-t border-white/5 flex items-center gap-2 text-xs text-slate-400">
@@ -615,12 +679,18 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* SKILLS SECTION — Priority 2: Exactly matches resume, no ratings/bars */}
+        {/* SKILLS SECTION */}
         <section
           id="skills"
           className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
         >
-          <div className="text-center max-w-3xl mx-auto mb-8 space-y-3">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeInUp}
+            className="text-center max-w-3xl mx-auto mb-8 space-y-3"
+          >
             <span
               className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
               style={{
@@ -637,7 +707,7 @@ export default function Portfolio() {
             <p className="text-slate-400 text-sm sm:text-base">
               Verified skills directly supported by project implementations and coursework.
             </p>
-          </div>
+          </motion.div>
 
           <SkillsMatrix />
         </section>
@@ -645,12 +715,18 @@ export default function Portfolio() {
         {/* Haikei Organic Wave Divider (Flipped) */}
         <HaikeiWaveDivider flip={true} />
 
-        {/* PROJECTS SECTION — Priority 1.1 & Priority 3.3: 3 verified projects */}
+        {/* PROJECTS SECTION */}
         <section
           id="projects"
           className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
         >
-          <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeInUp}
+            className="text-center max-w-3xl mx-auto mb-12 space-y-3"
+          >
             <span
               className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
               style={{
@@ -667,193 +743,227 @@ export default function Portfolio() {
             <p className="text-slate-400 text-sm sm:text-base">
               Concrete implementations built, tested, and verifiable in an engineering interview.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Projects Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+          {/* Projects Grid with Staggered Entrance */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch"
+          >
             {VERIFIED_PROJECTS.map((project, idx) => {
               const isFlagship = idx === 0;
 
               return (
-                <TiltCard key={project.id} maxTilt={6}>
-                  <SpotlightCard className="h-full flex flex-col justify-between overflow-hidden relative group">
-                    {isFlagship && (
-                      <BorderBeam
-                        size={240}
-                        duration={10}
-                        colorFrom={palette.primary}
-                        colorTo={palette.accent}
-                      />
-                    )}
-
-                    <div className="flex-1 flex flex-col">
-                      {/* Image Thumbnail */}
-                      <div className="relative aspect-video w-full overflow-hidden rounded-t-xl flex-shrink-0">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                <motion.div key={project.id} variants={fadeInUp}>
+                  <TiltCard maxTilt={6}>
+                    <SpotlightCard className="h-full flex flex-col justify-between overflow-hidden relative group">
+                      {isFlagship && (
+                        <BorderBeam
+                          size={240}
+                          duration={10}
+                          colorFrom={palette.primary}
+                          colorTo={palette.accent}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+                      )}
 
-                        {isFlagship && (
-                          <div
-                            className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-bold tracking-wider border shadow-md flex items-center gap-1 text-white"
+                      <div className="flex-1 flex flex-col">
+                        {/* Image Thumbnail with smooth hover zoom */}
+                        <div className="relative aspect-video w-full overflow-hidden rounded-t-xl flex-shrink-0">
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-108"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+
+                          {isFlagship && (
+                            <motion.div
+                              animate={{ scale: [1, 1.04, 1] }}
+                              transition={{ duration: 3, repeat: Infinity }}
+                              className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-bold tracking-wider border shadow-md flex items-center gap-1 text-white"
+                              style={{
+                                backgroundColor: palette.primary,
+                                borderColor: `${palette.primary}88`,
+                              }}
+                            >
+                              <Star className="w-3 h-3 fill-current" />
+                              Flagship
+                            </motion.div>
+                          )}
+
+                          <span
+                            className="absolute bottom-3 right-3 text-xs font-medium px-2.5 py-1 rounded-full border backdrop-blur-md"
                             style={{
-                              backgroundColor: palette.primary,
-                              borderColor: `${palette.primary}88`,
+                              backgroundColor: "rgba(0,0,0,0.6)",
+                              borderColor: palette.borderDark,
+                              color: palette.accent,
                             }}
                           >
-                            <Star className="w-3 h-3 fill-current" />
-                            Flagship
+                            {project.category}
+                          </span>
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                          <div className="space-y-2">
+                            <h3 className="text-lg font-bold text-white group-hover:text-slate-200 transition-colors">
+                              {project.title}
+                            </h3>
+                            <p className="text-xs text-slate-400 font-medium">
+                              {project.subtitle}
+                            </p>
+                            <p className="text-xs text-slate-300 leading-relaxed line-clamp-3 pt-1">
+                              {project.description}
+                            </p>
                           </div>
-                        )}
 
-                        <span
-                          className="absolute bottom-3 right-3 text-xs font-medium px-2.5 py-1 rounded-full border backdrop-blur-md"
-                          style={{
-                            backgroundColor: "rgba(0,0,0,0.6)",
-                            borderColor: palette.borderDark,
-                            color: palette.accent,
-                          }}
+                          {/* Tech Badges with hover lift */}
+                          <div className="min-h-[52px] flex flex-wrap content-start gap-1.5 pt-2">
+                            {project.techStack.slice(0, 4).map((tech) => (
+                              <motion.div
+                                key={tech}
+                                whileHover={{ scale: 1.08, y: -1 }}
+                                transition={{ type: "spring", stiffness: 400 }}
+                              >
+                                <Badge
+                                  variant="outline"
+                                  className="text-xs font-medium px-2.5 py-0.5 border text-slate-300 rounded-md cursor-default"
+                                  style={{ borderColor: palette.borderDark }}
+                                >
+                                  {tech}
+                                </Badge>
+                              </motion.div>
+                            ))}
+                            {project.techStack.length > 4 && (
+                              <motion.div whileHover={{ scale: 1.08, y: -1 }}>
+                                <Badge
+                                  variant="outline"
+                                  className="text-xs font-medium px-2 py-0.5 border text-slate-400 rounded-md cursor-default"
+                                  style={{ borderColor: palette.borderDark }}
+                                >
+                                  +{project.techStack.length - 4}
+                                </Badge>
+                              </motion.div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Card Footer Actions */}
+                      <div className="p-6 pt-4 mt-auto flex items-center justify-between border-t border-white/5">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setSelectedProject(project)}
+                          className="text-xs font-semibold px-0 text-white hover:text-white flex items-center gap-1.5 group/btn cursor-pointer"
+                          style={{ color: palette.accent }}
                         >
-                          {project.category}
-                        </span>
+                          Deep-Dive Details
+                          <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                        </Button>
+
+                        <motion.a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ scale: 1.06 }}
+                          whileTap={{ scale: 0.94 }}
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs font-medium text-slate-300 hover:text-white transition-colors"
+                          aria-label={`View ${project.title} source code on GitHub`}
+                        >
+                          <Github className="w-3.5 h-3.5" />
+                          <span>Source Code</span>
+                        </motion.a>
                       </div>
-
-                      {/* Content */}
-                      <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                        <div className="space-y-2">
-                          <h3 className="text-lg font-bold text-white group-hover:text-slate-200 transition-colors">
-                            {project.title}
-                          </h3>
-                          <p className="text-xs text-slate-400 font-medium">
-                            {project.subtitle}
-                          </p>
-                          <p className="text-xs text-slate-300 leading-relaxed line-clamp-3 pt-1">
-                            {project.description}
-                          </p>
-                        </div>
-
-                        {/* Tech Badges */}
-                        <div className="min-h-[52px] flex flex-wrap content-start gap-1.5 pt-2">
-                          {project.techStack.slice(0, 4).map((tech) => (
-                            <Badge
-                              key={tech}
-                              variant="outline"
-                              className="text-xs font-medium px-2.5 py-0.5 border text-slate-300 rounded-md"
-                              style={{ borderColor: palette.borderDark }}
-                            >
-                              {tech}
-                            </Badge>
-                          ))}
-                          {project.techStack.length > 4 && (
-                            <Badge
-                              variant="outline"
-                              className="text-xs font-medium px-2 py-0.5 border text-slate-400 rounded-md"
-                              style={{ borderColor: palette.borderDark }}
-                            >
-                              +{project.techStack.length - 4}
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Card Footer Actions */}
-                    <div className="p-6 pt-4 mt-auto flex items-center justify-between border-t border-white/5">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setSelectedProject(project)}
-                        className="text-xs font-semibold px-0 text-white hover:text-white flex items-center gap-1.5 group/btn cursor-pointer"
-                        style={{ color: palette.accent }}
-                      >
-                        Deep-Dive Details
-                        <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                      </Button>
-
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs font-medium text-slate-300 hover:text-white transition-colors"
-                        aria-label={`View ${project.title} source code on GitHub`}
-                      >
-                        <Github className="w-3.5 h-3.5" />
-                        <span>Source Code</span>
-                      </a>
-                    </div>
-                  </SpotlightCard>
-                </TiltCard>
+                    </SpotlightCard>
+                  </TiltCard>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </section>
 
-        {/* RESUME SECTION — Priority 3.4 */}
+        {/* RESUME SECTION */}
         <section
           id="resume"
           className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto scroll-mt-20"
         >
-          <TiltCard maxTilt={5}>
-            <SpotlightCard className="p-8 sm:p-10 relative overflow-hidden">
-              <BorderBeam
-                size={300}
-                duration={14}
-                colorFrom={palette.primary}
-                colorTo={palette.accent}
-              />
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeInUp}
+          >
+            <TiltCard maxTilt={5}>
+              <SpotlightCard className="p-8 sm:p-10 relative overflow-hidden">
+                <BorderBeam
+                  size={300}
+                  duration={14}
+                  colorFrom={palette.primary}
+                  colorTo={palette.accent}
+                />
 
-              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-                <div className="space-y-2.5 max-w-lg">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-medium text-slate-300">
-                    <CheckCircle2
-                      className="w-3.5 h-3.5"
-                      style={{ color: palette.accent }}
-                    />
-                    Verified PDF Resume
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+                  <div className="space-y-2.5 max-w-lg">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-medium text-slate-300">
+                      <CheckCircle2
+                        className="w-3.5 h-3.5"
+                        style={{ color: palette.accent }}
+                      />
+                      Verified PDF Resume
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl font-bold text-white">
+                      Dhruv B — Official Resume
+                    </h3>
+                    <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                      Software Development Engineer Intern Candidate. Comprehensive record of university
+                      coursework at KL University, academic projects (DSA Tracker, CP Contest Tracker,
+                      Digital Spending Tracker), and verified technical skills.
+                    </p>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white">
-                    Dhruv B — Official Resume
-                  </h3>
-                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                    Software Development Engineer Intern Candidate. Comprehensive record of university
-                    coursework at KL University, academic projects (DSA Tracker, CP Contest Tracker,
-                    Digital Spending Tracker), and verified technical skills.
-                  </p>
-                </div>
 
-                <div className="flex-shrink-0">
-                  <Magnetic strength={0.3}>
-                    <Button
-                      asChild
-                      size="lg"
-                      className="px-7 py-5 rounded-xl text-sm font-semibold shadow-xl text-white cursor-pointer"
-                      style={{
-                        backgroundColor: palette.primary,
-                        boxShadow: `0 8px 24px -4px ${palette.glow}`,
-                      }}
-                    >
-                      <a href="/Resume.pdf" download="Dhruv_B_Resume.pdf">
-                        <Download className="w-4 h-4 mr-2" />
-                        Download Resume (PDF)
-                      </a>
-                    </Button>
-                  </Magnetic>
+                  <div className="flex-shrink-0">
+                    <Magnetic strength={0.3}>
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button
+                          asChild
+                          size="lg"
+                          className="px-7 py-5 rounded-xl text-sm font-semibold shadow-xl text-white cursor-pointer"
+                          style={{
+                            backgroundColor: palette.primary,
+                            boxShadow: `0 8px 24px -4px ${palette.glow}`,
+                          }}
+                        >
+                          <a href="/Resume.pdf" download="Dhruv_B_Resume.pdf">
+                            <Download className="w-4 h-4 mr-2" />
+                            Download Resume (PDF)
+                          </a>
+                        </Button>
+                      </motion.div>
+                    </Magnetic>
+                  </div>
                 </div>
-              </div>
-            </SpotlightCard>
-          </TiltCard>
+              </SpotlightCard>
+            </TiltCard>
+          </motion.div>
         </section>
 
-        {/* CONTACT SECTION — Priority 3.5 */}
+        {/* CONTACT SECTION */}
         <section
           id="contact"
           className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
         >
-          <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeInUp}
+            className="text-center max-w-3xl mx-auto mb-12 space-y-3"
+          >
             <span
               className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
               style={{
@@ -870,93 +980,118 @@ export default function Portfolio() {
             <p className="text-slate-400 text-sm sm:text-base">
               Available for Software Development Engineer (SDE) internship opportunities and technical conversations.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={staggerContainer}
+            className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto"
+          >
             {/* Email Card */}
-            <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-2px]">
-              <div
-                className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
-                style={{
-                  backgroundColor: `${palette.primary}20`,
-                  borderColor: `${palette.primary}44`,
-                  color: palette.accent,
-                }}
-              >
-                <Mail className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="font-bold text-white text-base">Direct Email</h3>
-                <p className="text-xs text-slate-400 mt-1">Primary communication</p>
-              </div>
-              <a
-                href="mailto:dhruvb324@gmail.com"
-                className="inline-block text-xs font-semibold hover:underline break-all"
-                style={{ color: palette.primary }}
-              >
-                dhruvb324@gmail.com
-              </a>
-            </SpotlightCard>
+            <motion.div variants={fadeInUp}>
+              <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-2px] transition-transform">
+                <motion.div
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
+                  className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
+                  style={{
+                    backgroundColor: `${palette.primary}20`,
+                    borderColor: `${palette.primary}44`,
+                    color: palette.accent,
+                  }}
+                >
+                  <Mail className="w-5 h-5" />
+                </motion.div>
+                <div>
+                  <h3 className="font-bold text-white text-base">Direct Email</h3>
+                  <p className="text-xs text-slate-400 mt-1">Primary communication</p>
+                </div>
+                <a
+                  href="mailto:dhruvb324@gmail.com"
+                  className="inline-block text-xs font-semibold hover:underline break-all"
+                  style={{ color: palette.primary }}
+                >
+                  dhruvb324@gmail.com
+                </a>
+              </SpotlightCard>
+            </motion.div>
 
             {/* LinkedIn Card */}
-            <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-2px]">
-              <div
-                className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
-                style={{
-                  backgroundColor: "rgba(59, 130, 246, 0.2)",
-                  borderColor: "rgba(59, 130, 246, 0.4)",
-                  color: "#60a5fa",
-                }}
-              >
-                <Linkedin className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="font-bold text-white text-base">LinkedIn</h3>
-                <p className="text-xs text-slate-400 mt-1">Professional network</p>
-              </div>
-              <a
-                href="https://www.linkedin.com/in/dhruvb-tech"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block text-xs font-semibold hover:underline"
-                style={{ color: palette.primary }}
-              >
-                in/dhruvb-tech
-              </a>
-            </SpotlightCard>
+            <motion.div variants={fadeInUp}>
+              <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-2px] transition-transform">
+                <motion.div
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
+                  className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
+                  style={{
+                    backgroundColor: "rgba(59, 130, 246, 0.2)",
+                    borderColor: "rgba(59, 130, 246, 0.4)",
+                    color: "#60a5fa",
+                  }}
+                >
+                  <Linkedin className="w-5 h-5" />
+                </motion.div>
+                <div>
+                  <h3 className="font-bold text-white text-base">LinkedIn</h3>
+                  <p className="text-xs text-slate-400 mt-1">Professional network</p>
+                </div>
+                <a
+                  href="https://www.linkedin.com/in/dhruvb-tech"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-xs font-semibold hover:underline"
+                  style={{ color: palette.primary }}
+                >
+                  in/dhruvb-tech
+                </a>
+              </SpotlightCard>
+            </motion.div>
 
             {/* GitHub Card */}
-            <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-2px]">
-              <div
-                className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
-                style={{
-                  backgroundColor: "rgba(168, 85, 247, 0.2)",
-                  borderColor: "rgba(168, 85, 247, 0.4)",
-                  color: "#c084fc",
-                }}
-              >
-                <Github className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="font-bold text-white text-base">GitHub</h3>
-                <p className="text-xs text-slate-400 mt-1">Project repositories</p>
-              </div>
-              <a
-                href="https://github.com/Dhruv-1309"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block text-xs font-semibold hover:underline"
-                style={{ color: palette.primary }}
-              >
-                github.com/Dhruv-1309
-              </a>
-            </SpotlightCard>
-          </div>
+            <motion.div variants={fadeInUp}>
+              <SpotlightCard className="p-6 text-center space-y-4 hover:translate-y-[-2px] transition-transform">
+                <motion.div
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
+                  className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
+                  style={{
+                    backgroundColor: "rgba(168, 85, 247, 0.2)",
+                    borderColor: "rgba(168, 85, 247, 0.4)",
+                    color: "#c084fc",
+                  }}
+                >
+                  <Github className="w-5 h-5" />
+                </motion.div>
+                <div>
+                  <h3 className="font-bold text-white text-base">GitHub</h3>
+                  <p className="text-xs text-slate-400 mt-1">Project repositories</p>
+                </div>
+                <a
+                  href="https://github.com/Dhruv-1309"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-xs font-semibold hover:underline"
+                  style={{ color: palette.primary }}
+                >
+                  github.com/Dhruv-1309
+                </a>
+              </SpotlightCard>
+            </motion.div>
+          </motion.div>
 
-          {/* Quick Copy Email Action */}
-          <div className="flex justify-center pt-8">
-            <button
+          {/* Quick Copy Email Action with interactive feedback */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="flex justify-center pt-8"
+          >
+            <motion.button
               onClick={handleCopyEmail}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-mono text-slate-300 hover:text-white transition-all backdrop-blur-md cursor-pointer shadow-sm hover:bg-white/5"
               style={{
                 backgroundColor: "rgba(255, 255, 255, 0.03)",
@@ -975,8 +1110,8 @@ export default function Portfolio() {
                   <span>Click to copy email: dhruvb324@gmail.com</span>
                 </>
               )}
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </section>
 
         {/* FOOTER */}
