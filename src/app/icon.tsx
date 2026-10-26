@@ -12,18 +12,21 @@ export default function Icon() {
     (
       <div
         style={{
-          fontSize: 20,
-          background: "#0b1220",
-          color: "#60a5fa",
+          fontSize: 16,
+          background: "linear-gradient(135deg, #0b1224 0%, #080c16 100%)",
+          color: "#38bdf8",
           width: "100%",
           height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontWeight: 700,
+          fontWeight: 800,
+          borderRadius: 8,
+          border: "1.5px solid #38bdf8",
+          letterSpacing: "-0.5px",
         }}
       >
-        AI
+        DB
       </div>
     ),
     { ...size }
