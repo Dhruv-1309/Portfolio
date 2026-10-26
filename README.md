@@ -1,61 +1,131 @@
-# Portfolio - AI & Data Science Student
+# Dhruv B — Software Engineer Portfolio
 
-Portfolio website for a B.Tech student specializing in Artificial Intelligence and Data Science at KLH University, Hyderabad.
+[![Next.js](https://img.shields.io/badge/Next.js-15.3-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-black?style=for-the-badge&logo=framer&logoColor=white)](https://motion.dev/)
 
-## 🚀 Live Demo
+A modern, highly interactive personal portfolio website for **Dhruv B**, B.Tech student in Artificial Intelligence & Data Science at KL University (CGPA: **9.58 / 10.0**), targeting Software Development Engineer (SDE) internship roles.
 
-Deploy this portfolio to [Vercel](https://vercel.com) in 3 steps:
+---
 
-1. **Import Repository**
-   - Go to [vercel.com/new](https://vercel.com/new)
-   - Import `Dhruv-1309/Portfolio`
-   - Click "Deploy"
+## 🌟 Key Features & Design System
 
-2. **Auto-Deploy**
-   - Vercel will automatically detect Next.js
-   - Every push to `main` will auto-deploy
+The portfolio is built with a bespoke UI design system combining six curated interface and animation libraries:
 
-3. **Get Your Link**
-   - Your live site: `https://your-username.vercel.app`
+1. **Motion Primitives:**
+   - **TextRoll Typography:** Character-by-character rolling transition on the hero headline with spring mechanics.
+   - **Magnetic Physics:** Cursor-attracted magnetic elements with refined pull-ratios on logo, CTAs, and interactive links.
 
-## 💻 Local Development
+2. **Realtime Colors System:**
+   - Dynamic real-time palette provider with dark mode foundation (`#080c16`), luminous indigo/cyan accents, accessible contrast ratios, and interactive theme switching.
 
-First, install dependencies:
+3. **Haikei Organic Wave Dividers:**
+   - Layered, high-contrast SVG mesh transitions and wave ribbons seamlessly partitioning page sections without abrupt layout cuts.
 
-```bash
-npm install --legacy-peer-deps
-```
+4. **Animaster Lib:**
+   - **3D Tilt Cards:** Multi-axis gyro and mouse-perspective cards with realistic specular highlights.
+   - **Border Beam:** Continuous, multi-stop gradient light beams traversing the borders of featured projects and the resume spotlight card.
 
-Then run the development server:
+5. **Skiper UI Infinite Marquee:**
+   - Smooth, loop-accelerated core technology ribbon visible above the fold on the home view showcasing Java, Spring Boot, React, Next.js, TypeScript, PostgreSQL, and Kotlin.
 
-```bash
-npm run dev
-```
+6. **Vengeance UI Floating Dock:**
+   - macOS-inspired bottom floating dock with distance-based icon magnification, active section tracking, and auto-hide on cursor inactivity.
 
-Open [http://localhost:3000](http://localhost:3000) to see your portfolio.
+7. **Accessibility & Usability (WCAG AA):**
+   - 30 usability and accessibility heuristics resolved.
+   - Native `useReducedMotion` support respecting user vestibular preferences.
+   - Semantic HTML5 landmarks (`<header>`, `<main>`, `<section>`, `<footer>`).
+   - RequestAnimationFrame (`rAF`) scroll-throttled navigation tracking.
+
+---
+
+## 📂 Verified Projects Showcase
+
+All portfolio projects directly mirror verified production repositories and academic builds:
+
+| Project | Description | Stack |
+| :--- | :--- | :--- |
+| **DSA Tracker** | Full-stack progress tracker for Data Structures & Algorithms problem-solving with categorized problem lists, spaced repetition, and milestone tracking. | React · TypeScript · Spring Boot · PostgreSQL · Tailwind CSS |
+| **CP Contest Tracker (CodeCountdown)** | Native Android app providing countdowns, notifications, and rating tracking for competitive programming contests across Codeforces, LeetCode, and CodeChef. | Kotlin · Android SDK · Retrofit 2 · Coroutines · Material 3 |
+| **Digital Spending Tracker** | Client-side personal finance dashboard with categorized expense logging, monthly budget thresholds, and dynamic interactive visual charts. | JavaScript · Firebase · Chart.js · HTML5 · CSS3 |
+
+---
+
+## 🎓 Academic Credentials
+
+- **Degree:** B.Tech in Artificial Intelligence & Data Science
+- **Institution:** KL University
+- **Current CGPA:** **9.58 / 10.0**
+- **Target Roles:** Software Development Engineer (SDE) Intern, Backend / Full-Stack Engineer
+
+---
 
 ## 🛠️ Tech Stack
 
-- **Framework:** Next.js 15 with App Router
-- **Styling:** Tailwind CSS
-- **UI Components:** Radix UI, shadcn/ui
-- **Icons:** Tabler Icons, Heroicons
-- **Animations:** Framer Motion, tsParticles
-- **3D Graphics:** React Three Fiber
+- **Framework:** [Next.js 15](https://nextjs.org/) (App Router, Turbopack)
+- **Library:** [React 19](https://react.dev/)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **Animation:** [Framer Motion](https://motion.dev/) & [Motion DOM](https://motion.dev/)
+- **Components:** [Radix UI](https://www.radix-ui.com/) primitives
+- **Icons:** [Lucide Icons](https://lucide.dev/), [Tabler Icons](https://tabler-icons.io/)
 
-## 📝 Customization
+---
 
-Edit `src/app/page.tsx` to update your portfolio content. The page auto-updates as you edit.
+## 🚀 Getting Started
 
-## 🔧 Build
+### Prerequisites
+- Node.js 18+ or 20+
+- npm or pnpm
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Dhruv-1309/Portfolio.git
+   cd Portfolio
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install --legacy-peer-deps
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 🏗️ Building for Production
+
+To create an optimized production build:
 
 ```bash
 npm run build
-npm start
+npm run start
 ```
 
-## 📚 Learn More
+---
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Tailwind CSS](https://tailwindcss.com/docs)
-- [shadcn/ui](https://ui.shadcn.com)
+## 🚢 Deployment (Vercel)
+
+The repository is configured for one-click continuous deployment on [Vercel](https://vercel.com):
+
+1. Push your changes to the `main` branch on GitHub.
+2. Link the repository to your Vercel project at [vercel.com/new](https://vercel.com/new).
+3. The Next.js App Router project is automatically detected with zero extra configuration.
+
+---
+
+## 📬 Contact & Links
+
+- **GitHub:** [@Dhruv-1309](https://github.com/Dhruv-1309)
+- **LinkedIn:** [dhruv-b-88a2a8316](https://linkedin.com/in/dhruv-b-88a2a8316)
+- **Email:** [dhruvb324@gmail.com](mailto:dhruvb324@gmail.com)
