@@ -381,17 +381,18 @@ export default function Portfolio() {
 
       {/* Main Content */}
       <main className="relative z-10 pt-20">
-        {/* HERO SECTION with Motion Primitives Text Roll and Staggered Animations */}
+        {/* HERO SECTION with Motion Primitives Text Roll and Integrated Tech Ribbon */}
         <section
           id="home"
-          className="min-h-[85vh] flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-10 pb-16 relative overflow-hidden"
+          className="min-h-[calc(100vh-4rem)] flex flex-col justify-between relative overflow-hidden"
         >
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-            className="max-w-4xl mx-auto text-center space-y-6"
-          >
+          <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-4 pb-2">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={staggerContainer}
+              className="max-w-4xl mx-auto text-center space-y-4 sm:space-y-5"
+            >
             {/* Status Pill with rotating sparkle */}
             <motion.div
               initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
@@ -572,12 +573,13 @@ export default function Portfolio() {
               </div>
             </motion.div>
           </motion.div>
-        </section>
+        </div>
 
-        {/* Skiper UI Infinite Tech Marquee */}
-        <section className="relative z-10 border-y border-white/5 py-2 bg-black/20" aria-label="Core Technology Ribbon">
+        {/* Skiper UI Infinite Tech Marquee - Visible at bottom of Home screen */}
+        <div className="relative z-10 border-y border-white/5 py-2.5 bg-black/30 w-full mt-auto" aria-label="Core Technology Ribbon">
           <TechMarquee />
-        </section>
+        </div>
+      </section>
 
         {/* Haikei Organic Wave Divider */}
         <HaikeiWaveDivider />
@@ -916,52 +918,92 @@ export default function Portfolio() {
           </motion.div>
         </section>
 
-        {/* RESUME SECTION */}
+        {/* RESUME SECTION - Dedicated section with distinct page presence */}
         <section
           id="resume"
-          className="pt-6 pb-12 sm:pt-8 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto scroll-mt-20"
+          className="min-h-[75vh] flex flex-col justify-center py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto scroll-mt-20"
         >
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
+            className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-2.5"
           >
-            <TiltCard maxTilt={5}>
+            <span
+              className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
+              style={{
+                backgroundColor: `${palette.primary}15`,
+                borderColor: palette.borderDark,
+                color: palette.accent,
+              }}
+            >
+              Verified Credentials
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+              Curriculum Vitae & Resume
+            </h2>
+            <p className="text-slate-400 text-sm sm:text-base">
+              Comprehensive record of university coursework at KL University, verified academic projects, and software engineering competencies.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            className="space-y-6"
+          >
+            <TiltCard maxTilt={4}>
               <SpotlightCard className="p-8 sm:p-10 relative overflow-hidden">
                 <BorderBeam
-                  size={300}
-                  duration={14}
+                  size={320}
+                  duration={12}
                   colorFrom={palette.primary}
                   colorTo={palette.accent}
                 />
 
                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-                  <div className="space-y-2.5 max-w-lg">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-medium text-slate-300">
-                      <CheckCircle2
-                        className="w-3.5 h-3.5"
-                        style={{ color: palette.accent }}
-                      />
-                      Verified PDF Resume
+                  <div className="space-y-3 max-w-xl">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-medium text-emerald-400 border-emerald-500/30 bg-emerald-500/10">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      Verified PDF Resume Available
                     </div>
-                    <h3 className="text-2xl sm:text-3xl font-bold text-white">
+                    <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                       Dhruv B — Official Resume
                     </h3>
                     <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                      Software Development Engineer Intern Candidate. Comprehensive record of university
-                      coursework at KL University, academic projects (DSA Tracker, CP Contest Tracker,
-                      Digital Spending Tracker), and verified technical skills.
+                      Software Development Engineer Intern Candidate. Comprehensive academic record at KL University (CGPA: 9.58 / 10.0), production project prototypes (DSA Tracker, CP Contest Tracker, Digital Spending Tracker), and core technical skills.
                     </p>
+
+                    {/* Quick Resume Highlights */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-left">
+                      <div className="p-2.5 rounded-lg border bg-white/[0.02]" style={{ borderColor: palette.borderDark }}>
+                        <span className="text-[10px] text-slate-400 font-mono block">EDUCATION</span>
+                        <span className="text-xs font-semibold text-white">KL University</span>
+                        <span className="text-[11px] text-emerald-400 block font-mono">CGPA: 9.58</span>
+                      </div>
+                      <div className="p-2.5 rounded-lg border bg-white/[0.02]" style={{ borderColor: palette.borderDark }}>
+                        <span className="text-[10px] text-slate-400 font-mono block">PROJECTS</span>
+                        <span className="text-xs font-semibold text-white">3 Verified</span>
+                        <span className="text-[11px] text-slate-300 block">Web & Android</span>
+                      </div>
+                      <div className="p-2.5 rounded-lg border bg-white/[0.02] col-span-2 sm:col-span-1" style={{ borderColor: palette.borderDark }}>
+                        <span className="text-[10px] text-slate-400 font-mono block">TARGET ROLE</span>
+                        <span className="text-xs font-semibold text-white">SDE Intern</span>
+                        <span className="text-[11px] text-slate-300 block">Java · Python · Web</span>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="flex-shrink-0">
+                  <div className="flex flex-col sm:flex-row md:flex-col gap-3 flex-shrink-0 w-full sm:w-auto">
                     <Magnetic strength={0.18}>
-                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full">
                         <Button
                           asChild
                           size="lg"
-                          className="px-7 py-5 rounded-xl text-sm font-semibold shadow-xl text-white cursor-pointer"
+                          className="w-full px-7 py-5 rounded-xl text-sm font-semibold shadow-xl text-white cursor-pointer"
                           style={{
                             backgroundColor: palette.primary,
                             boxShadow: `0 8px 24px -4px ${palette.glow}`,
@@ -974,6 +1016,16 @@ export default function Portfolio() {
                         </Button>
                       </motion.div>
                     </Magnetic>
+
+                    <a
+                      href="/Resume.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs font-medium text-slate-300 hover:text-white transition-colors text-center"
+                    >
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                      View in New Tab
+                    </a>
                   </div>
                 </div>
               </SpotlightCard>
@@ -981,10 +1033,13 @@ export default function Portfolio() {
           </motion.div>
         </section>
 
-        {/* CONTACT SECTION */}
+        {/* Haikei Organic Wave Divider between Resume and Contact */}
+        <HaikeiWaveDivider flip={true} />
+
+        {/* CONTACT SECTION - Dedicated Get In Touch section */}
         <section
           id="contact"
-          className="pt-6 pb-12 sm:pt-8 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+          className="min-h-[75vh] flex flex-col justify-center py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
         >
           <motion.div
             initial="hidden"

@@ -99,7 +99,7 @@ export function HaikeiWaveDivider({ flip = false }: { flip?: boolean }) {
       }`}
     >
       <svg
-        className="relative block w-full h-8 sm:h-12 opacity-25"
+        className="relative block w-full h-10 sm:h-14 opacity-80"
         data-name="Layer 1"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1200 120"
@@ -108,12 +108,12 @@ export function HaikeiWaveDivider({ flip = false }: { flip?: boolean }) {
         <path
           d="M0,0 C150,90 350,-40 500,50 C650,140 900,10 1200,40 L1200,120 L0,120 Z"
           fill={palette.primary}
-          fillOpacity="0.2"
+          fillOpacity="0.35"
         />
         <path
           d="M0,20 C200,110 420,-10 600,60 C780,130 1000,30 1200,60 L1200,120 L0,120 Z"
-          fill={palette.secondary}
-          fillOpacity="0.15"
+          fill={palette.accent}
+          fillOpacity="0.25"
         />
       </svg>
     </div>
