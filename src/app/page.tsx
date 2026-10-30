@@ -1135,95 +1135,125 @@ export default function Portfolio() {
             variants={staggerContainer}
             className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto"
           >
-            {/* Email Card */}
+            {/* Email Card - Entire card is clickable */}
             <motion.div variants={fadeInUp}>
-              <SpotlightCard className="p-6 text-center space-y-4">
-                <motion.div
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{ duration: 0.5 }}
-                  className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
-                  style={{
-                    backgroundColor: `${palette.primary}20`,
-                    borderColor: `${palette.primary}44`,
-                    color: palette.accent,
-                  }}
-                >
-                  <Mail className="w-5 h-5" />
-                </motion.div>
-                <div>
-                  <h3 className="font-bold text-white text-base">Direct Email</h3>
-                  <p className="text-xs text-slate-400 mt-1">Primary communication</p>
-                </div>
-                <a
-                  href="mailto:dhruvb324@gmail.com"
-                  className="inline-block text-xs font-semibold hover:underline break-all"
-                  style={{ color: palette.primary }}
-                >
-                  dhruvb324@gmail.com
-                </a>
-              </SpotlightCard>
+              <a
+                href="mailto:dhruvb324@gmail.com"
+                className="block group/contact h-full cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-500"
+                aria-label="Send direct email to dhruvb324@gmail.com"
+              >
+                <SpotlightCard className="p-6 text-center space-y-4 h-full flex flex-col justify-between transition-colors group-hover/contact:border-slate-500">
+                  <motion.div
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
+                    style={{
+                      backgroundColor: `${palette.primary}20`,
+                      borderColor: `${palette.primary}44`,
+                      color: palette.accent,
+                    }}
+                  >
+                    <Mail className="w-5 h-5" />
+                  </motion.div>
+                  <div>
+                    <h3 className="font-bold text-white text-base flex items-center justify-center gap-1.5 group-hover/contact:text-cyan-400 transition-colors">
+                      Direct Email
+                      <ArrowUpRight className="w-3.5 h-3.5 opacity-60 group-hover/contact:opacity-100 group-hover/contact:translate-x-0.5 group-hover/contact:-translate-y-0.5 transition-all" />
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-1">Primary communication</p>
+                  </div>
+                  <span
+                    className="inline-block text-xs font-semibold group-hover/contact:underline break-all"
+                    style={{ color: palette.primary }}
+                  >
+                    dhruvb324@gmail.com
+                  </span>
+                </SpotlightCard>
+              </a>
             </motion.div>
 
-            {/* LinkedIn Card */}
+            {/* LinkedIn Card - Entire card is clickable */}
             <motion.div variants={fadeInUp}>
-              <SpotlightCard className="p-6 text-center space-y-4">
-                <motion.div
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{ duration: 0.5 }}
-                  className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
-                  style={{
-                    backgroundColor: "rgba(59, 130, 246, 0.2)",
-                    borderColor: "rgba(59, 130, 246, 0.4)",
-                    color: "#60a5fa",
-                  }}
+              <a
+                href="https://www.linkedin.com/in/dhruvb-tech"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block group/contact h-full cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                aria-label="Visit LinkedIn profile"
+              >
+                <SpotlightCard
+                  spotlightColor="#3b82f6"
+                  className="p-6 text-center space-y-4 h-full flex flex-col justify-between transition-colors group-hover/contact:border-blue-500/50"
                 >
-                  <Linkedin className="w-5 h-5" />
-                </motion.div>
-                <div>
-                  <h3 className="font-bold text-white text-base">LinkedIn</h3>
-                  <p className="text-xs text-slate-400 mt-1">Professional network</p>
-                </div>
-                <a
-                  href="https://www.linkedin.com/in/dhruvb-tech"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block text-xs font-semibold hover:underline"
-                  style={{ color: palette.primary }}
-                >
-                  in/dhruvb-tech
-                </a>
-              </SpotlightCard>
+                  <motion.div
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
+                    style={{
+                      backgroundColor: "rgba(59, 130, 246, 0.2)",
+                      borderColor: "rgba(59, 130, 246, 0.4)",
+                      color: "#60a5fa",
+                    }}
+                  >
+                    <Linkedin className="w-5 h-5" />
+                  </motion.div>
+                  <div>
+                    <h3 className="font-bold text-white text-base flex items-center justify-center gap-1.5 group-hover/contact:text-blue-400 transition-colors">
+                      LinkedIn
+                      <ArrowUpRight className="w-3.5 h-3.5 opacity-60 group-hover/contact:opacity-100 group-hover/contact:translate-x-0.5 group-hover/contact:-translate-y-0.5 transition-all" />
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-1">Professional network</p>
+                  </div>
+                  <span
+                    className="inline-block text-xs font-semibold group-hover/contact:underline"
+                    style={{ color: palette.primary }}
+                  >
+                    in/dhruvb-tech
+                  </span>
+                </SpotlightCard>
+              </a>
             </motion.div>
 
-            {/* GitHub Card */}
+            {/* GitHub Card - Entire card is clickable */}
             <motion.div variants={fadeInUp}>
-              <SpotlightCard className="p-6 text-center space-y-4">
-                <motion.div
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{ duration: 0.5 }}
-                  className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
-                  style={{
-                    backgroundColor: "rgba(168, 85, 247, 0.2)",
-                    borderColor: "rgba(168, 85, 247, 0.4)",
-                    color: "#c084fc",
-                  }}
+              <a
+                href="https://github.com/Dhruv-1309"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block group/contact h-full cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-purple-500"
+                aria-label="Visit GitHub repositories"
+              >
+                <SpotlightCard
+                  spotlightColor="#a855f7"
+                  className="p-6 text-center space-y-4 h-full flex flex-col justify-between transition-colors group-hover/contact:border-purple-500/50"
                 >
-                  <Github className="w-5 h-5" />
-                </motion.div>
-                <div>
-                  <h3 className="font-bold text-white text-base">GitHub</h3>
-                  <p className="text-xs text-slate-400 mt-1">Project repositories</p>
-                </div>
-                <a
-                  href="https://github.com/Dhruv-1309"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block text-xs font-semibold hover:underline"
-                  style={{ color: palette.primary }}
-                >
-                  github.com/Dhruv-1309
-                </a>
-              </SpotlightCard>
+                  <motion.div
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
+                    style={{
+                      backgroundColor: "rgba(168, 85, 247, 0.2)",
+                      borderColor: "rgba(168, 85, 247, 0.4)",
+                      color: "#c084fc",
+                    }}
+                  >
+                    <Github className="w-5 h-5" />
+                  </motion.div>
+                  <div>
+                    <h3 className="font-bold text-white text-base flex items-center justify-center gap-1.5 group-hover/contact:text-purple-400 transition-colors">
+                      GitHub
+                      <ArrowUpRight className="w-3.5 h-3.5 opacity-60 group-hover/contact:opacity-100 group-hover/contact:translate-x-0.5 group-hover/contact:-translate-y-0.5 transition-all" />
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-1">Project repositories</p>
+                  </div>
+                  <span
+                    className="inline-block text-xs font-semibold group-hover/contact:underline"
+                    style={{ color: palette.primary }}
+                  >
+                    github.com/Dhruv-1309
+                  </span>
+                </SpotlightCard>
+              </a>
             </motion.div>
           </motion.div>
 
