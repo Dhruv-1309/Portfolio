@@ -19,6 +19,7 @@ import {
   Star,
   CheckCircle2,
   Terminal,
+  Layers,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -70,50 +71,97 @@ const VERIFIED_PROJECTS: ProjectData[] = [
   {
     id: "dsa-tracker",
     title: "DSA Tracker",
-    subtitle: "Problem Practice & Revision Scheduling Web App",
+    subtitle: "Algorithmic Practice & Spaced-Repetition System",
     category: "Full-Stack Web",
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=450&fit=crop",
+    image: "/projects/dsa-tracker/dsa-dashboard.png",
     description:
-      "A web app to organize and track DSA practice problems by topic, log attempt details, and schedule revisits.",
+      "A systematic algorithmic mastery platform featuring evidence-based spaced repetition, blind interview mode, habit heatmaps, and 10-domain topic gap analysis.",
     overview:
-      "Built with a React (Vite + TypeScript) frontend and a Spring Boot REST API backend using PostgreSQL, implementing JWT-based authentication and user-specific data access. Features a spaced-repetition revisit queue and an approval-based friend sharing system.",
+      "Engineered with a React (Vite + TypeScript) frontend and a robust Spring Boot REST backend utilizing PostgreSQL. Solves retention decay in technical interview preparation by combining an active-recall revisit queue, a blind practice mode simulating whiteboard pressure, and an interactive domain mastery topic map.",
     features: [
       {
-        title: "Attempt-Logging Architecture",
+        title: "Blind Interview Practice Mode",
         description:
-          "Records thinking ability, coding ability, time/space complexity, and confidence score per problem attempt.",
+          "Hides past attempt notes, solutions, and target complexity to simulate authentic, unassisted technical interview pressure.",
       },
       {
-        title: "Revisit Queue System",
+        title: "Spaced-Repetition Retention Queue",
         description:
-          "Problem status is auto-derived from the latest attempt, driving a structured spaced-repetition queue based on stored next-review dates.",
+          "Automated revision scheduler flagging overdue challenges and prioritizing problems based on forgetting curves and confidence scores.",
       },
       {
-        title: "Secure JWT Authentication",
+        title: "10-Domain Algorithmic Topic Map",
         description:
-          "Stateless token-based authentication with Spring Security and role-guarded user-specific database scoping.",
+          "Real-time coverage analytics across DP, Graphs, Sliding Window, Trees, Heaps, and Backtracking to pinpoint curriculum gaps.",
       },
       {
-        title: "Friend-Sharing & Heatmap",
+        title: "Activity Heatmap & Practice Metrics",
         description:
-          "Approval-based permission model allowing peer users read-only access to full problem logs, approach notes, and contribution activity heatmaps.",
+          "Tracks daily consistency, solve rate (77%), outcome distributions, and problem difficulty breakdowns across 184+ problems.",
+      },
+      {
+        title: "Filterable Problems Directory",
+        description:
+          "Searchable and sortable catalog with instant topic filters, LeetCode deep-links, revisit dates, and attempt action triggers.",
+      },
+      {
+        title: "Secure Spring Boot & JWT Architecture",
+        description:
+          "Stateless token authentication with Spring Security, PostgreSQL persistence, and strict user-scoped data access boundaries.",
       },
     ],
     metrics: [
+      { label: "Tracked", value: "184+" },
+      { label: "Optimal Solves", value: "142" },
+      { label: "Solve Rate", value: "77%" },
+      { label: "Topic Domains", value: "10" },
       { label: "Frontend", value: "React + TS" },
       { label: "Backend API", value: "Spring Boot" },
-      { label: "Database", value: "PostgreSQL" },
     ],
     techStack: [
       "React",
       "TypeScript",
       "Spring Boot",
       "PostgreSQL",
+      "Java",
+      "Tailwind CSS",
       "JWT",
       "Vite",
       "REST APIs",
     ],
     githubUrl: "https://github.com/Dhruv-1309",
+    screenshots: [
+      {
+        url: "/projects/dsa-tracker/dsa-dashboard.png",
+        title: "Executive Practice Dashboard",
+        caption: "Daily algorithmic summary with 184 tracked challenges, 142 optimal solutions, practice outcome distribution, and 2026 habit heatmap.",
+        tag: "Dashboard",
+      },
+      {
+        url: "/projects/dsa-tracker/dsa-problem-detail.png",
+        title: "Blind Interview Practice Mode",
+        caption: "Simulates whiteboard conditions by hiding past approaches and target complexity, paired with a custom revisit scheduling queue.",
+        tag: "Practice Mode",
+      },
+      {
+        url: "/projects/dsa-tracker/dsa-topic-map.png",
+        title: "Algorithmic Topic & Domain Map",
+        caption: "High-level progress metrics across 10 algorithmic categories (DP, Graphs, Sliding Window, Trees, Heaps, and Recursion).",
+        tag: "Topic Map",
+      },
+      {
+        url: "/projects/dsa-tracker/dsa-problems-directory.png",
+        title: "Filterable Problems Directory",
+        caption: "Sortable algorithmic problem registry featuring topic tags, difficulty badges, solve status, and scheduled review dates.",
+        tag: "Directory",
+      },
+      {
+        url: "/projects/dsa-tracker/dsa-auth-landing.png",
+        title: "Authentication & Onboarding",
+        caption: "Secure JWT login, Google OAuth integration, and core architectural feature breakdown for systematic interview prep.",
+        tag: "Auth & Landing",
+      },
+    ],
   },
   {
     id: "cp-tracker",
@@ -801,15 +849,29 @@ export default function Portfolio() {
 
                       <div className="flex-1 flex flex-col">
                         {/* Image Thumbnail with smooth hover zoom */}
-                        <div className="relative aspect-video w-full overflow-hidden rounded-t-xl flex-shrink-0">
+                        <div className="relative aspect-video w-full overflow-hidden rounded-t-xl flex-shrink-0 bg-slate-950">
                           <Image
                             src={project.image}
                             alt={project.title}
                             fill
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+
+                          {project.screenshots && project.screenshots.length > 0 && (
+                            <span
+                              className="absolute bottom-3 left-3 text-[11px] font-medium px-2 py-0.5 rounded-full border backdrop-blur-md flex items-center gap-1 shadow-sm"
+                              style={{
+                                backgroundColor: "rgba(0,0,0,0.65)",
+                                borderColor: "rgba(255,255,255,0.15)",
+                                color: palette.accent,
+                              }}
+                            >
+                              <Layers className="w-3 h-3" />
+                              {project.screenshots.length} App Views
+                            </span>
+                          )}
 
                           {isFlagship && (
                             <motion.div
