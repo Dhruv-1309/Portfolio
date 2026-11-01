@@ -10,10 +10,10 @@ const COMMAND_MAP: Record<string, React.ReactNode> = {
     <div className="space-y-1 text-slate-300 text-xs sm:text-sm">
       <p className="text-emerald-400">✓ Student Profile Initialized</p>
       <p>Name: <span className="text-white font-semibold">Dhruv B</span></p>
-      <p>Role: <span className="text-cyan-400">Software Development Engineer Intern Candidate</span></p>
-      <p>University: <span className="text-indigo-400">KL University (Hyderabad, India)</span></p>
-      <p>Degree: <span className="text-slate-200">B.Tech in Artificial Intelligence & Data Science</span></p>
-      <p>Graduation: <span className="text-slate-400">Class of 2028 (2024 – Expected 2028)</span></p>
+      <p>Role: <span className="text-cyan-400">Software Development | Backend & Full-Stack | Android Dev</span></p>
+      <p>University: <span className="text-indigo-400">KL University (Koneru Lakshmaiah Education Foundation)</span></p>
+      <p>Degree: <span className="text-slate-200">Bachelor of Technology in Artificial Intelligence & Data Science</span></p>
+      <p>Timeline: <span className="text-slate-400">2024 – 2028 (Expected)</span></p>
       <p>Academic Standing: <span className="text-amber-400 font-bold">CGPA: 9.58 / 10.0</span></p>
     </div>
   ),
@@ -21,46 +21,72 @@ const COMMAND_MAP: Record<string, React.ReactNode> = {
     <div className="space-y-1.5 text-slate-300 text-xs sm:text-sm">
       <p className="text-emerald-400">✓ Verified Technical Skills (Resume-Aligned)</p>
       <p>
-        <span className="text-indigo-400 font-medium">Languages:</span> Java, Python, JavaScript (ES6+), C (Fundamentals)
+        <span className="text-indigo-400 font-medium">Languages:</span> Java, Kotlin, TypeScript, JavaScript (ES6+), Python, C, SQL, HTML5, CSS3
       </p>
       <p>
-        <span className="text-cyan-400 font-medium">CS Fundamentals:</span> Data Structures & Algorithms, Object-Oriented Programming (OOP)
+        <span className="text-cyan-400 font-medium">Backend & Frameworks:</span> Spring Boot, Spring Security, Spring Data JPA, Hibernate, React (Vite), Android SDK, Retrofit 2, Kotlin Coroutines, Chart.js
       </p>
       <p>
-        <span className="text-emerald-400 font-medium">Backend & Databases:</span> Spring Boot, REST APIs, PostgreSQL, Firebase, Cloud Firestore
+        <span className="text-emerald-400 font-medium">Databases & Security:</span> PostgreSQL, Cloud Firestore, Firebase Authentication, Stateless JWT (JJWT), Google OAuth 2.0, BCrypt, Rate Limiting, CORS/CSP/HSTS
       </p>
       <p>
-        <span className="text-violet-400 font-medium">Web:</span> React, TypeScript, HTML5, CSS3
-      </p>
-      <p>
-        <span className="text-amber-400 font-medium">Android:</span> Kotlin, Android Development
-      </p>
-      <p>
-        <span className="text-slate-400 font-medium">Tools:</span> Git, GitHub, VS Code
+        <span className="text-violet-400 font-medium">Tools & Concepts:</span> Apache Maven, Git, GitHub, RESTful APIs, DSA, OOP, MVVM, Repository Pattern
       </p>
     </div>
   ),
   "dhruv.projects": (
     <div className="space-y-2 text-slate-300 text-xs sm:text-sm">
-      <p className="text-emerald-400">✓ 3 Verified Academic Projects</p>
+      <p className="text-emerald-400">✓ 3 Verified Production & Academic Projects</p>
       <div>
-        <p className="text-white font-medium">1. DSA Tracker — Problem Practice Web App</p>
+        <p className="text-white font-medium">1. DSA Tracker — Full-Stack Problem Practice Platform</p>
         <p className="text-slate-400">
-          React (Vite + TypeScript), Spring Boot REST API, PostgreSQL, JWT Authentication. Attempt-logging with spaced repetition revisit queues.
+          Java, Spring Boot, Spring Security, JPA/Hibernate, PostgreSQL, React (Vite+TS), JWT, Maven. 35 REST endpoints, token blacklisting, rate limiting, N+1 query elimination, spaced repetition.
         </p>
+        <a href="https://github.com/Dhruv-1309/dsa-tracker" target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline text-xs">
+          github.com/Dhruv-1309/dsa-tracker
+        </a>
       </div>
       <div>
-        <p className="text-white font-medium">2. CP Contest Tracker (CodeCountdown) — Android App</p>
+        <p className="text-white font-medium">2. Contestory (CodeCountdown) — Contest Tracker Android App</p>
         <p className="text-slate-400">
-          Kotlin, MVVM, Retrofit 2, Coroutines, Material Design 3. Tracks contests from Codeforces, LeetCode, CodeChef, and AtCoder with AlarmManager reminders.
+          Kotlin, Android SDK, MVVM, Repo Pattern, Retrofit 2, Coroutines, LiveData, Material 3. Synchronizes contests from Codeforces, LeetCode, CodeChef, and AtCoder with AlarmManager reminders.
         </p>
+        <a href="https://github.com/Dhruv-1309/Contestory" target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline text-xs">
+          github.com/Dhruv-1309/Contestory
+        </a>
       </div>
       <div>
-        <p className="text-white font-medium">3. Digital Spending Tracker — Web App</p>
+        <p className="text-white font-medium">3. Digital Spending Tracker — Expense Analytics & Anomaly Detection</p>
         <p className="text-slate-400">
-          JavaScript (ES6+), Firebase Auth, Cloud Firestore, Chart.js. Category anomaly detection using Z-score threshold of 2, Excel export.
+          JavaScript (ES6+), HTML5, CSS3, Firebase Auth, Cloud Firestore, Chart.js. Automated category anomaly detection with statistical Z-score threshold of 2 (|Z| &gt; 2) and Excel export.
         </p>
+        <a href="https://github.com/Dhruv-1309/Digital-Spending-Tracker" target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline text-xs">
+          github.com/Dhruv-1309/Digital-Spending-Tracker
+        </a>
       </div>
+    </div>
+  ),
+  "dhruv.achievements": (
+    <div className="space-y-1.5 text-slate-300 text-xs sm:text-sm">
+      <p className="text-emerald-400">✓ Competitive Programming & Certifications</p>
+      <p>
+        <span className="text-amber-400 font-semibold">Problems Solved:</span> 968+ algorithmic problems & 146 rated contests over 240+ active coding days
+      </p>
+      <p>
+        <span className="text-cyan-400 font-medium">LeetCode:</span> 100 Days Badge (2026) & 50 Days Badge (2026) • 257 DSA solved • 43 contests • Peak rating 1,439
+      </p>
+      <p>
+        <span className="text-indigo-400 font-medium">CodeChef:</span> 500+ Problems Solved & 50+ Contests badges • 677 problems solved • 96 contests
+      </p>
+      <p>
+        <span className="text-emerald-400 font-medium">Certification:</span> AI Fluency for Students – Certificate of Completion (2024)
+      </p>
+      <p>
+        <span className="text-slate-400 font-medium">Codolio Profile:</span>{" "}
+        <a href="https://codolio.com/profile/Dhruv_13" target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline">
+          codolio.com/profile/Dhruv_13
+        </a>
+      </p>
     </div>
   ),
   "dhruv.contact": (
@@ -70,6 +96,7 @@ const COMMAND_MAP: Record<string, React.ReactNode> = {
       <p>Phone: <span className="text-slate-300">+91-9933260140</span></p>
       <p>LinkedIn: <a href="https://www.linkedin.com/in/dhruvb-tech" target="_blank" rel="noreferrer" className="text-indigo-400 hover:underline">linkedin.com/in/dhruvb-tech</a></p>
       <p>GitHub: <a href="https://github.com/Dhruv-1309" target="_blank" rel="noreferrer" className="text-violet-400 hover:underline">github.com/Dhruv-1309</a></p>
+      <p>Codolio: <a href="https://codolio.com/profile/Dhruv_13" target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline">codolio.com/profile/Dhruv_13</a></p>
     </div>
   ),
 };

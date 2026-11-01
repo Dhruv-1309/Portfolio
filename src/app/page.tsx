@@ -20,6 +20,7 @@ import {
   CheckCircle2,
   Terminal,
   Layers,
+  Code2,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -71,65 +72,66 @@ const VERIFIED_PROJECTS: ProjectData[] = [
   {
     id: "dsa-tracker",
     title: "DSA Tracker",
-    subtitle: "Algorithmic Practice & Spaced-Repetition System",
+    subtitle: "Full-Stack Problem Practice Platform",
     category: "Full-Stack Web",
     image: "/projects/dsa-tracker/dsa-dashboard.png",
     description:
-      "A systematic algorithmic mastery platform featuring evidence-based spaced repetition, blind interview mode, habit heatmaps, and 10-domain topic gap analysis.",
+      "Architected 35 RESTful API endpoints across 10 Spring Boot controllers and 8 normalized PostgreSQL tables backing a React + TypeScript SPA with stateless auth, rate limiting, and spaced-repetition.",
     overview:
-      "Engineered with a React (Vite + TypeScript) frontend and a robust Spring Boot REST backend utilizing PostgreSQL. Solves retention decay in technical interview preparation by combining an active-recall revisit queue, a blind practice mode simulating whiteboard pressure, and an interactive domain mastery topic map.",
+      "Full-stack problem practice platform with React (Vite + TypeScript) and Spring Boot with PostgreSQL. Engineered 35 REST API endpoints, stateless security with JJWT and Google OAuth 2.0, token blacklist revocation, bucket-based rate limiting, N+1 query elimination with @BatchSize, automated timestamp auditing, and a priority-sorted spaced-repetition revisit queue.",
     features: [
+      {
+        title: "35 REST APIs & Normalized Schemas",
+        description:
+          "Architected 35 RESTful API endpoints across 10 Spring Boot controllers and 8 normalized PostgreSQL tables (6 core entities and 2 many-to-many join tables for topics and mistake tags).",
+      },
+      {
+        title: "Stateless Auth & Security Hardening",
+        description:
+          "Spring Security, JJWT (0.12.6), Google OAuth 2.0, BCrypt, in-memory TokenBlacklistService for instant logout revocation, and bucket-based RateLimitingFilter (HSTS, CSP, X-Frame-Options).",
+      },
+      {
+        title: "Hibernate N+1 Query Elimination",
+        description:
+          "Eliminated N+1 query bottlenecks across nested attempt and mistake-tag collections with @BatchSize(size = 100), multi-column PostgreSQL indexes, and custom JPQL projections with @CreationTimestamp/@UpdateTimestamp.",
+      },
+      {
+        title: "Priority Spaced-Repetition Queue",
+        description:
+          "Built a priority-sorted spaced-repetition revisit queue, 365-day practice heatmap, and domain mastery tracking to overcome forgetting curves.",
+      },
+      {
+        title: "Friend-Sharing State Machine",
+        description:
+          "Approval-based friend-sharing workflow (PENDING/ACCEPTED) granting read-only peer access to solutions, complexity logs, and mistake frequency analytics.",
+      },
       {
         title: "Blind Interview Practice Mode",
         description:
-          "Hides past attempt notes, solutions, and target complexity to simulate authentic, unassisted technical interview pressure.",
-      },
-      {
-        title: "Spaced-Repetition Retention Queue",
-        description:
-          "Automated revision scheduler flagging overdue challenges and prioritizing problems based on forgetting curves and confidence scores.",
-      },
-      {
-        title: "10-Domain Algorithmic Topic Map",
-        description:
-          "Real-time coverage analytics across DP, Graphs, Sliding Window, Trees, Heaps, and Backtracking to pinpoint curriculum gaps.",
-      },
-      {
-        title: "Activity Heatmap & Practice Metrics",
-        description:
-          "Tracks daily consistency, solve rate (77%), outcome distributions, and problem difficulty breakdowns across 184+ problems.",
-      },
-      {
-        title: "Filterable Problems Directory",
-        description:
-          "Searchable and sortable catalog with instant topic filters, LeetCode deep-links, revisit dates, and attempt action triggers.",
-      },
-      {
-        title: "Secure Spring Boot & JWT Architecture",
-        description:
-          "Stateless token authentication with Spring Security, PostgreSQL persistence, and strict user-scoped data access boundaries.",
+          "Hides past approaches, solutions, and target complexity to simulate authentic, unassisted technical whiteboard pressure.",
       },
     ],
     metrics: [
-      { label: "Tracked", value: "184+" },
-      { label: "Optimal Solves", value: "142" },
-      { label: "Solve Rate", value: "77%" },
-      { label: "Topic Domains", value: "10" },
-      { label: "Frontend", value: "React + TS" },
-      { label: "Backend API", value: "Spring Boot" },
+      { label: "REST APIs", value: "35 Endpoints" },
+      { label: "Controllers", value: "10 Spring Boot" },
+      { label: "PostgreSQL", value: "8 Tables" },
+      { label: "Security", value: "JJWT + OAuth" },
+      { label: "Optimization", value: "@BatchSize=100" },
+      { label: "Heatmap", value: "365-Day Practice" },
     ],
     techStack: [
-      "React",
-      "TypeScript",
-      "Spring Boot",
-      "PostgreSQL",
       "Java",
-      "Tailwind CSS",
+      "Spring Boot",
+      "Spring Security",
+      "Spring Data JPA",
+      "Hibernate",
+      "PostgreSQL",
+      "React (Vite)",
+      "TypeScript",
       "JWT",
-      "Vite",
-      "REST APIs",
+      "Apache Maven",
     ],
-    githubUrl: "https://github.com/Dhruv-1309",
+    githubUrl: "https://github.com/Dhruv-1309/dsa-tracker",
     screenshots: [
       {
         url: "/projects/dsa-tracker/dsa-dashboard.png",
@@ -165,98 +167,106 @@ const VERIFIED_PROJECTS: ProjectData[] = [
   },
   {
     id: "cp-tracker",
-    title: "CP Contest Tracker (CodeCountdown)",
-    subtitle: "Contest Aggregator & Reminder Android App",
+    title: "Contestory (CodeCountdown)",
+    subtitle: "Competitive Programming Contest Tracker",
     category: "Android Application",
     image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=450&fit=crop",
     description:
-      "An Android app that pulls upcoming competitive programming contests from Codeforces, LeetCode, CodeChef, and AtCoder and sends local reminders.",
+      "Native Android application in Kotlin using MVVM and Repository Pattern, integrating the CLIST REST API (v4) to synchronize contests across Codeforces, LeetCode, CodeChef, and AtCoder.",
     overview:
-      "Developed in Kotlin using MVVM and Repository Pattern, integrating the CLIST API (v4) via Retrofit 2 and Kotlin Coroutines to display live and upcoming contests with custom filtering and reliable background alarm notifications.",
+      "Developed in Kotlin using MVVM and the Repository Pattern, integrating the CLIST REST API (v4) via Retrofit 2 and Kotlin Coroutines for non-blocking contest synchronization. Features a reactive multi-criteria filtering engine with Material Design 3 chips, and persistent local contest reminders with AlarmManager and NotificationCompat.",
     features: [
       {
-        title: "Live Contest Synchronization",
+        title: "CLIST API v4 & Coroutines Sync",
         description:
-          "Integrates CLIST API (v4) with Retrofit 2 and Kotlin Coroutines for asynchronous, non-blocking contest ingestion.",
+          "Integrates CLIST REST API (v4) via Retrofit 2 and Kotlin Coroutines for non-blocking background synchronization across Codeforces, LeetCode, CodeChef, and AtCoder.",
       },
       {
-        title: "Day & Platform Filtering",
+        title: "Reactive Multi-Criteria Filtering",
         description:
-          "Scrollable day-selector and multi-choice platform filter chips styled with Material Design 3, backed by LiveData state observation.",
+          "Scrollable day-selector and multi-choice Material Design 3 platform chips backed by LiveData observers for real-time UI state updates.",
       },
       {
-        title: "Local Notification Reminders",
+        title: "Persistent AlarmManager Reminders",
         description:
-          "Schedules exact alerts via AlarmManager and NotificationCompat, paired with a BootReceiver to persist reminders across device reboots.",
+          "Local contest reminders via AlarmManager and NotificationCompat paired with a system BootReceiver to automatically reschedule alerts across device reboots.",
       },
       {
-        title: "Preference Persistence",
+        title: "MVVM & Repository Architecture",
         description:
-          "Caches user theme choices and selected contest platform filters locally using SharedPreferences.",
+          "Clean architectural separation with ViewModel, LiveData, and SharedPreferences state persistence for theme and platform preferences.",
       },
     ],
     metrics: [
+      { label: "Platforms", value: "4 Major CP Sites" },
+      { label: "API Sync", value: "CLIST v4 REST" },
+      { label: "Architecture", value: "MVVM + Repo" },
+      { label: "Alerts", value: "AlarmManager" },
       { label: "Language", value: "Kotlin" },
-      { label: "Architecture", value: "MVVM" },
       { label: "UI System", value: "Material 3" },
     ],
     techStack: [
       "Kotlin",
-      "Android",
+      "Android SDK",
       "MVVM",
+      "Repository Pattern",
       "Retrofit 2",
-      "Coroutines",
+      "Kotlin Coroutines",
+      "LiveData",
       "Material Design 3",
       "AlarmManager",
     ],
-    githubUrl: "https://github.com/Dhruv-1309",
+    githubUrl: "https://github.com/Dhruv-1309/Contestory",
   },
   {
     id: "spending-tracker",
     title: "Digital Spending Tracker",
-    subtitle: "Personal Finance & Statistical Anomaly Web App",
+    subtitle: "Expense Analytics & Anomaly Detection",
     category: "Web Application",
     image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop",
     description:
-      "A browser-based personal finance tracker with category charts, Z-score anomaly detection, and Excel export.",
+      "Multi-device income and expense tracking web application with Firebase Auth and Cloud Firestore, featuring statistical Z-score anomaly detection (|Z| > 2) and Chart.js analytics.",
     overview:
-      "Built with HTML5, CSS3, JavaScript (ES6+), and Firebase to deliver real-time personal expense management. Features category-level spending anomaly detection using mathematical Z-scores and visual trend breakdown.",
+      "Built with JavaScript (ES6+), HTML5, CSS3, Firebase Authentication, and Cloud Firestore for real-time NoSQL transaction persistence and custom category creation. Engineered automated category-level spending anomaly detection using a statistical Z-score threshold of 2 (|Z| > 2) and an interactive Chart.js analytics dashboard with client-side Excel export.",
     features: [
       {
-        title: "Z-Score Anomaly Detection",
+        title: "Statistical Z-Score Anomaly Detection",
         description:
-          "Calculates historical category mean and standard deviation, flagging transactions that exceed a Z-score threshold of 2.",
+          "Calculates historical category mean and standard deviation, dynamically flagging outlier transactions exceeding 2 standard deviations (|Z| > 2).",
       },
       {
-        title: "Firebase Cloud Sync",
+        title: "Firebase Auth & Cloud Firestore",
         description:
-          "Secured multi-device transaction history and custom category creation powered by Firebase Authentication and Cloud Firestore.",
+          "Multi-device real-time NoSQL transaction persistence, user authentication, and custom category management.",
       },
       {
-        title: "Interactive Chart.js Dashboard",
+        title: "3D Chart.js Analytics Dashboard",
         description:
-          "Visualizes spending distribution by category, timeline progression, and day-of-week consumption patterns.",
+          "Visualizes expenditure across 3 dimensions: category distribution, time-series progression, and day-of-week consumption patterns.",
       },
       {
-        title: "Excel Data Export",
+        title: "Client-Side Excel Export",
         description:
           "One-click complete transaction history download formatted for spreadsheet analysis and record keeping.",
       },
     ],
     metrics: [
-      { label: "Anomaly Filter", value: "Z-Score ≥ 2" },
-      { label: "Cloud Store", value: "Firestore" },
-      { label: "Visuals", value: "Chart.js" },
+      { label: "Anomaly Filter", value: "|Z| > 2 Z-Score" },
+      { label: "Data Store", value: "Cloud Firestore" },
+      { label: "Auth", value: "Firebase Auth" },
+      { label: "Dimensions", value: "3D Chart.js" },
+      { label: "Export", value: "Excel Export" },
     ],
     techStack: [
       "JavaScript (ES6+)",
       "HTML5",
       "CSS3",
-      "Firebase",
+      "Firebase Authentication",
       "Cloud Firestore",
       "Chart.js",
+      "Statistical Z-Score",
     ],
-    githubUrl: "https://github.com/Dhruv-1309",
+    githubUrl: "https://github.com/Dhruv-1309/Digital-Spending-Tracker",
   },
 ];
 
@@ -368,7 +378,7 @@ export default function Portfolio() {
                     Dhruv B
                   </span>
                   <span className="block text-xs text-slate-400 font-mono">
-                    Software Engineer in Training
+                    Backend & Full-Stack · Android Dev
                   </span>
                 </div>
               </a>
@@ -413,7 +423,7 @@ export default function Portfolio() {
                 className="rounded-full text-xs font-medium px-3.5 py-1.5 text-slate-200 border border-white/15 bg-white/5 hover:bg-white/10 hover:border-white/30 hover:text-white transition-all shadow-sm"
               >
                 <motion.a
-                  href="/Resume.pdf"
+                  href="/Resume.pdf?v=2"
                   download="Dhruv_B_Resume.pdf"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -459,7 +469,7 @@ export default function Portfolio() {
                 <Sparkles className="w-4 h-4" style={{ color: palette.accent }} />
               </motion.div>
               <span className="text-xs sm:text-sm font-medium text-slate-300">
-                KL University • B.Tech in Artificial Intelligence & Data Science • CGPA: 9.58 / 10.0
+                KL University â€¢ B.Tech in Artificial Intelligence & Data Science â€¢ CGPA: 9.58 / 10.0
               </span>
             </motion.div>
 
@@ -489,14 +499,14 @@ export default function Portfolio() {
 
               {/* SDE Candidate Positioning with Motion Primitives TextMorph */}
               <div className="text-lg sm:text-2xl font-semibold tracking-tight text-slate-200 flex items-center justify-center gap-2 flex-wrap min-h-[44px]">
-                <span className="text-slate-400">Software Engineer in Training | Building with</span>
+                <span className="text-slate-400">Software Development | Specializing in</span>
                 <TextMorph
                   words={[
-                    "Java & Spring Boot",
-                    "Data Structures & Algorithms",
-                    "React & TypeScript",
-                    "Kotlin & Android Apps",
-                    "PostgreSQL & REST APIs",
+                    "Backend & Full-Stack Systems",
+                    "Java & Spring Boot APIs",
+                    "PostgreSQL & Hibernate",
+                    "Kotlin & Native Android",
+                    "Competitive Coding (968+ Solved)",
                   ]}
                   className="font-bold underline decoration-2 underline-offset-8"
                   style={{
@@ -519,9 +529,9 @@ export default function Portfolio() {
               transition={{ duration: 0.6, delay: 0.25 }}
               className="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed pt-1"
             >
-              Building web and Android application prototypes. Exploring software development
-              with Java, Python, REST APIs, databases, and frontend technologies. Focused on
-              strengthening implementation, testing, and problem-solving through hands-on projects.
+              Engineering robust backend architectures, full-stack web applications, and native Android prototypes
+              with Java, Spring Boot, PostgreSQL, React, and Kotlin. Solved 968+ algorithmic problems and competed in
+              146 rated contests across major competitive programming platforms.
             </motion.p>
 
             {/* Hero CTAs with Magnetic Spring & Hover Ripple */}
@@ -574,7 +584,7 @@ export default function Portfolio() {
                       backgroundColor: "rgba(255,255,255,0.02)",
                     }}
                   >
-                    <a href="/Resume.pdf" download="Dhruv_B_Resume.pdf">
+                    <a href="/Resume.pdf?v=2" download="Dhruv_B_Resume.pdf">
                       <Download className="w-4 h-4 mr-2" style={{ color: palette.accent }} />
                       Download Resume (PDF)
                     </a>
@@ -616,6 +626,24 @@ export default function Portfolio() {
                     aria-label="LinkedIn Profile"
                   >
                     <Linkedin className="w-4 h-4" />
+                  </motion.a>
+                </Magnetic>
+                <Magnetic strength={0.2}>
+                  <motion.a
+                    href="https://codolio.com/profile/Dhruv_13"
+                    target="_blank"
+                    rel="noreferrer"
+                    whileHover={{ scale: 1.15, y: -2 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="w-10 h-10 rounded-xl border flex items-center justify-center text-slate-300 hover:text-white transition-all duration-150 backdrop-blur-md shadow-sm"
+                    style={{
+                      backgroundColor: "rgba(255, 255, 255, 0.04)",
+                      borderColor: palette.borderDark,
+                    }}
+                    aria-label="Codolio Profile (968+ Solved)"
+                    title="Codolio Competitive Programming Profile"
+                  >
+                    <Code2 className="w-4 h-4 text-amber-400" />
                   </motion.a>
                 </Magnetic>
               </div>
@@ -696,17 +724,17 @@ export default function Portfolio() {
                         className="text-sm font-semibold"
                         style={{ color: palette.primary }}
                       >
-                        KL University, Hyderabad, Telangana, India
+                        KL University (Koneru Lakshmaiah Education Foundation)
                       </p>
                       <p className="text-xs text-slate-400">
-                        2024 – Expected 2028 (Undergraduate)
+                        2024 – 2028 (Expected) • Undergraduate
                       </p>
                     </div>
 
                     <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                      Solid foundation in Data Structures & Algorithms, Object-Oriented Programming (OOP),
-                      Database Management Systems, and Software Development. Project experience spanning
-                      Java, Python, Spring Boot, React, and Android development with Kotlin.
+                      Solid engineering foundation in Data Structures & Algorithms, Object-Oriented Programming (OOP),
+                      RESTful API architectures, and database design. Hands-on project experience with Spring Boot,
+                      PostgreSQL, React, and Kotlin Android SDK.
                     </p>
 
                     {/* Exact CGPA: 9.58 / 10.0 */}
@@ -737,9 +765,49 @@ export default function Portfolio() {
                         <p className="text-xs text-slate-400">KL University</p>
                       </div>
                     </motion.div>
+
+                    {/* Competitive Programming & DSA Achievements */}
+                    <div
+                      className="p-4 rounded-xl border space-y-3"
+                      style={{
+                        backgroundColor: "rgba(255,255,255,0.02)",
+                        borderColor: palette.borderDark,
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Code2 className="w-4 h-4 text-amber-400" />
+                          <span className="text-xs font-semibold text-white">Competitive Programming & DSA</span>
+                        </div>
+                        <a
+                          href="https://codolio.com/profile/Dhruv_13"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[11px] font-mono text-cyan-400 hover:underline flex items-center gap-1"
+                        >
+                          Codolio Profile
+                          <ArrowUpRight className="w-3 h-3" />
+                        </a>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        Solved <strong className="text-white">968+</strong> algorithmic problems and competed in <strong className="text-white">146 rated contests</strong> across LeetCode, CodeChef, Codeforces, AtCoder, GeeksforGeeks, and HackerRank over <span className="text-emerald-400 font-medium">240+ active coding days</span>.
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+                        <div className="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 space-y-1">
+                          <span className="text-amber-400 font-semibold block">LeetCode Milestones</span>
+                          <p className="text-slate-300">100 Days & 50 Days Badges (2026)</p>
+                          <p className="text-slate-400">257 DSA solved • 43 contests • Peak rating 1,439</p>
+                        </div>
+                        <div className="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 space-y-1">
+                          <span className="text-amber-400 font-semibold block">CodeChef Badges</span>
+                          <p className="text-slate-300">500+ Solved & 50+ Contests Badges</p>
+                          <p className="text-slate-400">677 problems solved across 96 contests</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="pt-6 border-t border-white/5 flex items-center gap-2 text-xs text-slate-400">
+                  <div className="pt-4 border-t border-white/5 flex items-center gap-2 text-xs text-slate-400">
                     <CheckCircle2
                       className="w-4 h-4"
                       style={{ color: palette.accent }}
@@ -1036,25 +1104,30 @@ export default function Portfolio() {
                       Dhruv B — Official Resume
                     </h3>
                     <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                      Software Development Engineer Intern Candidate. Comprehensive academic record at KL University (CGPA: 9.58 / 10.0), production project prototypes (DSA Tracker, CP Contest Tracker, Digital Spending Tracker), and core technical skills.
+                      Software Development | Backend & Full-Stack Engineering | Android Development. Comprehensive academic record at KL University (CGPA: 9.58 / 10.0), 968+ competitive programming solutions, and production project prototypes (DSA Tracker, Contestory, Digital Spending Tracker).
                     </p>
 
                     {/* Quick Resume Highlights */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-left">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-left">
                       <div className="p-2.5 rounded-lg border bg-white/[0.02]" style={{ borderColor: palette.borderDark }}>
                         <span className="text-[10px] text-slate-400 font-mono block">EDUCATION</span>
                         <span className="text-xs font-semibold text-white">KL University</span>
-                        <span className="text-[11px] text-emerald-400 block font-mono">CGPA: 9.58</span>
+                        <span className="text-[11px] text-emerald-400 block font-mono">CGPA: 9.58 / 10.0</span>
+                      </div>
+                      <div className="p-2.5 rounded-lg border bg-white/[0.02]" style={{ borderColor: palette.borderDark }}>
+                        <span className="text-[10px] text-slate-400 font-mono block">COMPETITIVE CODING</span>
+                        <span className="text-xs font-semibold text-white">968+ Problems</span>
+                        <span className="text-[11px] text-emerald-400 block font-mono">146 Contests</span>
                       </div>
                       <div className="p-2.5 rounded-lg border bg-white/[0.02]" style={{ borderColor: palette.borderDark }}>
                         <span className="text-[10px] text-slate-400 font-mono block">PROJECTS</span>
                         <span className="text-xs font-semibold text-white">3 Verified</span>
-                        <span className="text-[11px] text-slate-300 block">Web & Android</span>
+                        <span className="text-[11px] text-slate-300 block">Full-Stack & Android</span>
                       </div>
-                      <div className="p-2.5 rounded-lg border bg-white/[0.02] col-span-2 sm:col-span-1" style={{ borderColor: palette.borderDark }}>
-                        <span className="text-[10px] text-slate-400 font-mono block">TARGET ROLE</span>
-                        <span className="text-xs font-semibold text-white">SDE Intern</span>
-                        <span className="text-[11px] text-slate-300 block">Java · Python · Web</span>
+                      <div className="p-2.5 rounded-lg border bg-white/[0.02]" style={{ borderColor: palette.borderDark }}>
+                        <span className="text-[10px] text-slate-400 font-mono block">CORE STACK</span>
+                        <span className="text-xs font-semibold text-white">Java · Spring · Kotlin</span>
+                        <span className="text-[11px] text-slate-300 block">PostgreSQL · React</span>
                       </div>
                     </div>
                   </div>
@@ -1071,7 +1144,7 @@ export default function Portfolio() {
                             boxShadow: `0 8px 24px -4px ${palette.glow}`,
                           }}
                         >
-                          <a href="/Resume.pdf" download="Dhruv_B_Resume.pdf">
+                          <a href="/Resume.pdf?v=2" download="Dhruv_B_Resume.pdf">
                             <Download className="w-4 h-4 mr-2" />
                             Download Resume (PDF)
                           </a>
@@ -1080,7 +1153,7 @@ export default function Portfolio() {
                     </Magnetic>
 
                     <a
-                      href="/Resume.pdf"
+                      href="/Resume.pdf?v=2"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs font-medium text-slate-300 hover:text-white transition-colors text-center"
@@ -1092,6 +1165,35 @@ export default function Portfolio() {
                 </div>
               </SpotlightCard>
             </TiltCard>
+
+            {/* Embedded Live PDF Document Viewer */}
+            <div className="rounded-2xl border border-white/10 bg-slate-950/60 overflow-hidden shadow-2xl backdrop-blur-xl">
+              <div
+                className="flex items-center justify-between px-4 py-3 border-b border-white/10 text-xs font-mono text-slate-300"
+                style={{ backgroundColor: "rgba(255,255,255,0.02)" }}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
+                  <span className="text-white font-medium">Dhruv_B_Resume.pdf (Live Interactive Viewer)</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <a
+                    href="/Resume.pdf?v=2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-cyan-400 hover:underline flex items-center gap-1"
+                  >
+                    Open in Full Tab
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+              <iframe
+                src="/Resume.pdf?v=2#toolbar=0&navpanes=0"
+                className="w-full h-[650px] sm:h-[880px] bg-slate-900 border-0"
+                title="Dhruv B Official Resume"
+              />
+            </div>
           </motion.div>
         </section>
 
@@ -1133,7 +1235,7 @@ export default function Portfolio() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto"
+            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto"
           >
             {/* Email Card - Entire card is clickable */}
             <motion.div variants={fadeInUp}>
@@ -1255,6 +1357,48 @@ export default function Portfolio() {
                 </SpotlightCard>
               </a>
             </motion.div>
+
+            {/* Codolio Card - Entire card is clickable */}
+            <motion.div variants={fadeInUp}>
+              <a
+                href="https://codolio.com/profile/Dhruv_13"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block group/contact h-full cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-500"
+                aria-label="Visit Codolio competitive programming profile"
+              >
+                <SpotlightCard
+                  spotlightColor="#f59e0b"
+                  className="p-6 text-center space-y-4 h-full flex flex-col justify-between transition-colors group-hover/contact:border-amber-500/50"
+                >
+                  <motion.div
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center border shadow-md"
+                    style={{
+                      backgroundColor: "rgba(245, 158, 11, 0.2)",
+                      borderColor: "rgba(245, 158, 11, 0.4)",
+                      color: "#fbbf24",
+                    }}
+                  >
+                    <Code2 className="w-5 h-5" />
+                  </motion.div>
+                  <div>
+                    <h3 className="font-bold text-white text-base flex items-center justify-center gap-1.5 group-hover/contact:text-amber-400 transition-colors">
+                      Codolio Profile
+                      <ArrowUpRight className="w-3.5 h-3.5 opacity-60 group-hover/contact:opacity-100 group-hover/contact:translate-x-0.5 group-hover/contact:-translate-y-0.5 transition-all" />
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-1">Competitive coding stats</p>
+                  </div>
+                  <span
+                    className="inline-block text-xs font-semibold group-hover/contact:underline"
+                    style={{ color: palette.primary }}
+                  >
+                    profile/Dhruv_13
+                  </span>
+                </SpotlightCard>
+              </a>
+            </motion.div>
           </motion.div>
 
           {/* Quick Copy Email Action with interactive feedback */}
@@ -1262,7 +1406,7 @@ export default function Portfolio() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="flex justify-center pt-8"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8"
           >
             <motion.button
               onClick={handleCopyEmail}
@@ -1287,6 +1431,10 @@ export default function Portfolio() {
                 </>
               )}
             </motion.button>
+
+            <span className="text-xs font-mono text-slate-400">
+              Phone: <strong className="text-slate-300 font-medium">+91-9933260140</strong>
+            </span>
           </motion.div>
         </section>
 
@@ -1300,10 +1448,10 @@ export default function Portfolio() {
             <span className="text-white font-semibold">Dhruv B</span>.
           </p>
           <p className="text-xs text-slate-400">
-            Software Development Engineer Intern Candidate • Java · Python · Spring Boot · React · Kotlin
+            Software Development | Backend & Full-Stack · Android Development • Java · Kotlin · Spring Boot · React · PostgreSQL
           </p>
           <p className="text-xs text-slate-400 font-mono">
-            KL University • B.Tech in Artificial Intelligence & Data Science • Class of 2028 • CGPA: 9.58 / 10.0
+            KL University (Koneru Lakshmaiah Education Foundation) • B.Tech in AI & Data Science • Class of 2028 • CGPA: 9.58 / 10.0
           </p>
         </footer>
       </main>

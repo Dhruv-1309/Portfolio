@@ -13,6 +13,7 @@ import {
   FileCode,
   Workflow,
   Sparkles,
+  ShieldCheck,
 } from "lucide-react";
 import { usePortfolioTheme } from "./ThemeContext";
 
@@ -23,18 +24,18 @@ interface TechItem {
 }
 
 const TECH_STACK: TechItem[] = [
-  { name: "Java", category: "Language / OOP", icon: Cpu },
-  { name: "Python", category: "Language", icon: Code2 },
+  { name: "Java", category: "Backend & Core OOP", icon: Cpu },
   { name: "Spring Boot", category: "Backend Framework", icon: Server },
+  { name: "Kotlin", category: "Native Android SDK", icon: Smartphone },
   { name: "PostgreSQL", category: "Relational Database", icon: Database },
-  { name: "React", category: "Frontend Web", icon: Workflow },
+  { name: "Spring Security", category: "Stateless JWT Auth", icon: ShieldCheck },
+  { name: "React (Vite)", category: "Frontend SPA", icon: Workflow },
   { name: "TypeScript", category: "Typed JavaScript", icon: FileCode },
-  { name: "Kotlin", category: "Android App Dev", icon: Smartphone },
-  { name: "REST APIs", category: "Backend Architecture", icon: Layers },
-  { name: "Data Structures & Algorithms", category: "CS Fundamentals", icon: Sparkles },
   { name: "Cloud Firestore", category: "NoSQL Database", icon: Database },
+  { name: "Retrofit 2", category: "Networking & Coroutines", icon: Layers },
+  { name: "DSA", category: "968+ Problems Solved", icon: Sparkles },
+  { name: "Apache Maven", category: "Build Automation", icon: Layers },
   { name: "Git & GitHub", category: "Version Control", icon: GitBranch },
-  { name: "JavaScript (ES6+)", category: "Web Standards", icon: Code2 },
 ];
 
 export function TechMarquee() {

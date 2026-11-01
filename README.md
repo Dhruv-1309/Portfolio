@@ -6,7 +6,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-black?style=for-the-badge&logo=framer&logoColor=white)](https://motion.dev/)
 
-A modern, highly interactive personal portfolio website for **Dhruv B**, B.Tech student in Artificial Intelligence & Data Science at KL University (CGPA: **9.58 / 10.0**), targeting Software Development Engineer (SDE) internship roles.
+A modern, highly interactive personal portfolio website for **Dhruv B**, B.Tech student in Artificial Intelligence & Data Science at KL University (CGPA: **9.58 / 10.0**), specializing in Backend, Full-Stack, and Android Development, and targeting Software Development Engineer (SDE) roles.
 
 ---
 
@@ -48,16 +48,28 @@ All portfolio projects directly mirror verified production repositories and acad
 
 | Project | Description | Stack |
 | :--- | :--- | :--- |
-| **DSA Tracker** | Full-stack progress tracker for Data Structures & Algorithms problem-solving with categorized problem lists, spaced repetition, and milestone tracking. | React · TypeScript · Spring Boot · PostgreSQL · Tailwind CSS |
-| **CP Contest Tracker (CodeCountdown)** | Native Android app providing countdowns, notifications, and rating tracking for competitive programming contests across Codeforces, LeetCode, and CodeChef. | Kotlin · Android SDK · Retrofit 2 · Coroutines · Material 3 |
-| **Digital Spending Tracker** | Client-side personal finance dashboard with categorized expense logging, monthly budget thresholds, and dynamic interactive visual charts. | JavaScript · Firebase · Chart.js · HTML5 · CSS3 |
+| **[DSA Tracker](https://github.com/Dhruv-1309/dsa-tracker)** | Full-stack problem practice platform with 35 REST APIs, 10 controllers, 8 PostgreSQL tables, stateless JJWT + OAuth auth, @BatchSize N+1 optimization, and spaced repetition. | Java · Spring Boot · Spring Security · JPA/Hibernate · PostgreSQL · React (Vite) · TypeScript · Maven |
+| **[Contestory (CodeCountdown)](https://github.com/Dhruv-1309/Contestory)** | Native Android app synchronizing live & upcoming contests across Codeforces, LeetCode, CodeChef, and AtCoder with reactive filters and persistent reboot-resilient reminders. | Kotlin · Android SDK · MVVM · Repository Pattern · Retrofit 2 · Coroutines · LiveData · Material 3 · AlarmManager |
+| **[Digital Spending Tracker](https://github.com/Dhruv-1309/Digital-Spending-Tracker)** | Multi-device personal finance tracker with real-time Firestore persistence, automated category spending anomaly detection (\|Z\| > 2), and interactive 3D Chart.js visual analytics. | JavaScript (ES6+) · HTML5 · CSS3 · Firebase Authentication · Cloud Firestore · Chart.js |
+
+---
+
+## 🏆 Achievements & Competitive Programming
+
+- **Codolio Profile:** [codolio.com/profile/Dhruv_13](https://codolio.com/profile/Dhruv_13)
+- **Competitive Problems Solved:** **968+** algorithmic and competitive programming problems across LeetCode, CodeChef, Codeforces, AtCoder, GeeksforGeeks, and HackerRank over **240+ active coding days**.
+- **Rated Contests:** **146** rated contests across all platforms.
+- **LeetCode Milestones:** Earned the **100 Days Badge (2026)** and **50 Days Badge (2026)** (257 DSA solved, 43 contests, peak rating 1,439).
+- **CodeChef Badges:** **500+ Problems Solved** and **50+ Contests** badges (677 solved across 96 contests).
+- **Certifications:** AI Fluency for Students – Certificate of Completion (2024).
 
 ---
 
 ## 🎓 Academic Credentials
 
-- **Degree:** B.Tech in Artificial Intelligence & Data Science
-- **Institution:** KL University
+- **Degree:** Bachelor of Technology in Artificial Intelligence & Data Science
+- **Institution:** KL University (Koneru Lakshmaiah Education Foundation)
+- **Duration:** 2024 – 2028 (Expected)
 - **Current CGPA:** **9.58 / 10.0**
 - **Target Roles:** Software Development Engineer (SDE) Intern, Backend / Full-Stack Engineer
 
@@ -127,5 +139,6 @@ The repository is configured for one-click continuous deployment on [Vercel](htt
 ## 📬 Contact & Links
 
 - **GitHub:** [@Dhruv-1309](https://github.com/Dhruv-1309)
-- **LinkedIn:** [dhruv-b-88a2a8316](https://linkedin.com/in/dhruv-b-88a2a8316)
+- **LinkedIn:** [dhruvb-tech](https://linkedin.com/in/dhruvb-tech)
+- **Codolio:** [Dhruv_13](https://codolio.com/profile/Dhruv_13)
 - **Email:** [dhruvb324@gmail.com](mailto:dhruvb324@gmail.com)
