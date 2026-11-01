@@ -1165,35 +1165,6 @@ export default function Portfolio() {
                 </div>
               </SpotlightCard>
             </TiltCard>
-
-            {/* Embedded Live PDF Document Viewer */}
-            <div className="rounded-2xl border border-white/10 bg-slate-950/60 overflow-hidden shadow-2xl backdrop-blur-xl">
-              <div
-                className="flex items-center justify-between px-4 py-3 border-b border-white/10 text-xs font-mono text-slate-300"
-                style={{ backgroundColor: "rgba(255,255,255,0.02)" }}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
-                  <span className="text-white font-medium">Dhruv_B_Resume.pdf (Live Interactive Viewer)</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <a
-                    href="/Resume.pdf?v=2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-cyan-400 hover:underline flex items-center gap-1"
-                  >
-                    Open in Full Tab
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </div>
-              <iframe
-                src="/Resume.pdf?v=2#toolbar=0&navpanes=0"
-                className="w-full h-[650px] sm:h-[880px] bg-slate-900 border-0"
-                title="Dhruv B Official Resume"
-              />
-            </div>
           </motion.div>
         </section>
 
